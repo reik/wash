@@ -32,11 +32,11 @@ What only we can do: the events come from the same pipeline as [[plant-voice]], 
 3. **Emotions, not care states** (user, 2026-10-12). The set is feelings such as happy, sad, mad, grateful and embarrassed, not "thirsty" or "hot".
 4. **A moji belongs to one plant** (user, 2026-10-12). The leaf outline is the identity: heart for a pothos, holes for a monstera, a fan for a ginkgo.
 5. **Much simpler than the first sketch** (user, 2026-10-13). It must still read at chat size.
+6. **Owners earn sunlight points** (user, 2026-10-13). Option A in the Earning section is the v1 model.
 
 Proposed, not yet confirmed by the user:
 - Each feeling is **earned from a real event**, never picked from a menu.
 - Names are **Japanese sound-words** (るんるん, しょぼん, ぷんぷん, ぺこり, てれてれ) with a plain label in the reader's language.
-- Earning model A below.
 
 ## How it works
 ### From event to feeling
@@ -72,7 +72,7 @@ The user asked for a way to earn points or money when a plant's moji is used.
 
 | Option | How it works | Trade-off |
 |---|---|---|
-| **A. Sunlight points (proposed for v1)** | Each borrow gives the origin plant one point. The owner sees where the moji travelled, not a public count. | Fits "no ranking" in [[principles]]; no payouts, tax or age checks. |
+| **A. Sunlight points (chosen for v1)** | Each borrow gives the origin plant one point. The owner sees where the moji travelled, not a public count. | Fits "no ranking" in [[principles]]; no payouts, tax or age checks. |
 | **B. Points with real value (later)** | Points redeem for premium months, extra moji slots or credit on a printed sticker sheet. | Needs premium to exist ([[roadmap]] P5). |
 | **C. Cash revenue share (set aside)** | Others buy a moji pack; the owner gets a cut. LINE Creators Market paid about half after the store fee on 2014–15 figures; current terms not verified. | Digital sales must use in-app purchase; payouts need identity checks, tax handling and 18+. Most LINE creators earned little. |
 
@@ -102,7 +102,8 @@ No code. Run inside [[circle-pilot]]:
 Measure: how often moji are used, the share of uses that are borrowed, and whether owners ask for more feelings. Pass signal (tentative): at least half of the sets get borrowed in the first two weeks, and at least two owners ask for another feeling unprompted.
 
 ## Open questions
-- Earning: confirm A for v1, B later, C set aside.
+- Earning: A is chosen for v1. Whether B follows later and C is set aside for good is not yet confirmed.
+- What can sunlight points be spent on, if anything, in v1?
 - Does a moji attach to a line, replace the three soft reactions (☀️ 💧 🌱), or both?
 - How many feelings are in the fixed vocabulary at launch?
 - Can a plant borrow from outside its circle?
