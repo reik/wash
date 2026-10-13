@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plant-moji — one-leaf direction (throwaway)</title>
+<style>
+  :root { --ink:#17332b; --cream:#fbf3e4; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--cream); color:var(--ink);
+    font-family: ui-rounded, "Hiragino Maru Gothic ProN", "Nunito", system-ui, sans-serif; }
+  main { max-width:1000px; margin:0 auto; padding:48px 32px 72px; }
+  h1 { font-size:40px; margin:0 0 6px; letter-spacing:-.5px; }
+  h2 { font-size:24px; margin:48px 0 6px; }
+  p.lead { font-size:18px; margin:0 0 6px; max-width:720px; line-height:1.5; }
+  p.sub { margin:0 0 22px; opacity:.75; max-width:740px; line-height:1.5; }
+  .tag { display:inline-block; background:var(--ink); color:var(--cream); font-size:12px; padding:4px 10px; border-radius:99px; margin-bottom:14px; }
+  .table { display:grid; grid-template-columns:170px repeat(5,1fr); gap:12px; align-items:center; }
+  .head { text-align:center; font-weight:800; font-size:15px; }
+  .head small { display:block; font-weight:600; opacity:.6; font-size:12px; }
+  .plant b { font-size:18px; display:block; } .plant span { font-size:12.5px; opacity:.7; line-height:1.35; display:block; }
+  .cell { background:#fff; border-radius:24px; padding:6px; }
+  .cell svg { width:100%; height:auto; display:block; }
+  .chat { background:#fff; border-radius:22px; padding:14px 16px; max-width:430px; }
+  .row { display:flex; align-items:center; gap:8px; font-size:14px; margin:6px 0; }
+  .row svg { width:30px; height:30px; flex:none; }
+  .row .big svg { width:64px; height:64px; }
+  .n { font-weight:800; font-size:12px; min-width:92px; } .n i { font-style:normal; font-weight:500; opacity:.6; }
+  .ink * { stroke:var(--ink); stroke-width:3; stroke-linejoin:round; stroke-linecap:round; }
+  .ink .line { fill:none !important; }
+</style>
+</head>
+<body>
+<main>
+  <span class="tag">Concept sketch · throwaway · not final art</span>
+  <h1>Plant-moji: the leaf is the moji</h1>
+  <p class="lead">One leaf, one mark. No pot, no face, no whole plant.</p>
+  <p class="sub">Each plant's moji uses its own leaf outline, so a ginkgo tree, a fern and a cactus look nothing alike. The feeling comes from how the leaf bends, plus a single manga mark.</p>
+
+  <div class="table" id="table"></div>
+
+  <h2>At chat size</h2>
+  <p class="sub">The simpler shape still reads when it is small.</p>
+  <div class="chat" id="chat"></div>
+</main>
+
+<script>
+const rad = d => d * Math.PI / 180;
+const svg = body => `<svg viewBox="0 0 120 124" xmlns="http://www.w3.org/2000/svg"><g class="ink">${body}</g></svg>`;
+const T = (x, y, s = 1, r = 0) => `transform="translate(${x} ${y}) rotate(${r}) scale(${s})"`;
+const thin = d => `<path class="line" d="${d}" style="stroke-width:1.8;opacity:.45"/>`;
+
+// leaf blades: base at 0,0, pointing up, about 68 tall
+const SHAPES = {
+  heart: c => `<path d="M0 -6 C -10 6 -36 -2 -31 -30 C -27 -50 -8 -58 0 -68 C 8 -58 27 -50 31 -30 C 36 -2 10 6 0 -6Z" fill="${c}"/>` + thin('M0 -10 V-52'),
+  monstera: c => `<path fill-rule="evenodd" fill="${c}" d="M0 -6 C 10 6 34 2 33 -20 L 16 -24 L 31 -34 C 29 -44 24 -50 18 -55 L 9 -44 L 8 -62 C 5 -65 2 -67 0 -69 C -2 -67 -5 -65 -8 -62 L -9 -44 L -18 -55 C -24 -50 -29 -44 -31 -34 L -16 -24 L -33 -20 C -34 2 -10 6 0 -6Z M6 -14 a3 5 0 1 0 6 0 a3 5 0 1 0 -6 0Z M-12 -14 a3 5 0 1 0 6 0 a3 5 0 1 0 -6 0Z"/>`,
+  ginkgo: c => `<path d="M0 0 C -4 -18 -40 -26 -38 -48 C -30 -64 -10 -60 0 -50 C 10 -60 30 -64 38 -48 C 40 -26 4 -18 0 0Z" fill="${c}"/>` + thin('M0 -6 L-22 -46 M0 -6 L22 -46 M0 -6 L-9 -50 M0 -6 L9 -50'),
+  fern: c => { let s = `<path class="line" d="M0 0 V-62"/>`;
+    for (let k = 0; k < 6; k++) { const y = -8 - k * 9.5, rx = 15 - k * 1.9, ry = 5.2 - k * .45;
+      s += `<ellipse cx="${-rx}" cy="${y}" rx="${rx}" ry="${ry}" fill="${c}" transform="rotate(22 0 ${y})"/><ellipse cx="${rx}" cy="${y}" rx="${rx}" ry="${ry}" fill="${c}" transform="rotate(-22 0 ${y})"/>`; }
+    return s + `<ellipse cx="0" cy="-66" rx="4" ry="7" fill="${c}"/>`; },
+  cactus: c => `<ellipse cx="18" cy="-60" rx="10" ry="12" fill="${c}"/><ellipse cx="0" cy="-32" rx="24" ry="32" fill="${c}"/>` +
+    `<path class="line" d="M-10 -44 h4 M-8 -46 v4 M8 -34 h4 M10 -36 v4 M-6 -20 h4 M-4 -22 v4 M10 -14 h4 M12 -16 v4" style="stroke:#fff;stroke-width:1.8"/>`,
+};
+// one mark each
+const note = (x, y) => `<g ${T(x, y, 1.1, 10)}><path class="line" d="M4.5 6 V-10 q7 1 8 8"/><ellipse cx="0" cy="6" rx="5" ry="4" fill="#ff7a59"/></g>`;
+const drop = (x, y, s = 1, r = 0) => `<path ${T(x, y, s, r)} d="M0 -11 C 8 0 8 9 0 9 C -8 9 -8 0 0 -11Z" fill="#5cc3f2"/>`;
+const anger = (x, y) => `<path class="line" ${T(x, y, 1.2)} d="M-9 -3 q6 0 6 -6 M3 -9 q0 6 6 6 M9 3 q-6 0 -6 6 M-3 9 q0 -6 -6 -6" style="stroke:#e63946;stroke-width:4"/>`;
+const heart = (x, y) => `<path ${T(x, y, 1.15, -12)} d="M0 8 C -15 -3 -8 -14 0 -6 C 8 -14 15 -3 0 8Z" fill="#ff5c7a"/>`;
+const blush = `<path class="line" d="M-8 -30 l-3 7 M-2 -30 l-3 7 M4 -30 l-3 7" style="stroke:#ff6f91;stroke-width:2.8"/>`;
+const gloom = (x, y) => `<path class="line" transform="translate(${x} ${y})" d="M0 0 v12 M8 0 v19 M16 0 v9 M24 0 v15" style="stroke:#7a6fb0;stroke-width:3.2"/>`;
+
+const POSE = {
+  happy:  { ax: 60, ay: 90, rot: -12, stalk: 'M60 116 Q63 102 60 90', mark: note(100, 30) },
+  sad:    { ax: 70, ay: 50, rot: 156, sc: .86, stalk: 'M58 116 Q46 52 70 50', mark: gloom(14, 12) + drop(108, 104, .55) },
+  mad:    { ax: 60, ay: 90, rot: 0, stalk: 'M60 116 V90', mark: anger(100, 26) },
+  thanks: { ax: 58, ay: 92, rot: 40, stalk: 'M56 116 Q54 102 58 92', mark: heart(24, 30) },
+  shy:    { ax: 62, ay: 92, rot: -24, sc: .88, stalk: 'M64 116 Q66 104 62 92', blush: true, mark: drop(100, 36, .85, 14) },
+};
+const RIGID = { // cactus pads stand on their own, so they only tilt
+  happy: { rot: -8, mark: note(100, 30) }, sad: { rot: 26, mark: gloom(12, 12) + drop(104, 70, .55) },
+  mad: { rot: 0, mark: anger(100, 30) }, thanks: { rot: 30, mark: heart(22, 34) }, shy: { rot: -16, blush: true, mark: drop(102, 40, .85, 14) },
+};
+function moji(shape, color, emo) {
+  if (shape === 'cactus') {
+    const p = RIGID[emo];
+    return svg(`<g ${T(60, 116, 1.12, p.rot)}>${SHAPES.cactus(color)}${p.blush ? blush : ''}</g>${p.mark}`);
+  }
+  const p = POSE[emo];
+  return svg(`<path class="line" d="${p.stalk}" style="stroke-width:4"/><g ${T(p.ax, p.ay, p.sc || 1, p.rot)}>${SHAPES[shape](color)}${p.blush ? blush : ''}</g>${p.mark}`);
+}
+
+const EMO = [['happy', 'Happy', 'るんるん', '#fff6cf'], ['sad', 'Sad', 'しょぼん', '#e6e3f8'], ['mad', 'Mad', 'ぷんぷん', '#ffe0d4'], ['thanks', 'Grateful', 'ぺこり', '#ffe3ec'], ['shy', 'Embarrassed', 'てれてれ', '#ffeede']];
+const PLANTS = [
+  ['Mochi', 'pothos · indoor pot · Osaka', 'heart', '#3aa866'],
+  ['Lua', 'monstera · São Paulo', 'monstera', '#1f8a57'],
+  ['Kogane', 'ginkgo · street tree · Kyoto', 'ginkgo', '#f2c230'],
+  ['Wren', 'fern · garden wall · Portland', 'fern', '#6cc04a'],
+  ['Bjørn', 'cactus · Oslo', 'cactus', '#4fb58a'],
+];
+let html = '<div></div>' + EMO.map(e => `<div class="head">${e[2]}<small>${e[1]}</small></div>`).join('');
+PLANTS.forEach(([name, sub, shape, color]) => {
+  html += `<div class="plant"><b>${name}</b><span>${sub}</span></div>`;
+  html += EMO.map(e => `<div class="cell" style="background:${e[3]}">${moji(shape, color, e[0])}</div>`).join('');
+});
+document.getElementById('table').innerHTML = html;
+
+document.getElementById('chat').innerHTML = [
+  `<div class="row"><span class="n">Bjørn <i>· Oslo</i></span>−6°C by the window. ${moji('cactus', '#4fb58a', 'mad')}</div>`,
+  `<div class="row"><span class="n">Kogane <i>· Kyoto</i></span>First gold leaf today! ${moji('ginkgo', '#f2c230', 'happy')}</div>`,
+  `<div class="row"><span class="n">Lua <i>· São Paulo</i></span>Someone finally watered me. ${moji('monstera', '#1f8a57', 'thanks')}</div>`,
+  `<div class="row"><span class="n">Mochi <i>· Osaka</i></span><span class="big">${moji('heart', '#3aa866', 'shy')}</span></div>`,
+].join('');
+</script>
+</body>
+</html>
