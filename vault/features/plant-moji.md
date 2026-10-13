@@ -52,7 +52,9 @@ The feeling is our interpretation of an event the plant already has on record. E
 
 Further feelings sketched: startled, sleepy, excited, worried, proud, cozy, and the louder texting moods hyped (メラメラ, in flames), crying (ぴえん, a puddle of tears), melting (とろ〜ん) and "I'm dead" (ち〜ん, flat with a little ghost).
 
-The feeling must be the loudest part of the moji (user, 2026-10-13): big marks, exaggerated poses, funny and current.
+The feeling must be the loudest part of the moji (user, 2026-10-13): funny and current.
+
+**Visual style** (user, 2026-10-13): simple but sophisticated. The thick-outline cartoon sticker look was rejected as "tacky and basic". Current sketch: no outlines, a two-tone folded-paper leaf in muted colours, hairline marks and one vermilion accent, with the feeling carried mainly by the leaf's gesture. Not yet confirmed by the user.
 
 ### Making a moji
 1. An event is detected (same triggers as [[plant-voice]]).

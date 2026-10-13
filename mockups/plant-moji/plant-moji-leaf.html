@@ -5,126 +5,133 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Plant-moji — one-leaf direction (throwaway)</title>
 <style>
-  :root { --ink:#17332b; --cream:#fbf3e4; }
+  :root { --ink:#22201c; --paper:#f3efe6; --line:#d9d2c3; --acc:#e2492f; }
   * { box-sizing: border-box; }
-  body { margin:0; background:var(--cream); color:var(--ink);
-    font-family: ui-rounded, "Hiragino Maru Gothic ProN", "Nunito", system-ui, sans-serif; }
-  main { max-width:1200px; margin:0 auto; padding:48px 28px 72px; }
-  h1 { font-size:40px; margin:0 0 6px; letter-spacing:-.5px; }
-  h2 { font-size:24px; margin:48px 0 6px; }
-  p.lead { font-size:18px; margin:0 0 6px; max-width:720px; line-height:1.5; }
-  p.sub { margin:0 0 22px; opacity:.75; max-width:740px; line-height:1.5; }
-  .tag { display:inline-block; background:var(--ink); color:var(--cream); font-size:12px; padding:4px 10px; border-radius:99px; margin-bottom:14px; }
-  .table { display:grid; grid-template-columns:112px repeat(8,1fr); gap:10px; align-items:center; }
-  .head { text-align:center; font-weight:800; font-size:15px; }
-  .head small { display:block; font-weight:600; opacity:.6; font-size:12px; }
-  .plant b { font-size:17px; display:block; } .plant span { font-size:12px; opacity:.7; line-height:1.35; display:block; }
-  .cell { border-radius:22px; padding:4px; }
+  body { margin:0; background:var(--paper); color:var(--ink);
+    font-family: "Avenir Next", "Hiragino Sans", system-ui, sans-serif; }
+  main { max-width:1160px; margin:0 auto; padding:56px 36px 80px; }
+  .tag { font-size:11px; letter-spacing:.14em; text-transform:uppercase; opacity:.55; }
+  h1 { font-family:"Iowan Old Style", "Hiragino Mincho ProN", Georgia, serif; font-weight:400; font-size:44px; margin:10px 0 8px; letter-spacing:-.01em; }
+  h2 { font-family:"Iowan Old Style", "Hiragino Mincho ProN", Georgia, serif; font-weight:400; font-size:24px; margin:64px 0 6px; }
+  p.lead { font-size:17px; margin:0; max-width:620px; line-height:1.6; opacity:.8; }
+  .hero { display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin:44px 0 20px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .hero > div { padding:22px 0 18px; text-align:center; }
+  .hero > div + div { border-left:1px solid var(--line); }
+  .hero svg { width:220px; height:auto; }
+  .cap { font-size:11px; letter-spacing:.14em; text-transform:uppercase; opacity:.6; margin-top:4px; }
+  .cap b { font-family:"Hiragino Mincho ProN", serif; font-weight:400; font-size:15px; letter-spacing:.04em; text-transform:none; opacity:1; margin-right:8px; }
+  .table { display:grid; grid-template-columns:128px repeat(8,1fr); align-items:center; }
+  .head { text-align:center; padding-bottom:12px; font-family:"Hiragino Mincho ProN", serif; font-size:15px; }
+  .head small { display:block; font-family:"Avenir Next", system-ui, sans-serif; font-size:10px; letter-spacing:.14em; text-transform:uppercase; opacity:.55; margin-top:3px; }
+  .plant, .cell { border-top:1px solid var(--line); height:100%; display:flex; flex-direction:column; justify-content:center; }
+  .plant b { font-family:"Iowan Old Style", Georgia, serif; font-weight:400; font-size:19px; }
+  .plant span { font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; opacity:.55; margin-top:2px; }
+  .cell { padding:8px 6px; }
   .cell svg { width:100%; height:auto; display:block; }
-  .chat { background:#fff; border-radius:22px; padding:14px 16px; max-width:460px; }
-  .row { display:flex; align-items:center; gap:8px; font-size:14px; margin:6px 0; }
-  .row svg { width:44px; height:44px; flex:none; }
-  .n { font-weight:800; font-size:12px; min-width:98px; } .n i { font-style:normal; font-weight:500; opacity:.6; }
-  .ink * { stroke:var(--ink); stroke-width:3; stroke-linejoin:round; stroke-linecap:round; }
-  .ink .line { fill:none !important; }
-  .ink .flat { stroke-width:0; }
+  .chat { border-top:1px solid var(--line); max-width:520px; margin-top:16px; }
+  .row { display:flex; align-items:center; gap:12px; font-size:15px; padding:8px 0; border-bottom:1px solid var(--line); }
+  .row svg { width:46px; height:46px; flex:none; }
+  .n { font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; opacity:.6; min-width:118px; }
 </style>
 </head>
 <body>
 <main>
-  <span class="tag">Concept sketch · throwaway · not final art</span>
-  <h1>Plant-moji: the leaf is the moji</h1>
-  <p class="lead">One leaf, one loud feeling. No pot, no face, no whole plant.</p>
-  <p class="sub">Each plant's moji uses its own leaf outline. The feeling is the star: big marks, exaggerated poses, and a few moods borrowed from how people actually text.</p>
+  <div class="tag">Concept sketch · throwaway · not final art</div>
+  <h1>Plant-moji</h1>
+  <p class="lead">One leaf, cut like folded paper. The feeling is in the gesture; a single vermilion accent does the rest. No outline, no pot, no face.</p>
+
+  <div class="hero" id="hero"></div>
 
   <div class="table" id="table"></div>
 
-  <h2>At chat size</h2>
-  <p class="sub">Bigger marks keep the feeling readable when the moji is small.</p>
+  <h2>In a message</h2>
   <div class="chat" id="chat"></div>
 </main>
 
 <script>
-const svg = body => `<svg viewBox="0 0 120 124" xmlns="http://www.w3.org/2000/svg"><g class="ink">${body}</g></svg>`;
+const INK = '#22201c', ACC = '#e2492f';
+const svg = body => `<svg viewBox="0 0 120 124" xmlns="http://www.w3.org/2000/svg"><defs>
+  <clipPath id="rh"><rect x="0" y="-90" width="70" height="110"/></clipPath>
+  <linearGradient id="flush" gradientUnits="userSpaceOnUse" x1="0" y1="-70" x2="0" y2="-14"><stop offset="0" stop-color="#ee5a44"/><stop offset=".45" stop-color="#ee5a44" stop-opacity=".75"/><stop offset="1" stop-color="#ee5a44" stop-opacity="0"/></linearGradient></defs>${body}</svg>`;
 const T = (x, y, s = 1, r = 0, sy = s) => `transform="translate(${x} ${y}) rotate(${r}) scale(${s} ${sy})"`;
-const thin = d => `<path class="line" d="${d}" style="stroke-width:1.8;opacity:.45"/>`;
+const two = (d, a, b) => `<path d="${d}" fill="${a}"/><path d="${d}" fill="${b}" clip-path="url(#rh)"/>`;
+const hair = (d, c = INK, w = 1.8) => `<path d="${d}" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
 
-// leaf blades: base at 0,0, pointing up, about 68 tall
+// leaf blades: base at 0,0, pointing up, about 68 tall; light half / dark half
 const SHAPES = {
-  heart: c => `<path d="M0 -6 C -10 6 -36 -2 -31 -30 C -27 -50 -8 -58 0 -68 C 8 -58 27 -50 31 -30 C 36 -2 10 6 0 -6Z" fill="${c}"/>` + thin('M0 -10 V-52'),
-  monstera: c => `<path fill-rule="evenodd" fill="${c}" d="M0 -6 C 10 6 34 2 33 -20 L 16 -24 L 31 -34 C 29 -44 24 -50 18 -55 L 9 -44 L 8 -62 C 5 -65 2 -67 0 -69 C -2 -67 -5 -65 -8 -62 L -9 -44 L -18 -55 C -24 -50 -29 -44 -31 -34 L -16 -24 L -33 -20 C -34 2 -10 6 0 -6Z M6 -14 a3 5 0 1 0 6 0 a3 5 0 1 0 -6 0Z M-12 -14 a3 5 0 1 0 6 0 a3 5 0 1 0 -6 0Z"/>`,
-  ginkgo: c => `<path d="M0 0 C -4 -18 -40 -26 -38 -48 C -30 -64 -10 -60 0 -50 C 10 -60 30 -64 38 -48 C 40 -26 4 -18 0 0Z" fill="${c}"/>` + thin('M0 -6 L-22 -46 M0 -6 L22 -46 M0 -6 L-9 -50 M0 -6 L9 -50'),
-  fern: c => { let s = `<path class="line" d="M0 0 V-62"/>`;
-    for (let k = 0; k < 6; k++) { const y = -8 - k * 9.5, rx = 15 - k * 1.9, ry = 5.2 - k * .45;
-      s += `<ellipse cx="${-rx}" cy="${y}" rx="${rx}" ry="${ry}" fill="${c}" transform="rotate(22 0 ${y})"/><ellipse cx="${rx}" cy="${y}" rx="${rx}" ry="${ry}" fill="${c}" transform="rotate(-22 0 ${y})"/>`; }
-    return s + `<ellipse cx="0" cy="-66" rx="4" ry="7" fill="${c}"/>`; },
-  cactus: c => `<ellipse cx="18" cy="-60" rx="10" ry="12" fill="${c}"/><ellipse cx="0" cy="-32" rx="24" ry="32" fill="${c}"/>` +
-    `<path class="line" d="M-10 -44 h4 M-8 -46 v4 M8 -34 h4 M10 -36 v4 M-6 -20 h4 M-4 -22 v4 M10 -14 h4 M12 -16 v4" style="stroke:#fff;stroke-width:1.8"/>`,
+  heart: (a, b) => two('M0 -6 C -10 6 -36 -2 -31 -30 C -27 -50 -8 -58 0 -68 C 8 -58 27 -50 31 -30 C 36 -2 10 6 0 -6Z', a, b),
+  monstera: (a, b) => two('M0 -6 C 10 6 34 2 33 -20 L 14 -23 L 31 -34 C 29 -44 24 -50 18 -55 L 8 -42 L 8 -62 C 5 -65 2 -67 0 -69 C -2 -67 -5 -65 -8 -62 L -8 -42 L -18 -55 C -24 -50 -29 -44 -31 -34 L -14 -23 L -33 -20 C -34 2 -10 6 0 -6Z', a, b),
+  ginkgo: (a, b) => two('M0 0 C -4 -18 -40 -26 -38 -48 C -30 -64 -10 -60 0 -50 C 10 -60 30 -64 38 -48 C 40 -26 4 -18 0 0Z', a, b),
+  fern: (a, b) => { let s = hair('M0 0 V-60', b, 1.6);
+    for (let k = 0; k < 6; k++) { const y = -8 - k * 9.5, rx = 15 - k * 1.9, ry = 5 - k * .42;
+      s += `<ellipse cx="${-rx}" cy="${y}" rx="${rx}" ry="${ry}" fill="${a}" transform="rotate(22 0 ${y})"/><ellipse cx="${rx}" cy="${y}" rx="${rx}" ry="${ry}" fill="${b}" transform="rotate(-22 0 ${y})"/>`; }
+    return s + `<ellipse cx="0" cy="-66" rx="3.6" ry="7" fill="${a}"/>`; },
+  cactus: (a, b) => `<ellipse cx="17" cy="-60" rx="9" ry="11" fill="${b}"/><ellipse cx="0" cy="-32" rx="23" ry="32" fill="${a}"/><ellipse cx="0" cy="-32" rx="23" ry="32" fill="${b}" clip-path="url(#rh)"/>` +
+    [[-9,-44],[9,-36],[-5,-22],[10,-16],[-12,-30]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.1" fill="#f3efe6"/>`).join(''),
 };
 
-// loud marks
-const notes = (x, y, s, r, c) => `<g ${T(x, y, s, r)}><path class="line" d="M-5 8 V-12 L11 -16 V4"/><path class="line" d="M-5 -12 L11 -16" style="stroke-width:6"/><ellipse cx="-10" cy="8" rx="5.5" ry="4.5" fill="${c}"/><ellipse cx="6" cy="4" rx="5.5" ry="4.5" fill="${c}"/></g>`;
-const note1 = (x, y, s, r, c) => `<g ${T(x, y, s, r)}><path class="line" d="M4.5 6 V-10 q7 1 8 8"/><ellipse cx="0" cy="6" rx="5" ry="4" fill="${c}"/></g>`;
-const drop = (x, y, s = 1, r = 0, c = '#5cc3f2') => `<path ${T(x, y, s, r)} d="M0 -11 C 8 0 8 9 0 9 C -8 9 -8 0 0 -11Z" fill="${c}"/>`;
-const anger = (x, y, s) => `<path class="line" ${T(x, y, s)} d="M-9 -3 q6 0 6 -6 M3 -9 q0 6 6 6 M9 3 q-6 0 -6 6 M-3 9 q0 -6 -6 -6" style="stroke:#e6142d;stroke-width:4.5"/>`;
-const heart = (x, y, s = 1, r = 0) => `<path ${T(x, y, s, r)} d="M0 8 C -15 -3 -8 -14 0 -6 C 8 -14 15 -3 0 8Z" fill="#ff3d7f"/>`;
-const sparkle = (x, y, s = 1) => `<path ${T(x, y, s)} d="M0 -11 Q1.8 -1.8 11 0 Q1.8 1.8 0 11 Q-1.8 1.8 -11 0 Q-1.8 -1.8 0 -11Z" fill="#fff"/>`;
-const puff = (x, y, s, f = 1) => `<path transform="translate(${x} ${y}) scale(${f * s} ${s})" d="M0 0 a5 5 0 0 1 8 -5 a6 6 0 0 1 10 2 a4.5 4.5 0 0 1 -2 8 h-13 a4 4 0 0 1 -3 -5Z" fill="#fff"/>`;
-const gloom = (x, y) => `<path class="line" transform="translate(${x} ${y})" d="M0 0 v16 M10 0 v26 M20 0 v12 M30 0 v21" style="stroke:#6d5fc7;stroke-width:4.5"/>`;
-const steam = (x, y) => `<path class="line" transform="translate(${x} ${y})" d="M0 0 q-7 -7 0 -14 q7 -7 0 -14" style="stroke:#ff6a3d;stroke-width:4.5"/>`;
-const hop = `<path class="line" d="M42 119 q18 6 36 0" style="stroke-width:3"/>`;
-const shake = `<path class="line" d="M24 36 l-10 -6 M20 54 h-12 M100 66 h12 M98 84 l10 6" style="stroke-width:3.2"/>`;
-const flame = `<path d="M60 120 C 18 120 12 78 34 54 C 34 70 43 72 45 62 C 45 36 58 28 60 6 C 70 30 92 40 85 66 C 91 62 93 54 91 48 C 110 78 102 120 60 120Z" fill="#ff7a1a"/>` +
-  `<path transform="translate(60 120) scale(.58) translate(-60 -120)" d="M60 120 C 18 120 12 78 34 54 C 34 70 43 72 45 62 C 45 36 58 28 60 6 C 70 30 92 40 85 66 C 91 62 93 54 91 48 C 110 78 102 120 60 120Z" fill="#ffd23f" style="stroke-width:5"/>`;
-const puddle = c => `<path d="M16 112 C 16 102 38 100 60 100 C 82 100 104 102 104 112 C 104 121 82 122 60 122 C 38 122 16 121 16 112Z" fill="${c}"/>`;
-const tears = `<ellipse cx="92" cy="116" rx="22" ry="5.5" fill="#5cc3f2"/>` + drop(108, 90, 1.05) + drop(88, 98, .75) + drop(100, 70, .6);
-const soul = `<g transform="translate(96 42) scale(.9)"><path d="M0 -26 C 17 -26 21 -6 13 6 C 9 14 11 22 2 31 C 2 22 -5 20 -9 12 C -19 0 -15 -26 0 -26Z" fill="#fff"/><ellipse class="line" cx="0" cy="-36" rx="12" ry="4" style="stroke:#f5a700;stroke-width:3.5"/></g>`;
-const flush = `<ellipse class="flat" cx="0" cy="-30" rx="19" ry="12" fill="#ff5c8a" opacity=".8"/><path class="line" d="M-10 -36 l-5 12 M-1 -36 l-5 12 M8 -36 l-5 12" style="stroke:#fff;stroke-width:3"/>`;
+// quiet marks: hairlines in ink, one accent
+const rays = (cx, cy, r1, r2, from, to, step) => { let d = '';
+  for (let a = from; a <= to; a += step) { const r = a * Math.PI / 180;
+    d += `M${(cx + r1 * Math.cos(r)).toFixed(1)} ${(cy + r1 * Math.sin(r)).toFixed(1)} L${(cx + r2 * Math.cos(r)).toFixed(1)} ${(cy + r2 * Math.sin(r)).toFixed(1)} `; }
+  return hair(d, ACC, 2); };
+const sun = `<circle cx="97" cy="24" r="8" fill="${ACC}"/>`;
+const heart = (x, y, s) => `<path ${T(x, y, s, -10)} d="M0 8 C -15 -3 -8 -14 0 -6 C 8 -14 15 -3 0 8Z" fill="${ACC}"/>`;
+const dropD = 'M0 -11 C 8 0 8 9 0 9 C -8 9 -8 0 0 -11Z';
+const dropInk = (x, y, s) => `<path ${T(x, y, s)} d="${dropD}" fill="${INK}"/>`;
+const dropLine = (x, y, s) => `<g ${T(x, y, s, 14)}>${hair(dropD, INK, 2.4)}</g>`;
+const bolt = hair('M90 12 l8 11 l-9 2 l8 12', INK, 2.2);
+const heat = (x, y) => `<g transform="translate(${x} ${y})">${hair('M0 0 q-5 -6 0 -12 q5 -6 0 -12')}</g>`;
+const halo = `<ellipse cx="58" cy="46" rx="15" ry="4.5" fill="none" stroke="#c9a23a" stroke-width="2.2"/>`;
 
-// pose per feeling; `rigid` overrides apply to plants with no stalk to bend
+const RED = ['#e2492f', '#c23a22'], DUST = ['#b9ae9b', '#a3977f'];
 const POSE = {
-  happy:  { ax: 58, ay: 88, rot: -18, stalk: 'M62 112 Q66 100 58 88', front: hop + notes(92, 40, 1.8, 8, '#ff3d7f') + note1(20, 34, 1.5, -16, '#ff9f1c'), rigid: { rot: -12, ay: 110 } },
-  hyped:  { ax: 60, ay: 106, sc: .7, rot: 0, stalk: 'M60 120 V106', back: flame, front: sparkle(100, 22, 1.3) + sparkle(18, 30, .8), rigid: { sc: .78, ay: 118 } },
-  thanks: { ax: 52, ay: 94, rot: 58, sc: .92, stalk: 'M48 118 Q44 104 52 94', front: heart(26, 36, 2.1, -12) + heart(56, 16, 1, 12) + heart(12, 72, .75), rigid: { rot: 36, ax: 56 } },
-  shy:    { ax: 62, ay: 96, rot: -22, sc: .86, stalk: 'M66 118 Q68 106 62 96', inner: flush, front: drop(100, 34, 1.5, 16) + drop(82, 16, .9, 16), rigid: { rot: -16, ax: 58 } },
-  mad:    { ax: 60, ay: 92, rot: 0, color: '#f0503a', stalk: 'M60 118 V92', front: shake + puff(2, 100, 1.3) + puff(118, 100, 1.3, -1) + anger(94, 28, 2.1), rigid: {} },
-  sad:    { ax: 68, ay: 46, rot: 158, sc: .84, stalk: 'M54 118 Q40 48 68 46', front: gloom(8, 8) + tears, rigid: { rot: 28, ax: 54, sc: 1 } },
-  melt:   { ax: 60, ay: 108, rot: 0, sc: 1.18, sy: .56, back: 'PUDDLE', front: steam(26, 44) + steam(96, 40) + drop(102, 62, 1.1, 14), rigid: { sc: 1.3, sy: .6 } },
-  dead:   { ax: 20, ay: 90, rot: 90, sc: .88, color: '#b9a57e', stalk: 'M6 90 H20', front: soul, rigid: { ax: 14, ay: 92, sc: .95 } },
+  happy:  { ax: 54, ay: 94, rot: 16, stalk: 'M50 120 Q47 106 54 94', front: sun, rigid: { rot: 10 } },
+  hyped:  { ax: 60, ay: 106, sc: .84, rot: 0, stalk: 'M60 121 V106', front: rays(60, 74, 47, 58, -165, -15, 15), rigid: { sc: .8, ay: 119 } },
+  thanks: { ax: 52, ay: 96, rot: 56, sc: .92, stalk: 'M48 120 Q44 106 52 96', front: heart(28, 44, 1.05), rigid: { rot: 34, ax: 56 } },
+  shy:    { ax: 62, ay: 98, rot: -22, sc: .86, stalk: 'M66 120 Q68 108 62 98', flush: true, front: dropLine(98, 40, .7), rigid: { rot: -16, ax: 58 } },
+  mad:    { ax: 60, ay: 96, rot: 0, tone: RED, stalk: 'M60 120 V96', front: bolt, rigid: {} },
+  sad:    { ax: 68, ay: 46, rot: 158, sc: .84, stalk: 'M54 120 Q40 48 68 46', front: dropInk(93, 114, .55), rigid: { rot: 28, ax: 54, sc: 1 } },
+  melt:   { ax: 60, ay: 108, rot: 0, sc: 1.15, sy: .56, pool: true, front: heat(44, 56) + heat(78, 50), rigid: { sc: 1.3, sy: .6, ay: 110 } },
+  dead:   { ax: 22, ay: 92, rot: 90, sc: .88, tone: DUST, stalk: 'M8 92 H22', front: halo, rigid: { ax: 14, ay: 92, sc: .95 } },
 };
-function moji(shape, color, emo) {
+function moji(shape, tone, emo) {
   const rigid = shape === 'cactus';
-  const p = rigid ? { ...POSE[emo], ay: 116, stalk: null, ...POSE[emo].rigid } : POSE[emo];
-  const c = p.color || color, sc = p.sc || 1;
-  const back = p.back === 'PUDDLE' ? puddle(c) + drop(34, 96, .7, 0, c) + drop(88, 98, .6, 0, c) : (p.back || '');
-  const stalk = p.stalk ? `<path class="line" d="${p.stalk}" style="stroke-width:4"/>` : '';
-  return svg(`${back}${stalk}<g ${T(p.ax, p.ay, sc, p.rot, p.sy || sc)}>${SHAPES[shape](c)}${p.inner || ''}</g>${p.front}`);
+  const p = rigid ? { ...POSE[emo], ay: 118, stalk: null, ...POSE[emo].rigid } : POSE[emo];
+  const [a, b] = p.tone || tone, sc = p.sc || 1;
+  const pool = p.pool ? `<ellipse cx="60" cy="111" rx="42" ry="8" fill="${a}"/>` : '';
+  const stalk = p.stalk ? hair(p.stalk) : '';
+  return svg(`${pool}${stalk}<g ${T(p.ax, p.ay, sc, p.rot, p.sy || sc)}>${SHAPES[shape](a, b)}${p.flush ? SHAPES[shape]('url(#flush)', 'url(#flush)') : ''}</g>${p.front}`);
 }
 
 const EMO = [
-  ['happy', 'Happy', 'るんるん', '#ffe45c'], ['hyped', 'Hyped', 'メラメラ', '#ffc9a3'], ['thanks', 'Thank you', 'ぺこり', '#ffbfd6'],
-  ['shy', 'Embarrassed', 'てれてれ', '#ffe1d6'], ['mad', 'Mad', 'ぷんぷん', '#ffd68a'], ['sad', 'Crying', 'ぴえん', '#bcd8ff'],
-  ['melt', 'Melting', 'とろ〜ん', '#fff0b3'], ['dead', "I'm dead", 'ち〜ん', '#d6d2ea'],
+  ['happy', 'Happy', 'るんるん'], ['hyped', 'Hyped', 'メラメラ'], ['thanks', 'Thank you', 'ぺこり'], ['shy', 'Embarrassed', 'てれてれ'],
+  ['mad', 'Mad', 'ぷんぷん'], ['sad', 'Crying', 'ぴえん'], ['melt', 'Melting', 'とろ〜ん'], ['dead', "I'm dead", 'ち〜ん'],
 ];
-const PLANTS = [
-  ['Mochi', 'pothos · Osaka', 'heart', '#3aa866'],
-  ['Lua', 'monstera · São Paulo', 'monstera', '#1f8a57'],
-  ['Kogane', 'ginkgo tree · Kyoto', 'ginkgo', '#f2c230'],
-  ['Wren', 'fern · Portland', 'fern', '#6cc04a'],
-  ['Bjørn', 'cactus · Oslo', 'cactus', '#4fb58a'],
-];
+const P = {
+  mochi:  ['Mochi', 'Pothos · Osaka', 'heart', ['#2f6b4f', '#24543e']],
+  lua:    ['Lua', 'Monstera · São Paulo', 'monstera', ['#1e4d3a', '#163a2c']],
+  kogane: ['Kogane', 'Ginkgo · Kyoto', 'ginkgo', ['#d9a441', '#bf8a2b']],
+  wren:   ['Wren', 'Fern · Portland', 'fern', ['#7a9f4f', '#5b8139']],
+  bjorn:  ['Bjørn', 'Cactus · Oslo', 'cactus', ['#86b3a0', '#679883']],
+};
+const m = (k, e) => moji(P[k][2], P[k][3], e);
+
+document.getElementById('hero').innerHTML = [['mochi', 'sad', 'ぴえん', 'Crying'], ['kogane', 'hyped', 'メラメラ', 'Hyped'], ['lua', 'thanks', 'ぺこり', 'Thank you']]
+  .map(([k, e, ja, en]) => `<div>${m(k, e)}<div class="cap"><b>${ja}</b>${P[k][0]} · ${en}</div></div>`).join('');
+
 let html = '<div></div>' + EMO.map(e => `<div class="head">${e[2]}<small>${e[1]}</small></div>`).join('');
-PLANTS.forEach(([name, sub, shape, color]) => {
-  html += `<div class="plant"><b>${name}</b><span>${sub}</span></div>`;
-  html += EMO.map(e => `<div class="cell" style="background:${e[3]}">${moji(shape, color, e[0])}</div>`).join('');
+Object.keys(P).forEach(k => {
+  html += `<div class="plant"><b>${P[k][0]}</b><span>${P[k][1]}</span></div>`;
+  html += EMO.map(e => `<div class="cell">${m(k, e[0])}</div>`).join('');
 });
 document.getElementById('table').innerHTML = html;
 
 document.getElementById('chat').innerHTML = [
-  `<div class="row"><span class="n">Bjørn <i>· Oslo</i></span>−6°C by the window. ${moji('cactus', '#4fb58a', 'mad')}</div>`,
-  `<div class="row"><span class="n">Kogane <i>· Kyoto</i></span>First gold leaf today! ${moji('ginkgo', '#f2c230', 'hyped')}</div>`,
-  `<div class="row"><span class="n">Lua <i>· São Paulo</i></span>33°C. Again. ${moji('monstera', '#1f8a57', 'melt')}</div>`,
-  `<div class="row"><span class="n">Mochi <i>· Osaka</i></span>The cat sat on me. ${moji('heart', '#3aa866', 'dead')}</div>`,
+  `<div class="row"><span class="n">Bjørn · Oslo</span>−6°C by the window. ${m('bjorn', 'mad')}</div>`,
+  `<div class="row"><span class="n">Kogane · Kyoto</span>First gold leaf today. ${m('kogane', 'hyped')}</div>`,
+  `<div class="row"><span class="n">Lua · São Paulo</span>33°C. Again. ${m('lua', 'melt')}</div>`,
+  `<div class="row"><span class="n">Mochi · Osaka</span>The cat sat on me. ${m('mochi', 'dead')}</div>`,
 ].join('');
 </script>
 </body>
