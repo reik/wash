@@ -14,7 +14,7 @@
   h1 { font-family:"Iowan Old Style", "Hiragino Mincho ProN", Georgia, serif; font-weight:400; font-size:44px; margin:10px 0 8px; letter-spacing:-.01em; }
   h2 { font-family:"Iowan Old Style", "Hiragino Mincho ProN", Georgia, serif; font-weight:400; font-size:24px; margin:64px 0 6px; }
   p.lead { font-size:17px; margin:0; max-width:620px; line-height:1.6; opacity:.8; }
-  .hero { display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin:44px 0 20px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .hero { display:grid; grid-template-columns:repeat(4,1fr); gap:0; margin:44px 0 20px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
   .hero > div { padding:22px 0 18px; text-align:center; }
   .hero > div + div { border-left:1px solid var(--line); }
   .hero svg { width:220px; height:auto; }
@@ -76,39 +76,48 @@ const rays = (cx, cy, r1, r2, from, to, step) => { let d = '';
   for (let a = from; a <= to; a += step) { const r = a * Math.PI / 180;
     d += `M${(cx + r1 * Math.cos(r)).toFixed(1)} ${(cy + r1 * Math.sin(r)).toFixed(1)} L${(cx + r2 * Math.cos(r)).toFixed(1)} ${(cy + r2 * Math.sin(r)).toFixed(1)} `; }
   return hair(d, ACC, 2); };
-const sun = `<circle cx="97" cy="24" r="8" fill="${ACC}"/>`;
+const sun = `<circle cx="96" cy="24" r="8" fill="${ACC}"/>` + rays(96, 24, 12.5, 18, 0, 315, 45);
+const beamed = (x, y, s, r) => `<g ${T(x, y, s, r)}><path d="M-5 8 V-12 L11 -16 V4" fill="none" stroke="${ACC}" stroke-width="2.6" stroke-linejoin="round"/><path d="M-5 -12 L11 -16" stroke="${ACC}" stroke-width="6"/>` +
+  `<ellipse cx="-9.5" cy="8" rx="5.5" ry="4.2" fill="${ACC}" transform="rotate(-20 -9.5 8)"/><ellipse cx="6.5" cy="4" rx="5.5" ry="4.2" fill="${ACC}" transform="rotate(-20 6.5 4)"/></g>`;
+const single = (x, y, s, r) => `<g ${T(x, y, s, r)}>${hair('M4.5 6 V-12 q8 2 8 10', ACC, 2.6)}<ellipse cx="0" cy="6" rx="5.5" ry="4.2" fill="${ACC}" transform="rotate(-20 0 6)"/></g>`;
+const shadow = `<ellipse cx="59" cy="120" rx="17" ry="2.6" fill="${INK}" opacity=".14"/>`;
+const anger = (x, y, s) => `<g ${T(x, y, s)}>${hair('M-9 -3 q6 0 6 -6 M3 -9 q0 6 6 6 M9 3 q-6 0 -6 6 M-3 9 q0 -6 -6 -6', ACC, 4.4)}</g>`;
+const puff = (x, y, f) => `<path transform="translate(${x} ${y}) scale(${1.25 * f} 1.25)" d="M0 0 a5 5 0 0 1 8 -5 a6 6 0 0 1 10 2 a4.5 4.5 0 0 1 -2 8 h-13 a4 4 0 0 1 -3 -5Z" fill="#c9d1d9"/>`;
+const tremble = hair('M27 74 h-9 M25 88 h-9 M93 74 h9 M95 88 h9', INK, 2);
+const water = (x, y, s, r) => `<path ${T(x, y, s, r)} d="M0 -11 C 8 0 8 9 0 9 C -8 9 -8 0 0 -11Z" fill="#6aaed6"/>`;
+const blushOn = `<circle cx="-13" cy="-31" r="8.5" fill="#f28a7a"/><circle cx="12" cy="-31" r="8.5" fill="#f28a7a"/>` +
+  hair('M-15 -35 l-3 7 M-11 -35 l-3 7 M10 -35 l-3 7 M14 -35 l-3 7', '#f3efe6', 1.8);
+const BLOB = 'M12 113 C 12 105 28 103 40 106 C 50 100 72 100 82 106 C 94 103 110 106 108 114 C 106 121 86 122 60 122 C 34 122 12 121 12 113Z';
 const heart = (x, y, s) => `<path ${T(x, y, s, -10)} d="M0 8 C -15 -3 -8 -14 0 -6 C 8 -14 15 -3 0 8Z" fill="${ACC}"/>`;
 const dropD = 'M0 -11 C 8 0 8 9 0 9 C -8 9 -8 0 0 -11Z';
 const dropInk = (x, y, s) => `<path ${T(x, y, s)} d="${dropD}" fill="${INK}"/>`;
-const dropLine = (x, y, s) => `<g ${T(x, y, s, 14)}>${hair(dropD, INK, 2.4)}</g>`;
-const bolt = hair('M90 12 l8 11 l-9 2 l8 12', INK, 2.2);
-const heat = (x, y) => `<g transform="translate(${x} ${y})">${hair('M0 0 q-5 -6 0 -12 q5 -6 0 -12')}</g>`;
 const FLAME = 'M60 121 C 18 121 12 79 34 55 C 34 71 43 73 45 63 C 45 37 58 29 60 7 C 70 31 92 41 85 67 C 91 63 93 55 91 49 C 110 79 102 121 60 121Z';
 const flame = `<path d="${FLAME}" fill="#e2492f"/><path d="${FLAME}" fill="#c23a22" clip-path="url(#fh)"/>`;
-const cheeks = hair('M-15 -38 l-4 9 M-10 -38 l-4 9 M-5 -38 l-4 9 M7 -38 l-4 9 M12 -38 l-4 9 M17 -38 l-4 9', '#f3efe6', 2.4);
 // the leaf's own pale ghost rising from the body, with a halo
 const spirit = shape => `<g ${T(54, 66, .5, 6)}>${SHAPES[shape]('#dfe5ea', '#c2ccd6')}</g>` +
   `<ellipse cx="56" cy="24" rx="10" ry="3.2" fill="none" stroke="#c9a23a" stroke-width="2"/>` + hair('M48 68 q-3 3 0 6 M58 69 q3 3 0 6', INK, 1.5);
 
 const RED = ['#e2492f', '#c23a22'], DUST = ['#b9ae9b', '#a3977f'];
 const POSE = {
-  happy:  { ax: 54, ay: 94, rot: 16, stalk: 'M50 120 Q47 106 54 94', front: sun, rigid: { rot: 10 } },
+  happy:  { ax: 58, ay: 98, rot: -14, sc: .9, stalk: 'M62 113 Q65 105 58 98', back: shadow, front: beamed(93, 34, 1.7, 8) + single(21, 36, 1.35, -14), rigid: { rot: -10, ay: 110 } },
   hyped:  { ax: 60, ay: 110, sc: .6, rot: 0, stalk: 'M60 121 V110', back: flame, front: '', rigid: { sc: .62, ay: 116 } },
   thanks: { ax: 52, ay: 96, rot: 56, sc: .92, stalk: 'M48 120 Q44 106 52 96', front: heart(28, 44, 1.05), rigid: { rot: 34, ax: 56 } },
-  shy:    { ax: 62, ay: 100, rot: -22, sc: .9, stalk: 'M66 121 Q68 110 62 100', flush: true, inner: cheeks, front: '', rigid: { rot: -16, ax: 58 } },
-  mad:    { ax: 60, ay: 96, rot: 0, tone: RED, stalk: 'M60 120 V96', front: bolt, rigid: {} },
+  shy:    { ax: 60, ay: 100, rot: -20, sc: .9, stalk: 'M64 121 Q66 110 60 100', inner: blushOn, front: water(92, 26, .6, 35) + water(104, 40, .5, 50) + water(100, 58, .4, 65), rigid: { rot: -14, ax: 56 } },
+  mad:    { ax: 60, ay: 104, rot: 0, sc: .88, tone: RED, stalk: 'M60 121 V104', front: tremble + puff(1, 104, 1) + puff(119, 104, -1) + anger(96, 26, 1.9), rigid: { sc: .9 } },
   sad:    { ax: 68, ay: 46, rot: 158, sc: .84, stalk: 'M54 120 Q40 48 68 46', front: dropInk(93, 114, .55), rigid: { rot: 28, ax: 54, sc: 1 } },
-  melt:   { ax: 60, ay: 108, rot: 0, sc: 1.15, sy: .56, pool: true, front: heat(44, 56) + heat(78, 50), rigid: { sc: 1.3, sy: .6, ay: 110 } },
+  melt:   { ax: 58, ay: 86, rot: -24, sc: .9, sy: .8, melt: true, stalk: 'M62 112 Q66 98 58 86', front: sun, rigid: { ay: 104, rot: -12 } },
   dead:   { ax: 26, ay: 99, rot: 90, sc: .78, tone: DUST, stalk: 'M12 99 H26', front: spirit, rigid: { ax: 20, ay: 99, sc: .85 } },
 };
 function moji(shape, tone, emo) {
   const rigid = shape === 'cactus';
   const p = rigid ? { ...POSE[emo], ay: 118, stalk: null, ...POSE[emo].rigid } : POSE[emo];
   const [a, b] = p.tone || tone, sc = p.sc || 1;
-  const pool = p.pool ? `<ellipse cx="60" cy="111" rx="42" ry="8" fill="${a}"/>` : '';
+  // melting: the base of the leaf dissolves into a puddle of its own colour, with drips running off
+  const fall = (x, y, s) => `<path ${T(x, y, s)} d="M0 -11 C 8 0 8 9 0 9 C -8 9 -8 0 0 -11Z" fill="${a}"/>`;
+  const pool = p.melt ? `<path d="${BLOB}" fill="${a}"/>${fall(36, 92, .62)}${fall(78, 98, .5)}${fall(24, 78, .4)}` : '';
   const stalk = p.stalk ? hair(p.stalk) : '';
   const front = typeof p.front === 'function' ? p.front(shape) : p.front;
-  return svg(`${p.back || ''}${pool}${stalk}<g ${T(p.ax, p.ay, sc, p.rot, p.sy || sc)}>${SHAPES[shape](a, b)}${p.flush ? SHAPES[shape]('url(#flush)', 'url(#flush)') : ''}${p.inner || ''}</g>${front}`);
+  return svg(`${p.back || ''}${stalk}${pool}<g ${T(p.ax, p.ay, sc, p.rot, p.sy || sc)}>${SHAPES[shape](a, b)}${p.inner || ''}</g>${front}`);
 }
 
 const EMO = [
@@ -124,7 +133,7 @@ const P = {
 };
 const m = (k, e) => moji(P[k][2], P[k][3], e);
 
-document.getElementById('hero').innerHTML = [['mochi', 'shy', 'てれてれ', 'Embarrassed'], ['kogane', 'hyped', 'メラメラ', 'Hyped'], ['lua', 'dead', 'ち〜ん', "I'm dead"]]
+document.getElementById('hero').innerHTML = [['mochi', 'happy', 'るんるん', 'Happy'], ['kogane', 'shy', 'てれてれ', 'Embarrassed'], ['lua', 'mad', 'ぷんぷん', 'Mad'], ['mochi', 'melt', 'とろ〜ん', 'Melting']]
   .map(([k, e, ja, en]) => `<div>${m(k, e)}<div class="cap"><b>${ja}</b>${P[k][0]} · ${en}</div></div>`).join('');
 
 let html = '<div></div>' + EMO.map(e => `<div class="head">${e[2]}<small>${e[1]}</small></div>`).join('');
