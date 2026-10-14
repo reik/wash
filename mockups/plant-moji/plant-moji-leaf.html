@@ -53,6 +53,8 @@ const INK = '#22201c', ACC = '#e2492f';
 const svg = body => `<svg viewBox="0 0 120 124" xmlns="http://www.w3.org/2000/svg"><defs>
   <clipPath id="rh"><rect x="0" y="-90" width="70" height="110"/></clipPath>
   <clipPath id="fh"><rect x="60" y="0" width="60" height="124"/></clipPath>
+  <clipPath id="tc1"><rect x="0" y="89" width="120" height="35"/></clipPath>
+  <clipPath id="tc2"><rect x="0" y="68" width="120" height="56"/></clipPath>
   <linearGradient id="flush" gradientUnits="userSpaceOnUse" x1="0" y1="-70" x2="0" y2="-14"><stop offset="0" stop-color="#ee5a44"/><stop offset=".45" stop-color="#ee5a44" stop-opacity=".75"/><stop offset="1" stop-color="#ee5a44" stop-opacity="0"/></linearGradient></defs>${body}</svg>`;
 const T = (x, y, s = 1, r = 0, sy = s) => `transform="translate(${x} ${y}) rotate(${r}) scale(${s} ${sy})"`;
 const two = (d, a, b) => `<path d="${d}" fill="${a}"/><path d="${d}" fill="${b}" clip-path="url(#rh)"/>`;
@@ -88,10 +90,11 @@ const water = (x, y, s, r) => `<path ${T(x, y, s, r)} d="M0 -11 C 8 0 8 9 0 9 C 
 const blushOn = `<circle cx="-13" cy="-31" r="8.5" fill="#f28a7a"/><circle cx="12" cy="-31" r="8.5" fill="#f28a7a"/>` +
   hair('M-15 -35 l-3 7 M-11 -35 l-3 7 M10 -35 l-3 7 M14 -35 l-3 7', '#f3efe6', 1.8);
 // crying: tears stream off the hanging leaf's edges and tip into a small pool
-const TEARS = water(64, 92, .55) + water(62, 104, .62) + water(65, 115, .5) + water(80, 104, .5) + water(78, 114, .42) +
-  water(92, 108, .66) + water(95, 119, .5) + `<ellipse cx="80" cy="122" rx="24" ry="2.4" fill="#6aaed6" opacity=".5"/>`;
-const TEARS_PAD = water(36, 78, .55) + water(34, 92, .62) + water(37, 104, .48) + water(98, 86, .6) + water(101, 99, .52) + water(98, 111, .44) +
-  `<ellipse cx="66" cy="122" rx="30" ry="2.4" fill="#6aaed6" opacity=".5"/>`;
+const TEAR_DROPS = water(64, 92, .55) + water(62, 104, .62) + water(65, 115, .5) + water(80, 104, .5) + water(78, 114, .42) + water(92, 108, .66) + water(95, 119, .5);
+const POOL_A = `<ellipse cx="80" cy="122" rx="24" ry="2.4" fill="#6aaed6" opacity=".5"/>`;
+const PAD_DROPS = water(36, 78, .55) + water(34, 92, .62) + water(37, 104, .48) + water(98, 86, .6) + water(101, 99, .52) + water(98, 111, .44);
+const POOL_B = `<ellipse cx="66" cy="122" rx="30" ry="2.4" fill="#6aaed6" opacity=".5"/>`;
+const TEARS = TEAR_DROPS + POOL_A, TEARS_PAD = PAD_DROPS + POOL_B;
 const BLOB ='M12 113 C 12 105 28 103 40 106 C 50 100 72 100 82 106 C 94 103 110 106 108 114 C 106 121 86 122 60 122 C 34 122 12 121 12 113Z';
 const heart = (x, y, s) => `<path ${T(x, y, s, -10)} d="M0 8 C -15 -3 -8 -14 0 -6 C 8 -14 15 -3 0 8Z" fill="${ACC}"/>`;
 const dropD = 'M0 -11 C 8 0 8 9 0 9 C -8 9 -8 0 0 -11Z';
@@ -121,7 +124,30 @@ const POSE = {
   relax:  { ax: 30, ay: 82, rot: 84, sc: .62, back: sun + HAMMOCK, front: '', rigid: { ax: 30, ay: 84, rot: 80, sc: .66 } },
   dead:   { ax: 26, ay: 99, rot: 90, sc: .78, tone: DUST, stalk: 'M12 99 H26', front: spirit, rigid: { ax: 20, ay: 99, sc: .85 } },
 };
-function moji(shape, tone, emo) {
+// animation: t runs 0 → 1 once per loop, and every motion is periodic so the loop is seamless
+const S = x => Math.sin(x * 2 * Math.PI);
+const f2 = n => n.toFixed(2);
+const fadeOut = (t, from = .7) => t < from ? 1 : (1 - t) / (1 - from);
+const g = (tr, body, op = 1) => `<g transform="${tr}" opacity="${f2(op)}">${body}</g>`;
+const conveyor = (drops, dy, t, clip) => `<g clip-path="url(#${clip})">${g(`translate(0 ${f2(dy * t)})`, drops)}${g(`translate(0 ${f2(dy * t - dy)})`, drops)}</g>`;
+const ANIM = {
+  happy:   (t, p) => ({ all: `translate(0 ${f2(-7 * Math.abs(S(t)))})`, rot: 6 * S(t), front: g(`translate(0 ${f2(-3 * S(t + .25))})`, p.front) }),
+  hyped:   t => ({ back: g(`translate(60 121) scale(${f2(1 + .05 * S(2 * t))} ${f2(1 + .08 * S(2 * t + .3))}) translate(-60 -121)`, flame), dy: -1.5 * S(2 * t) }),
+  thanks:  (t, p) => ({ rot: 12 * S(t), front: g(`translate(0 ${f2(-10 * t)})`, p.front, fadeOut(t)) }),
+  relax:   t => { const sway = `rotate(${f2(3 * S(t))} 60 56)`;
+    return { back: g(`translate(92 27) scale(${f2(1 + .05 * S(t))}) translate(-92 -27)`, sun) + g(sway, HAMMOCK), all: sway }; },
+  shy:     (t, p) => ({ rot: 6 * S(2 * t), front: g(`translate(${f2(6 * t)} ${f2(-6 * t)})`, p.front, fadeOut(t, .6)) }),
+  awkward: t => ({ front: [42, 56, 70].slice(0, Math.min(3, Math.floor(t * 4))).map(x => `<circle cx="${x}" cy="22" r="3.4" fill="${INK}"/>`).join('') + water(91, 54 + 8 * t, 1.15, 0) }),
+  mad:     t => { const out = 3 * Math.abs(S(t));
+    return { all: `translate(${f2(1.8 * S(8 * t))} 0)`, front: tremble + puff(1 - out, 104, 1) + puff(119 + out, 104, -1) + anger(96, 26, 1.9 * (1 + .15 * Math.abs(S(2 * t)))) }; },
+  sad:     (t, p, rigid) => ({ front: rigid ? conveyor(PAD_DROPS, 14, t, 'tc2') + POOL_B : conveyor(TEAR_DROPS, 14, t, 'tc1') + POOL_A }),
+  melt:    t => ({ rot: 6 * S(t), front: `<circle cx="26" cy="24" r="13" fill="${ACC}"/>` + g(`rotate(${f2(30 * t)} 26 24)`, rays(26, 24, 18, 25, 0, 330, 30)) +
+    g(`translate(0 ${f2(12 * t)})`, water(30, 70, .55, -15) + water(22, 86, .45, -15), fadeOut(t, .5)) }),
+  dead:    (t, p, rigid, shape) => ({ front: g(`translate(0 ${f2(-12 * t)})`, spirit(shape), t < .15 ? t / .15 : fadeOut(t)) }),
+};
+
+// t undefined → the still pose used on the sheet
+function moji(shape, tone, emo, t) {
   const rigid = shape === 'cactus';
   const p = rigid ? { ...POSE[emo], ay: 118, stalk: null, ...POSE[emo].rigid } : POSE[emo];
   let [a, b] = p.tone || tone;
@@ -130,7 +156,10 @@ function moji(shape, tone, emo) {
   const sc = p.sc || 1;
   const stalk = p.stalk ? hair(p.stalk) : '';
   const front = typeof p.front === 'function' ? p.front(shape) : p.front;
-  return svg(`${p.back || ''}${stalk}<g ${T(p.ax, p.ay, sc, p.rot, p.sy || sc)}>${SHAPES[shape](a, b)}${p.inner || ''}</g>${front}`);
+  const A = t === undefined ? {} : ANIM[emo](t, { ...p, front }, rigid, shape);
+  const leaf = `<g ${T(p.ax + (A.dx || 0), p.ay + (A.dy || 0), sc, p.rot + (A.rot || 0), p.sy || sc)}>${SHAPES[shape](a, b)}${p.inner || ''}</g>`;
+  const moving = `${stalk}${leaf}${A.front !== undefined ? A.front : front}`;
+  return svg(`${A.back !== undefined ? A.back : (p.back || '')}${A.all ? `<g transform="${A.all}">${moving}</g>` : moving}`);
 }
 
 const EMO = [
@@ -144,24 +173,33 @@ const P = {
   wren:   ['Wren', 'Fern · Portland', 'fern', ['#7a9f4f', '#5b8139']],
   bjorn:  ['Bjørn', 'Cactus · Oslo', 'cactus', ['#86b3a0', '#679883']],
 };
-const m = (k, e) => moji(P[k][2], P[k][3], e);
+const m = (k, e, t) => moji(P[k][2], P[k][3], e, t);
+window.mojiAt = m; // used by export-gifs.mjs
 
-document.getElementById('hero').innerHTML = [['mochi', 'melt', 'あつ〜', 'Melting'], ['kogane', 'relax', 'とろ〜ん', 'Blissful'], ['lua', 'awkward', 'しーん', 'Awkward'], ['mochi', 'shy', 'てれてれ', 'Embarrassed']]
-  .map(([k, e, ja, en]) => `<div>${m(k, e)}<div class="cap"><b>${ja}</b>${P[k][0]} · ${en}</div></div>`).join('');
+function render(t) {
+  document.getElementById('hero').innerHTML = [['mochi', 'melt', 'あつ〜', 'Melting'], ['kogane', 'relax', 'とろ〜ん', 'Blissful'], ['lua', 'awkward', 'しーん', 'Awkward'], ['mochi', 'shy', 'てれてれ', 'Embarrassed']]
+    .map(([k, e, ja, en]) => `<div>${m(k, e, t)}<div class="cap"><b>${ja}</b>${P[k][0]} · ${en}</div></div>`).join('');
 
-let html = '<div></div>' + EMO.map(e => `<div class="head">${e[2]}<small>${e[1]}</small></div>`).join('');
-Object.keys(P).forEach(k => {
-  html += `<div class="plant"><b>${P[k][0]}</b><span>${P[k][1]}</span></div>`;
-  html += EMO.map(e => `<div class="cell">${m(k, e[0])}</div>`).join('');
-});
-document.getElementById('table').innerHTML = html;
+  let html = '<div></div>' + EMO.map(e => `<div class="head">${e[2]}<small>${e[1]}</small></div>`).join('');
+  Object.keys(P).forEach(k => {
+    html += `<div class="plant"><b>${P[k][0]}</b><span>${P[k][1]}</span></div>`;
+    html += EMO.map(e => `<div class="cell">${m(k, e[0], t)}</div>`).join('');
+  });
+  document.getElementById('table').innerHTML = html;
 
-document.getElementById('chat').innerHTML = [
-  `<div class="row"><span class="n">Bjørn · Oslo</span>−6°C by the window. ${m('bjorn', 'mad')}</div>`,
-  `<div class="row"><span class="n">Kogane · Kyoto</span>First gold leaf today. ${m('kogane', 'hyped')}</div>`,
-  `<div class="row"><span class="n">Lua · São Paulo</span>33°C. Again. ${m('lua', 'melt')}</div>`,
-  `<div class="row"><span class="n">Mochi · Osaka</span>The cat sat on me. ${m('mochi', 'dead')}</div>`,
-].join('');
+  document.getElementById('chat').innerHTML = [
+    `<div class="row"><span class="n">Bjørn · Oslo</span>−6°C by the window. ${m('bjorn', 'mad', t)}</div>`,
+    `<div class="row"><span class="n">Kogane · Kyoto</span>First gold leaf today. ${m('kogane', 'hyped', t)}</div>`,
+    `<div class="row"><span class="n">Lua · São Paulo</span>33°C. Again. ${m('lua', 'melt', t)}</div>`,
+    `<div class="row"><span class="n">Mochi · Osaka</span>The cat sat on me. ${m('mochi', 'dead', t)}</div>`,
+  ].join('');
+}
+
+// open the page plainly to watch it move; add #static for the still sheet
+const FRAMES = 16;
+window.renderAt = render;
+if (location.hash === '#static') render();
+else { let i = 0; render(0); setInterval(() => render(++i % FRAMES / FRAMES), 90); }
 </script>
 </body>
 </html>
