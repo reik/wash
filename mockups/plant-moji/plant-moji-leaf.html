@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plant-moji — one-leaf direction (throwaway)</title>
+<style>
+  :root { --ink:#22201c; --paper:#f3efe6; --line:#d9d2c3; --acc:#e2492f; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink);
+    font-family: "Avenir Next", "Hiragino Sans", system-ui, sans-serif; }
+  main { max-width:1160px; margin:0 auto; padding:56px 36px 80px; }
+  .tag { font-size:11px; letter-spacing:.14em; text-transform:uppercase; opacity:.55; }
+  h1 { font-family:"Iowan Old Style", "Hiragino Mincho ProN", Georgia, serif; font-weight:400; font-size:44px; margin:10px 0 8px; letter-spacing:-.01em; }
+  h2 { font-family:"Iowan Old Style", "Hiragino Mincho ProN", Georgia, serif; font-weight:400; font-size:24px; margin:64px 0 6px; }
+  p.lead { font-size:17px; margin:0; max-width:620px; line-height:1.6; opacity:.8; }
+  .hero { display:grid; grid-template-columns:repeat(4,1fr); gap:0; margin:44px 0 20px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .hero > div { padding:22px 0 18px; text-align:center; }
+  .hero > div + div { border-left:1px solid var(--line); }
+  .hero svg { width:220px; height:auto; }
+  .cap { font-size:11px; letter-spacing:.14em; text-transform:uppercase; opacity:.6; margin-top:4px; }
+  .cap b { font-family:"Hiragino Mincho ProN", serif; font-weight:400; font-size:15px; letter-spacing:.04em; text-transform:none; opacity:1; margin-right:8px; }
+  .table { display:grid; grid-template-columns:118px repeat(10,1fr); align-items:center; }
+  .head { text-align:center; padding-bottom:12px; font-family:"Hiragino Mincho ProN", serif; font-size:15px; }
+  .head small { display:block; font-family:"Avenir Next", system-ui, sans-serif; font-size:10px; letter-spacing:.14em; text-transform:uppercase; opacity:.55; margin-top:3px; }
+  .plant, .cell { border-top:1px solid var(--line); height:100%; display:flex; flex-direction:column; justify-content:center; }
+  .plant b { font-family:"Iowan Old Style", Georgia, serif; font-weight:400; font-size:19px; }
+  .plant span { font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; opacity:.55; margin-top:2px; }
+  .cell { padding:8px 6px; }
+  .cell svg { width:100%; height:auto; display:block; }
+  .chat { border-top:1px solid var(--line); max-width:520px; margin-top:16px; }
+  .row { display:flex; align-items:center; gap:12px; font-size:15px; padding:8px 0; border-bottom:1px solid var(--line); }
+  .row svg { width:46px; height:46px; flex:none; }
+  .n { font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; opacity:.6; min-width:118px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="tag">Concept sketch · throwaway · not final art</div>
+  <h1>Plant-moji</h1>
+  <p class="lead">One leaf, cut like folded paper. The feeling is in the gesture; a single vermilion accent does the rest. No outline, no pot, no face.</p>
+
+  <div class="hero" id="hero"></div>
+
+  <div class="table" id="table"></div>
+
+  <h2>In a message</h2>
+  <div class="chat" id="chat"></div>
+</main>
+
+<script>
+const INK = '#22201c', ACC = '#e2492f';
+const svg = body => `<svg viewBox="0 0 120 124" xmlns="http://www.w3.org/2000/svg"><defs>
+  <clipPath id="rh"><rect x="0" y="-90" width="70" height="110"/></clipPath>
+  <clipPath id="fh"><rect x="60" y="0" width="60" height="124"/></clipPath>
+  <clipPath id="tc1"><rect x="0" y="89" width="120" height="35"/></clipPath>
+  <clipPath id="tc2"><rect x="0" y="68" width="120" height="56"/></clipPath>
+  <linearGradient id="flush" gradientUnits="userSpaceOnUse" x1="0" y1="-70" x2="0" y2="-14"><stop offset="0" stop-color="#ee5a44"/><stop offset=".45" stop-color="#ee5a44" stop-opacity=".75"/><stop offset="1" stop-color="#ee5a44" stop-opacity="0"/></linearGradient></defs>${body}</svg>`;
+const T = (x, y, s = 1, r = 0, sy = s) => `transform="translate(${x} ${y}) rotate(${r}) scale(${s} ${sy})"`;
+const two = (d, a, b) => `<path d="${d}" fill="${a}"/><path d="${d}" fill="${b}" clip-path="url(#rh)"/>`;
+const hair = (d, c = INK, w = 1.8) => `<path d="${d}" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
+
+// leaf blades: base at 0,0, pointing up, about 68 tall; light half / dark half
+const SHAPES = {
+  heart: (a, b) => two('M0 -6 C -10 6 -36 -2 -31 -30 C -27 -50 -8 -58 0 -68 C 8 -58 27 -50 31 -30 C 36 -2 10 6 0 -6Z', a, b),
+  monstera: (a, b) => two('M0 -6 C 10 6 34 2 33 -20 L 14 -23 L 31 -34 C 29 -44 24 -50 18 -55 L 8 -42 L 8 -62 C 5 -65 2 -67 0 -69 C -2 -67 -5 -65 -8 -62 L -8 -42 L -18 -55 C -24 -50 -29 -44 -31 -34 L -14 -23 L -33 -20 C -34 2 -10 6 0 -6Z', a, b),
+  ginkgo: (a, b) => two('M0 0 C -4 -18 -40 -26 -38 -48 C -30 -64 -10 -60 0 -50 C 10 -60 30 -64 38 -48 C 40 -26 4 -18 0 0Z', a, b),
+  fern: (a, b) => { let s = hair('M0 0 V-60', b, 1.6);
+    for (let k = 0; k < 6; k++) { const y = -8 - k * 9.5, rx = 15 - k * 1.9, ry = 5 - k * .42;
+      s += `<ellipse cx="${-rx}" cy="${y}" rx="${rx}" ry="${ry}" fill="${a}" transform="rotate(22 0 ${y})"/><ellipse cx="${rx}" cy="${y}" rx="${rx}" ry="${ry}" fill="${b}" transform="rotate(-22 0 ${y})"/>`; }
+    return s + `<ellipse cx="0" cy="-66" rx="3.6" ry="7" fill="${a}"/>`; },
+  cactus: (a, b) => `<ellipse cx="17" cy="-60" rx="9" ry="11" fill="${b}"/><ellipse cx="0" cy="-32" rx="23" ry="32" fill="${a}"/><ellipse cx="0" cy="-32" rx="23" ry="32" fill="${b}" clip-path="url(#rh)"/>` +
+    [[-9,-44],[9,-36],[-5,-22],[10,-16],[-12,-30]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.1" fill="#f3efe6"/>`).join(''),
+};
+
+// quiet marks: hairlines in ink, one accent
+const rays = (cx, cy, r1, r2, from, to, step) => { let d = '';
+  for (let a = from; a <= to; a += step) { const r = a * Math.PI / 180;
+    d += `M${(cx + r1 * Math.cos(r)).toFixed(1)} ${(cy + r1 * Math.sin(r)).toFixed(1)} L${(cx + r2 * Math.cos(r)).toFixed(1)} ${(cy + r2 * Math.sin(r)).toFixed(1)} `; }
+  return hair(d, ACC, 2); };
+const sun = `<circle cx="92" cy="27" r="26" fill="#f6c94c" opacity=".28"/><circle cx="92" cy="27" r="14" fill="#f2a93b"/>` + rays(92, 27, 19, 26, 0, 330, 30).replace(ACC, '#f2a93b');
+const beamed = (x, y, s, r) => `<g ${T(x, y, s, r)}><path d="M-5 8 V-12 L11 -16 V4" fill="none" stroke="${ACC}" stroke-width="2.6" stroke-linejoin="round"/><path d="M-5 -12 L11 -16" stroke="${ACC}" stroke-width="6"/>` +
+  `<ellipse cx="-9.5" cy="8" rx="5.5" ry="4.2" fill="${ACC}" transform="rotate(-20 -9.5 8)"/><ellipse cx="6.5" cy="4" rx="5.5" ry="4.2" fill="${ACC}" transform="rotate(-20 6.5 4)"/></g>`;
+const single = (x, y, s, r) => `<g ${T(x, y, s, r)}>${hair('M4.5 6 V-12 q8 2 8 10', ACC, 2.6)}<ellipse cx="0" cy="6" rx="5.5" ry="4.2" fill="${ACC}" transform="rotate(-20 0 6)"/></g>`;
+const shadow = `<ellipse cx="59" cy="120" rx="17" ry="2.6" fill="${INK}" opacity=".14"/>`;
+const anger = (x, y, s) => `<g ${T(x, y, s)}>${hair('M-9 -3 q6 0 6 -6 M3 -9 q0 6 6 6 M9 3 q-6 0 -6 6 M-3 9 q0 -6 -6 -6', ACC, 4.4)}</g>`;
+const puff = (x, y, f) => `<path transform="translate(${x} ${y}) scale(${1.25 * f} 1.25)" d="M0 0 a5 5 0 0 1 8 -5 a6 6 0 0 1 10 2 a4.5 4.5 0 0 1 -2 8 h-13 a4 4 0 0 1 -3 -5Z" fill="#c9d1d9"/>`;
+const tremble = hair('M27 74 h-9 M25 88 h-9 M93 74 h9 M95 88 h9', INK, 2);
+const water = (x, y, s, r) => `<path ${T(x, y, s, r)} d="M0 -11 C 8 0 8 9 0 9 C -8 9 -8 0 0 -11Z" fill="#6aaed6"/>`;
+const blushOn = `<circle cx="-13" cy="-31" r="8.5" fill="#f28a7a"/><circle cx="12" cy="-31" r="8.5" fill="#f28a7a"/>` +
+  hair('M-15 -35 l-3 7 M-11 -35 l-3 7 M10 -35 l-3 7 M14 -35 l-3 7', '#f3efe6', 1.8);
+// crying: tears stream off the hanging leaf's edges and tip into a small pool
+const TEAR_DROPS = water(64, 92, .55) + water(62, 104, .62) + water(65, 115, .5) + water(80, 104, .5) + water(78, 114, .42) + water(92, 108, .66) + water(95, 119, .5);
+const POOL_A = `<ellipse cx="80" cy="122" rx="24" ry="2.4" fill="#6aaed6" opacity=".5"/>`;
+const PAD_DROPS = water(36, 78, .55) + water(34, 92, .62) + water(37, 104, .48) + water(98, 86, .6) + water(101, 99, .52) + water(98, 111, .44);
+const POOL_B = `<ellipse cx="66" cy="122" rx="30" ry="2.4" fill="#6aaed6" opacity=".5"/>`;
+const TEARS = TEAR_DROPS + POOL_A, TEARS_PAD = PAD_DROPS + POOL_B;
+const BLOB ='M12 113 C 12 105 28 103 40 106 C 50 100 72 100 82 106 C 94 103 110 106 108 114 C 106 121 86 122 60 122 C 34 122 12 121 12 113Z';
+const heart = (x, y, s) => `<path ${T(x, y, s, -10)} d="M0 8 C -15 -3 -8 -14 0 -6 C 8 -14 15 -3 0 8Z" fill="${ACC}"/>`;
+const dropD = 'M0 -11 C 8 0 8 9 0 9 C -8 9 -8 0 0 -11Z';
+const dropInk = (x, y, s) => `<path ${T(x, y, s)} d="${dropD}" fill="${INK}"/>`;
+const FLAME = 'M60 121 C 18 121 12 79 34 55 C 34 71 43 73 45 63 C 45 37 58 29 60 7 C 70 31 92 41 85 67 C 91 63 93 55 91 49 C 110 79 102 121 60 121Z';
+const flame = `<path d="${FLAME}" fill="#e2492f"/><path d="${FLAME}" fill="#c23a22" clip-path="url(#fh)"/>`;
+// the leaf's own pale ghost rising from the body, with a halo
+const spirit = shape => `<g ${T(54, 66, .5, 6)}>${SHAPES[shape]('#dfe5ea', '#c2ccd6')}</g>` +
+  `<ellipse cx="56" cy="24" rx="10" ry="3.2" fill="none" stroke="#c9a23a" stroke-width="2"/>` + hair('M48 68 q-3 3 0 6 M58 69 q3 3 0 6', INK, 1.5);
+
+const RED = ['#e2492f', '#c23a22'], DUST = ['#b9ae9b', '#a3977f'];
+const mix = (h1, h2, t) => { const p = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)); const x = p(h1), y = p(h2);
+  return '#' + x.map((v, i) => Math.round(v + (y[i] - v) * t).toString(16).padStart(2, '0')).join(''); };
+const hotSun = `<circle cx="26" cy="24" r="13" fill="${ACC}"/>` + rays(26, 24, 18, 25, 0, 330, 30);
+// blissful: lying in a hammock slung between two ropes
+const HAMMOCK = hair('M12 70 L3 56 M108 70 L117 56', INK, 1.6) + `<path d="M12 70 Q60 128 108 70 Q60 108 12 70Z" fill="#d8c9ae"/>`;
+const dots =`<circle cx="42" cy="22" r="3.4" fill="${INK}"/><circle cx="56" cy="22" r="3.4" fill="${INK}"/><circle cx="70" cy="22" r="3.4" fill="${INK}"/>`;
+const POSE = {
+  happy:  { ax: 58, ay: 98, rot: -14, sc: .9, stalk: 'M62 113 Q65 105 58 98', back: shadow, front: beamed(93, 34, 1.7, 8) + single(21, 36, 1.35, -14), rigid: { rot: -10, ay: 110 } },
+  hyped:  { ax: 60, ay: 110, sc: .6, rot: 0, stalk: 'M60 121 V110', back: flame, front: '', rigid: { sc: .62, ay: 116 } },
+  thanks: { ax: 52, ay: 96, rot: 56, sc: .92, stalk: 'M48 120 Q44 106 52 96', front: heart(32, 42, 1.75) + heart(68, 16, .95), rigid: { rot: 34, ax: 56 } },
+  shy:    { ax: 60, ay: 100, rot: -20, sc: .9, stalk: 'M64 121 Q66 110 60 100', inner: blushOn, front: water(92, 26, .6, 35) + water(104, 40, .5, 50) + water(100, 58, .4, 65), rigid: { rot: -14, ax: 56 } },
+  mad:    { ax: 60, ay: 104, rot: 0, sc: .88, tone: RED, stalk: 'M60 121 V104', front: tremble + puff(1, 104, 1) + puff(119, 104, -1) + anger(96, 26, 1.9), rigid: { sc: .9 } },
+  sad:    { ax: 68, ay: 46, rot: 158, sc: .84, stalk: 'M54 120 Q40 48 68 46', front: TEARS, rigid: { rot: 28, ax: 54, sc: 1, front: TEARS_PAD } },
+  awkward:{ ax: 60, ay: 102, rot: 10, sc: .86, stalk: 'M58 121 Q57 111 60 102', front: dots + water(91, 58, 1.15, 0), rigid: { rot: 6 } },
+  melt:   { ax: 64, ay: 58, rot: 128, sc: .8, sy: .9, fade: true, stalk: 'M56 121 Q50 66 64 58', front: hotSun + water(30, 70, .55, -15) + water(22, 86, .45, -15), rigid: { rot: 20, sy: .82, ax: 64 } },
+  relax:  { ax: 30, ay: 82, rot: 84, sc: .62, back: sun + HAMMOCK, front: '', rigid: { ax: 30, ay: 84, rot: 80, sc: .66 } },
+  dead:   { ax: 26, ay: 99, rot: 90, sc: .78, tone: DUST, stalk: 'M12 99 H26', front: spirit, rigid: { ax: 20, ay: 99, sc: .85 } },
+};
+// animation: t runs 0 → 1 once per loop, and every motion is periodic so the loop is seamless
+const S = x => Math.sin(x * 2 * Math.PI);
+const f2 = n => n.toFixed(2);
+const fadeOut = (t, from = .7) => t < from ? 1 : (1 - t) / (1 - from);
+const g = (tr, body, op = 1) => `<g transform="${tr}" opacity="${f2(op)}">${body}</g>`;
+const conveyor = (drops, dy, t, clip) => `<g clip-path="url(#${clip})">${g(`translate(0 ${f2(dy * t)})`, drops)}${g(`translate(0 ${f2(dy * t - dy)})`, drops)}</g>`;
+const ANIM = {
+  happy:   (t, p) => ({ all: `translate(0 ${f2(-7 * Math.abs(S(t)))})`, rot: 6 * S(t), front: g(`translate(0 ${f2(-3 * S(t + .25))})`, p.front) }),
+  hyped:   t => ({ back: g(`translate(60 121) scale(${f2(1 + .05 * S(2 * t))} ${f2(1 + .08 * S(2 * t + .3))}) translate(-60 -121)`, flame), dy: -1.5 * S(2 * t) }),
+  thanks:  (t, p) => ({ rot: 12 * S(t), front: g(`translate(0 ${f2(-10 * t)})`, p.front, fadeOut(t)) }),
+  relax:   t => { const sway = `rotate(${f2(3 * S(t))} 60 56)`;
+    return { back: g(`translate(92 27) scale(${f2(1 + .05 * S(t))}) translate(-92 -27)`, sun) + g(sway, HAMMOCK), all: sway }; },
+  shy:     (t, p) => ({ rot: 6 * S(2 * t), front: g(`translate(${f2(6 * t)} ${f2(-6 * t)})`, p.front, fadeOut(t, .6)) }),
+  awkward: t => ({ front: [42, 56, 70].slice(0, Math.min(3, Math.floor(t * 4))).map(x => `<circle cx="${x}" cy="22" r="3.4" fill="${INK}"/>`).join('') + water(91, 54 + 8 * t, 1.15, 0) }),
+  mad:     t => { const out = 3 * Math.abs(S(t));
+    return { all: `translate(${f2(1.8 * S(8 * t))} 0)`, front: tremble + puff(1 - out, 104, 1) + puff(119 + out, 104, -1) + anger(96, 26, 1.9 * (1 + .15 * Math.abs(S(2 * t)))) }; },
+  sad:     (t, p, rigid) => ({ front: rigid ? conveyor(PAD_DROPS, 14, t, 'tc2') + POOL_B : conveyor(TEAR_DROPS, 14, t, 'tc1') + POOL_A }),
+  melt:    t => ({ rot: 6 * S(t), front: `<circle cx="26" cy="24" r="13" fill="${ACC}"/>` + g(`rotate(${f2(30 * t)} 26 24)`, rays(26, 24, 18, 25, 0, 330, 30)) +
+    g(`translate(0 ${f2(12 * t)})`, water(30, 70, .55, -15) + water(22, 86, .45, -15), fadeOut(t, .5)) }),
+  dead:    (t, p, rigid, shape) => ({ front: g(`translate(0 ${f2(-12 * t)})`, spirit(shape), t < .15 ? t / .15 : fadeOut(t)) }),
+};
+
+// t undefined → the still pose used on the sheet
+function moji(shape, tone, emo, t) {
+  const rigid = shape === 'cactus';
+  const p = rigid ? { ...POSE[emo], ay: 118, stalk: null, ...POSE[emo].rigid } : POSE[emo];
+  let [a, b] = p.tone || tone;
+  // wilting in the heat: the leaf fades towards straw
+  if (p.fade) { a = mix(a, '#d8c27a', .5); b = mix(b, '#bfa65a', .5); }
+  const sc = p.sc || 1;
+  const stalk = p.stalk ? hair(p.stalk) : '';
+  const front = typeof p.front === 'function' ? p.front(shape) : p.front;
+  const A = t === undefined ? {} : ANIM[emo](t, { ...p, front }, rigid, shape);
+  const leaf = `<g ${T(p.ax + (A.dx || 0), p.ay + (A.dy || 0), sc, p.rot + (A.rot || 0), p.sy || sc)}>${SHAPES[shape](a, b)}${p.inner || ''}</g>`;
+  const moving = `${stalk}${leaf}${A.front !== undefined ? A.front : front}`;
+  return svg(`${A.back !== undefined ? A.back : (p.back || '')}${A.all ? `<g transform="${A.all}">${moving}</g>` : moving}`);
+}
+
+const EMO = [
+  ['happy', 'Happy', 'るんるん'], ['hyped', 'Hyped', 'メラメラ'], ['thanks', 'Thank you', 'ぺこり'], ['relax', 'Blissful', 'とろ〜ん'], ['shy', 'Embarrassed', 'てれてれ'],
+  ['awkward', 'Awkward', 'しーん'], ['mad', 'Mad', 'ぷんぷん'], ['sad', 'Crying', 'ぴえん'], ['melt', 'Melting', 'あつ〜'], ['dead', "I'm dead", 'ち〜ん'],
+];
+const P = {
+  mochi:  ['Mochi', 'Pothos · Osaka', 'heart', ['#2f6b4f', '#24543e']],
+  lua:    ['Lua', 'Monstera · São Paulo', 'monstera', ['#1e4d3a', '#163a2c']],
+  kogane: ['Kogane', 'Ginkgo · Kyoto', 'ginkgo', ['#d9a441', '#bf8a2b']],
+  wren:   ['Wren', 'Fern · Portland', 'fern', ['#7a9f4f', '#5b8139']],
+  bjorn:  ['Bjørn', 'Cactus · Oslo', 'cactus', ['#86b3a0', '#679883']],
+};
+const m = (k, e, t) => moji(P[k][2], P[k][3], e, t);
+window.mojiAt = m; // used by export-gifs.mjs
+
+function render(t) {
+  document.getElementById('hero').innerHTML = [['mochi', 'melt', 'あつ〜', 'Melting'], ['kogane', 'relax', 'とろ〜ん', 'Blissful'], ['lua', 'awkward', 'しーん', 'Awkward'], ['mochi', 'shy', 'てれてれ', 'Embarrassed']]
+    .map(([k, e, ja, en]) => `<div>${m(k, e, t)}<div class="cap"><b>${ja}</b>${P[k][0]} · ${en}</div></div>`).join('');
+
+  let html = '<div></div>' + EMO.map(e => `<div class="head">${e[2]}<small>${e[1]}</small></div>`).join('');
+  Object.keys(P).forEach(k => {
+    html += `<div class="plant"><b>${P[k][0]}</b><span>${P[k][1]}</span></div>`;
+    html += EMO.map(e => `<div class="cell">${m(k, e[0], t)}</div>`).join('');
+  });
+  document.getElementById('table').innerHTML = html;
+
+  document.getElementById('chat').innerHTML = [
+    `<div class="row"><span class="n">Bjørn · Oslo</span>−6°C by the window. ${m('bjorn', 'mad', t)}</div>`,
+    `<div class="row"><span class="n">Kogane · Kyoto</span>First gold leaf today. ${m('kogane', 'hyped', t)}</div>`,
+    `<div class="row"><span class="n">Lua · São Paulo</span>33°C. Again. ${m('lua', 'melt', t)}</div>`,
+    `<div class="row"><span class="n">Mochi · Osaka</span>The cat sat on me. ${m('mochi', 'dead', t)}</div>`,
+  ].join('');
+}
+
+// open the page plainly to watch it move; add #static for the still sheet
+const FRAMES = 16;
+window.renderAt = render;
+if (location.hash === '#static') render();
+else { let i = 0; render(0); setInterval(() => render(++i % FRAMES / FRAMES), 90); }
+</script>
+</body>
+</html>
