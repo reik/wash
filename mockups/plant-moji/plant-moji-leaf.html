@@ -52,6 +52,7 @@
 const INK = '#22201c', ACC = '#e2492f';
 const svg = body => `<svg viewBox="0 0 120 124" xmlns="http://www.w3.org/2000/svg"><defs>
   <clipPath id="rh"><rect x="0" y="-90" width="70" height="110"/></clipPath>
+  <clipPath id="fh"><rect x="60" y="0" width="60" height="124"/></clipPath>
   <linearGradient id="flush" gradientUnits="userSpaceOnUse" x1="0" y1="-70" x2="0" y2="-14"><stop offset="0" stop-color="#ee5a44"/><stop offset=".45" stop-color="#ee5a44" stop-opacity=".75"/><stop offset="1" stop-color="#ee5a44" stop-opacity="0"/></linearGradient></defs>${body}</svg>`;
 const T = (x, y, s = 1, r = 0, sy = s) => `transform="translate(${x} ${y}) rotate(${r}) scale(${s} ${sy})"`;
 const two = (d, a, b) => `<path d="${d}" fill="${a}"/><path d="${d}" fill="${b}" clip-path="url(#rh)"/>`;
@@ -82,18 +83,23 @@ const dropInk = (x, y, s) => `<path ${T(x, y, s)} d="${dropD}" fill="${INK}"/>`;
 const dropLine = (x, y, s) => `<g ${T(x, y, s, 14)}>${hair(dropD, INK, 2.4)}</g>`;
 const bolt = hair('M90 12 l8 11 l-9 2 l8 12', INK, 2.2);
 const heat = (x, y) => `<g transform="translate(${x} ${y})">${hair('M0 0 q-5 -6 0 -12 q5 -6 0 -12')}</g>`;
-const halo = `<ellipse cx="58" cy="46" rx="15" ry="4.5" fill="none" stroke="#c9a23a" stroke-width="2.2"/>`;
+const FLAME = 'M60 121 C 18 121 12 79 34 55 C 34 71 43 73 45 63 C 45 37 58 29 60 7 C 70 31 92 41 85 67 C 91 63 93 55 91 49 C 110 79 102 121 60 121Z';
+const flame = `<path d="${FLAME}" fill="#e2492f"/><path d="${FLAME}" fill="#c23a22" clip-path="url(#fh)"/>`;
+const cheeks = hair('M-15 -38 l-4 9 M-10 -38 l-4 9 M-5 -38 l-4 9 M7 -38 l-4 9 M12 -38 l-4 9 M17 -38 l-4 9', '#f3efe6', 2.4);
+// the leaf's own pale ghost rising from the body, with a halo
+const spirit = shape => `<g ${T(54, 66, .5, 6)}>${SHAPES[shape]('#dfe5ea', '#c2ccd6')}</g>` +
+  `<ellipse cx="56" cy="24" rx="10" ry="3.2" fill="none" stroke="#c9a23a" stroke-width="2"/>` + hair('M48 68 q-3 3 0 6 M58 69 q3 3 0 6', INK, 1.5);
 
 const RED = ['#e2492f', '#c23a22'], DUST = ['#b9ae9b', '#a3977f'];
 const POSE = {
   happy:  { ax: 54, ay: 94, rot: 16, stalk: 'M50 120 Q47 106 54 94', front: sun, rigid: { rot: 10 } },
-  hyped:  { ax: 60, ay: 106, sc: .84, rot: 0, stalk: 'M60 121 V106', front: rays(60, 74, 47, 58, -165, -15, 15), rigid: { sc: .8, ay: 119 } },
+  hyped:  { ax: 60, ay: 110, sc: .6, rot: 0, stalk: 'M60 121 V110', back: flame, front: '', rigid: { sc: .62, ay: 116 } },
   thanks: { ax: 52, ay: 96, rot: 56, sc: .92, stalk: 'M48 120 Q44 106 52 96', front: heart(28, 44, 1.05), rigid: { rot: 34, ax: 56 } },
-  shy:    { ax: 62, ay: 98, rot: -22, sc: .86, stalk: 'M66 120 Q68 108 62 98', flush: true, front: dropLine(98, 40, .7), rigid: { rot: -16, ax: 58 } },
+  shy:    { ax: 62, ay: 100, rot: -22, sc: .9, stalk: 'M66 121 Q68 110 62 100', flush: true, inner: cheeks, front: '', rigid: { rot: -16, ax: 58 } },
   mad:    { ax: 60, ay: 96, rot: 0, tone: RED, stalk: 'M60 120 V96', front: bolt, rigid: {} },
   sad:    { ax: 68, ay: 46, rot: 158, sc: .84, stalk: 'M54 120 Q40 48 68 46', front: dropInk(93, 114, .55), rigid: { rot: 28, ax: 54, sc: 1 } },
   melt:   { ax: 60, ay: 108, rot: 0, sc: 1.15, sy: .56, pool: true, front: heat(44, 56) + heat(78, 50), rigid: { sc: 1.3, sy: .6, ay: 110 } },
-  dead:   { ax: 22, ay: 92, rot: 90, sc: .88, tone: DUST, stalk: 'M8 92 H22', front: halo, rigid: { ax: 14, ay: 92, sc: .95 } },
+  dead:   { ax: 26, ay: 99, rot: 90, sc: .78, tone: DUST, stalk: 'M12 99 H26', front: spirit, rigid: { ax: 20, ay: 99, sc: .85 } },
 };
 function moji(shape, tone, emo) {
   const rigid = shape === 'cactus';
@@ -101,7 +107,8 @@ function moji(shape, tone, emo) {
   const [a, b] = p.tone || tone, sc = p.sc || 1;
   const pool = p.pool ? `<ellipse cx="60" cy="111" rx="42" ry="8" fill="${a}"/>` : '';
   const stalk = p.stalk ? hair(p.stalk) : '';
-  return svg(`${pool}${stalk}<g ${T(p.ax, p.ay, sc, p.rot, p.sy || sc)}>${SHAPES[shape](a, b)}${p.flush ? SHAPES[shape]('url(#flush)', 'url(#flush)') : ''}</g>${p.front}`);
+  const front = typeof p.front === 'function' ? p.front(shape) : p.front;
+  return svg(`${p.back || ''}${pool}${stalk}<g ${T(p.ax, p.ay, sc, p.rot, p.sy || sc)}>${SHAPES[shape](a, b)}${p.flush ? SHAPES[shape]('url(#flush)', 'url(#flush)') : ''}${p.inner || ''}</g>${front}`);
 }
 
 const EMO = [
@@ -117,7 +124,7 @@ const P = {
 };
 const m = (k, e) => moji(P[k][2], P[k][3], e);
 
-document.getElementById('hero').innerHTML = [['mochi', 'sad', 'ぴえん', 'Crying'], ['kogane', 'hyped', 'メラメラ', 'Hyped'], ['lua', 'thanks', 'ぺこり', 'Thank you']]
+document.getElementById('hero').innerHTML = [['mochi', 'shy', 'てれてれ', 'Embarrassed'], ['kogane', 'hyped', 'メラメラ', 'Hyped'], ['lua', 'dead', 'ち〜ん', "I'm dead"]]
   .map(([k, e, ja, en]) => `<div>${m(k, e)}<div class="cap"><b>${ja}</b>${P[k][0]} · ${en}</div></div>`).join('');
 
 let html = '<div></div>' + EMO.map(e => `<div class="head">${e[2]}<small>${e[1]}</small></div>`).join('');
