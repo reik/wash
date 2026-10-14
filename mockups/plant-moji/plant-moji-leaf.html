@@ -76,7 +76,7 @@ const rays = (cx, cy, r1, r2, from, to, step) => { let d = '';
   for (let a = from; a <= to; a += step) { const r = a * Math.PI / 180;
     d += `M${(cx + r1 * Math.cos(r)).toFixed(1)} ${(cy + r1 * Math.sin(r)).toFixed(1)} L${(cx + r2 * Math.cos(r)).toFixed(1)} ${(cy + r2 * Math.sin(r)).toFixed(1)} `; }
   return hair(d, ACC, 2); };
-const sun = `<circle cx="96" cy="24" r="8" fill="${ACC}"/>` + rays(96, 24, 12.5, 18, 0, 315, 45);
+const sun = `<circle cx="92" cy="27" r="26" fill="#f6c94c" opacity=".28"/><circle cx="92" cy="27" r="14" fill="#f2a93b"/>` + rays(92, 27, 19, 26, 0, 330, 30).replace(ACC, '#f2a93b');
 const beamed = (x, y, s, r) => `<g ${T(x, y, s, r)}><path d="M-5 8 V-12 L11 -16 V4" fill="none" stroke="${ACC}" stroke-width="2.6" stroke-linejoin="round"/><path d="M-5 -12 L11 -16" stroke="${ACC}" stroke-width="6"/>` +
   `<ellipse cx="-9.5" cy="8" rx="5.5" ry="4.2" fill="${ACC}" transform="rotate(-20 -9.5 8)"/><ellipse cx="6.5" cy="4" rx="5.5" ry="4.2" fill="${ACC}" transform="rotate(-20 6.5 4)"/></g>`;
 const single = (x, y, s, r) => `<g ${T(x, y, s, r)}>${hair('M4.5 6 V-12 q8 2 8 10', ACC, 2.6)}<ellipse cx="0" cy="6" rx="5.5" ry="4.2" fill="${ACC}" transform="rotate(-20 0 6)"/></g>`;
@@ -87,7 +87,12 @@ const tremble = hair('M27 74 h-9 M25 88 h-9 M93 74 h9 M95 88 h9', INK, 2);
 const water = (x, y, s, r) => `<path ${T(x, y, s, r)} d="M0 -11 C 8 0 8 9 0 9 C -8 9 -8 0 0 -11Z" fill="#6aaed6"/>`;
 const blushOn = `<circle cx="-13" cy="-31" r="8.5" fill="#f28a7a"/><circle cx="12" cy="-31" r="8.5" fill="#f28a7a"/>` +
   hair('M-15 -35 l-3 7 M-11 -35 l-3 7 M10 -35 l-3 7 M14 -35 l-3 7', '#f3efe6', 1.8);
-const BLOB = 'M12 113 C 12 105 28 103 40 106 C 50 100 72 100 82 106 C 94 103 110 106 108 114 C 106 121 86 122 60 122 C 34 122 12 121 12 113Z';
+// crying: tears stream off the hanging leaf's edges and tip into a small pool
+const TEARS = water(64, 92, .55) + water(62, 104, .62) + water(65, 115, .5) + water(80, 104, .5) + water(78, 114, .42) +
+  water(92, 108, .66) + water(95, 119, .5) + `<ellipse cx="80" cy="122" rx="24" ry="2.4" fill="#6aaed6" opacity=".5"/>`;
+const TEARS_PAD = water(36, 78, .55) + water(34, 92, .62) + water(37, 104, .48) + water(98, 86, .6) + water(101, 99, .52) + water(98, 111, .44) +
+  `<ellipse cx="66" cy="122" rx="30" ry="2.4" fill="#6aaed6" opacity=".5"/>`;
+const BLOB ='M12 113 C 12 105 28 103 40 106 C 50 100 72 100 82 106 C 94 103 110 106 108 114 C 106 121 86 122 60 122 C 34 122 12 121 12 113Z';
 const heart = (x, y, s) => `<path ${T(x, y, s, -10)} d="M0 8 C -15 -3 -8 -14 0 -6 C 8 -14 15 -3 0 8Z" fill="${ACC}"/>`;
 const dropD = 'M0 -11 C 8 0 8 9 0 9 C -8 9 -8 0 0 -11Z';
 const dropInk = (x, y, s) => `<path ${T(x, y, s)} d="${dropD}" fill="${INK}"/>`;
@@ -101,10 +106,10 @@ const RED = ['#e2492f', '#c23a22'], DUST = ['#b9ae9b', '#a3977f'];
 const POSE = {
   happy:  { ax: 58, ay: 98, rot: -14, sc: .9, stalk: 'M62 113 Q65 105 58 98', back: shadow, front: beamed(93, 34, 1.7, 8) + single(21, 36, 1.35, -14), rigid: { rot: -10, ay: 110 } },
   hyped:  { ax: 60, ay: 110, sc: .6, rot: 0, stalk: 'M60 121 V110', back: flame, front: '', rigid: { sc: .62, ay: 116 } },
-  thanks: { ax: 52, ay: 96, rot: 56, sc: .92, stalk: 'M48 120 Q44 106 52 96', front: heart(28, 44, 1.05), rigid: { rot: 34, ax: 56 } },
+  thanks: { ax: 52, ay: 96, rot: 56, sc: .92, stalk: 'M48 120 Q44 106 52 96', front: heart(32, 42, 1.75) + heart(68, 16, .95), rigid: { rot: 34, ax: 56 } },
   shy:    { ax: 60, ay: 100, rot: -20, sc: .9, stalk: 'M64 121 Q66 110 60 100', inner: blushOn, front: water(92, 26, .6, 35) + water(104, 40, .5, 50) + water(100, 58, .4, 65), rigid: { rot: -14, ax: 56 } },
   mad:    { ax: 60, ay: 104, rot: 0, sc: .88, tone: RED, stalk: 'M60 121 V104', front: tremble + puff(1, 104, 1) + puff(119, 104, -1) + anger(96, 26, 1.9), rigid: { sc: .9 } },
-  sad:    { ax: 68, ay: 46, rot: 158, sc: .84, stalk: 'M54 120 Q40 48 68 46', front: dropInk(93, 114, .55), rigid: { rot: 28, ax: 54, sc: 1 } },
+  sad:    { ax: 68, ay: 46, rot: 158, sc: .84, stalk: 'M54 120 Q40 48 68 46', front: TEARS, rigid: { rot: 28, ax: 54, sc: 1, front: TEARS_PAD } },
   melt:   { ax: 58, ay: 86, rot: -24, sc: .9, sy: .8, melt: true, stalk: 'M62 112 Q66 98 58 86', front: sun, rigid: { ay: 104, rot: -12 } },
   dead:   { ax: 26, ay: 99, rot: 90, sc: .78, tone: DUST, stalk: 'M12 99 H26', front: spirit, rigid: { ax: 20, ay: 99, sc: .85 } },
 };
@@ -133,7 +138,7 @@ const P = {
 };
 const m = (k, e) => moji(P[k][2], P[k][3], e);
 
-document.getElementById('hero').innerHTML = [['mochi', 'happy', 'るんるん', 'Happy'], ['kogane', 'shy', 'てれてれ', 'Embarrassed'], ['lua', 'mad', 'ぷんぷん', 'Mad'], ['mochi', 'melt', 'とろ〜ん', 'Melting']]
+document.getElementById('hero').innerHTML = [['mochi', 'sad', 'ぴえん', 'Crying'], ['lua', 'thanks', 'ぺこり', 'Thank you'], ['kogane', 'melt', 'とろ〜ん', 'Melting'], ['mochi', 'happy', 'るんるん', 'Happy']]
   .map(([k, e, ja, en]) => `<div>${m(k, e)}<div class="cap"><b>${ja}</b>${P[k][0]} · ${en}</div></div>`).join('');
 
 let html = '<div></div>' + EMO.map(e => `<div class="head">${e[2]}<small>${e[1]}</small></div>`).join('');
