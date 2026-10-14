@@ -50,7 +50,9 @@ The feeling is our interpretation of an event the plant already has on record. E
 | Watered after a dry week | Grateful ぺこり | bowing forward, heart |
 | Caught with a yellow leaf | Embarrassed てれてれ | turned away, blush lines, sweat drop |
 
-Further feelings sketched: startled, sleepy, excited, worried, proud, cozy, and the louder texting moods hyped (メラメラ, in flames), crying (ぴえん, a puddle of tears), melting (とろ〜ん) and "I'm dead" (ち〜ん, flat with a little ghost).
+Current sketch set (10): happy るんるん, hyped メラメラ, thank you ぺこり, blissful とろ〜ん, embarrassed てれてれ, awkward しーん, mad ぷんぷん, crying ぴえん, melting あつ〜 and "I'm dead" ち〜ん. Earlier sketches also tried startled, sleepy, excited, worried, proud and cozy.
+
+"Melting" means **too hot**, drawn as a wilted, faded leaf under a hot sun (user, 2026-10-14). The other two meanings of the 🫠 melting face are separate feelings: **blissful** (lying in a hammock under a warm sun) and **awkward** (one big sweat drop and "…").
 
 The feeling must be the loudest part of the moji (user, 2026-10-13): funny and current.
 

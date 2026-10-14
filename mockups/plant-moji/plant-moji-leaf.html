@@ -20,7 +20,7 @@
   .hero svg { width:220px; height:auto; }
   .cap { font-size:11px; letter-spacing:.14em; text-transform:uppercase; opacity:.6; margin-top:4px; }
   .cap b { font-family:"Hiragino Mincho ProN", serif; font-weight:400; font-size:15px; letter-spacing:.04em; text-transform:none; opacity:1; margin-right:8px; }
-  .table { display:grid; grid-template-columns:128px repeat(8,1fr); align-items:center; }
+  .table { display:grid; grid-template-columns:118px repeat(10,1fr); align-items:center; }
   .head { text-align:center; padding-bottom:12px; font-family:"Hiragino Mincho ProN", serif; font-size:15px; }
   .head small { display:block; font-family:"Avenir Next", system-ui, sans-serif; font-size:10px; letter-spacing:.14em; text-transform:uppercase; opacity:.55; margin-top:3px; }
   .plant, .cell { border-top:1px solid var(--line); height:100%; display:flex; flex-direction:column; justify-content:center; }
@@ -103,6 +103,12 @@ const spirit = shape => `<g ${T(54, 66, .5, 6)}>${SHAPES[shape]('#dfe5ea', '#c2c
   `<ellipse cx="56" cy="24" rx="10" ry="3.2" fill="none" stroke="#c9a23a" stroke-width="2"/>` + hair('M48 68 q-3 3 0 6 M58 69 q3 3 0 6', INK, 1.5);
 
 const RED = ['#e2492f', '#c23a22'], DUST = ['#b9ae9b', '#a3977f'];
+const mix = (h1, h2, t) => { const p = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)); const x = p(h1), y = p(h2);
+  return '#' + x.map((v, i) => Math.round(v + (y[i] - v) * t).toString(16).padStart(2, '0')).join(''); };
+const hotSun = `<circle cx="26" cy="24" r="13" fill="${ACC}"/>` + rays(26, 24, 18, 25, 0, 330, 30);
+// blissful: lying in a hammock slung between two ropes
+const HAMMOCK = hair('M12 70 L3 56 M108 70 L117 56', INK, 1.6) + `<path d="M12 70 Q60 128 108 70 Q60 108 12 70Z" fill="#d8c9ae"/>`;
+const dots =`<circle cx="42" cy="22" r="3.4" fill="${INK}"/><circle cx="56" cy="22" r="3.4" fill="${INK}"/><circle cx="70" cy="22" r="3.4" fill="${INK}"/>`;
 const POSE = {
   happy:  { ax: 58, ay: 98, rot: -14, sc: .9, stalk: 'M62 113 Q65 105 58 98', back: shadow, front: beamed(93, 34, 1.7, 8) + single(21, 36, 1.35, -14), rigid: { rot: -10, ay: 110 } },
   hyped:  { ax: 60, ay: 110, sc: .6, rot: 0, stalk: 'M60 121 V110', back: flame, front: '', rigid: { sc: .62, ay: 116 } },
@@ -110,24 +116,26 @@ const POSE = {
   shy:    { ax: 60, ay: 100, rot: -20, sc: .9, stalk: 'M64 121 Q66 110 60 100', inner: blushOn, front: water(92, 26, .6, 35) + water(104, 40, .5, 50) + water(100, 58, .4, 65), rigid: { rot: -14, ax: 56 } },
   mad:    { ax: 60, ay: 104, rot: 0, sc: .88, tone: RED, stalk: 'M60 121 V104', front: tremble + puff(1, 104, 1) + puff(119, 104, -1) + anger(96, 26, 1.9), rigid: { sc: .9 } },
   sad:    { ax: 68, ay: 46, rot: 158, sc: .84, stalk: 'M54 120 Q40 48 68 46', front: TEARS, rigid: { rot: 28, ax: 54, sc: 1, front: TEARS_PAD } },
-  melt:   { ax: 58, ay: 86, rot: -24, sc: .9, sy: .8, melt: true, stalk: 'M62 112 Q66 98 58 86', front: sun, rigid: { ay: 104, rot: -12 } },
+  awkward:{ ax: 60, ay: 102, rot: 10, sc: .86, stalk: 'M58 121 Q57 111 60 102', front: dots + water(91, 58, 1.15, 0), rigid: { rot: 6 } },
+  melt:   { ax: 64, ay: 58, rot: 128, sc: .8, sy: .9, fade: true, stalk: 'M56 121 Q50 66 64 58', front: hotSun + water(30, 70, .55, -15) + water(22, 86, .45, -15), rigid: { rot: 20, sy: .82, ax: 64 } },
+  relax:  { ax: 30, ay: 82, rot: 84, sc: .62, back: sun + HAMMOCK, front: '', rigid: { ax: 30, ay: 84, rot: 80, sc: .66 } },
   dead:   { ax: 26, ay: 99, rot: 90, sc: .78, tone: DUST, stalk: 'M12 99 H26', front: spirit, rigid: { ax: 20, ay: 99, sc: .85 } },
 };
 function moji(shape, tone, emo) {
   const rigid = shape === 'cactus';
   const p = rigid ? { ...POSE[emo], ay: 118, stalk: null, ...POSE[emo].rigid } : POSE[emo];
-  const [a, b] = p.tone || tone, sc = p.sc || 1;
-  // melting: the base of the leaf dissolves into a puddle of its own colour, with drips running off
-  const fall = (x, y, s) => `<path ${T(x, y, s)} d="M0 -11 C 8 0 8 9 0 9 C -8 9 -8 0 0 -11Z" fill="${a}"/>`;
-  const pool = p.melt ? `<path d="${BLOB}" fill="${a}"/>${fall(36, 92, .62)}${fall(78, 98, .5)}${fall(24, 78, .4)}` : '';
+  let [a, b] = p.tone || tone;
+  // wilting in the heat: the leaf fades towards straw
+  if (p.fade) { a = mix(a, '#d8c27a', .5); b = mix(b, '#bfa65a', .5); }
+  const sc = p.sc || 1;
   const stalk = p.stalk ? hair(p.stalk) : '';
   const front = typeof p.front === 'function' ? p.front(shape) : p.front;
-  return svg(`${p.back || ''}${stalk}${pool}<g ${T(p.ax, p.ay, sc, p.rot, p.sy || sc)}>${SHAPES[shape](a, b)}${p.inner || ''}</g>${front}`);
+  return svg(`${p.back || ''}${stalk}<g ${T(p.ax, p.ay, sc, p.rot, p.sy || sc)}>${SHAPES[shape](a, b)}${p.inner || ''}</g>${front}`);
 }
 
 const EMO = [
-  ['happy', 'Happy', 'るんるん'], ['hyped', 'Hyped', 'メラメラ'], ['thanks', 'Thank you', 'ぺこり'], ['shy', 'Embarrassed', 'てれてれ'],
-  ['mad', 'Mad', 'ぷんぷん'], ['sad', 'Crying', 'ぴえん'], ['melt', 'Melting', 'とろ〜ん'], ['dead', "I'm dead", 'ち〜ん'],
+  ['happy', 'Happy', 'るんるん'], ['hyped', 'Hyped', 'メラメラ'], ['thanks', 'Thank you', 'ぺこり'], ['relax', 'Blissful', 'とろ〜ん'], ['shy', 'Embarrassed', 'てれてれ'],
+  ['awkward', 'Awkward', 'しーん'], ['mad', 'Mad', 'ぷんぷん'], ['sad', 'Crying', 'ぴえん'], ['melt', 'Melting', 'あつ〜'], ['dead', "I'm dead", 'ち〜ん'],
 ];
 const P = {
   mochi:  ['Mochi', 'Pothos · Osaka', 'heart', ['#2f6b4f', '#24543e']],
@@ -138,7 +146,7 @@ const P = {
 };
 const m = (k, e) => moji(P[k][2], P[k][3], e);
 
-document.getElementById('hero').innerHTML = [['mochi', 'sad', 'ぴえん', 'Crying'], ['lua', 'thanks', 'ぺこり', 'Thank you'], ['kogane', 'melt', 'とろ〜ん', 'Melting'], ['mochi', 'happy', 'るんるん', 'Happy']]
+document.getElementById('hero').innerHTML = [['mochi', 'melt', 'あつ〜', 'Melting'], ['kogane', 'relax', 'とろ〜ん', 'Blissful'], ['lua', 'awkward', 'しーん', 'Awkward'], ['mochi', 'shy', 'てれてれ', 'Embarrassed']]
   .map(([k, e, ja, en]) => `<div>${m(k, e)}<div class="cap"><b>${ja}</b>${P[k][0]} · ${en}</div></div>`).join('');
 
 let html = '<div></div>' + EMO.map(e => `<div class="head">${e[2]}<small>${e[1]}</small></div>`).join('');
