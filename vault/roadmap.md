@@ -42,7 +42,7 @@ Back to [[index]] · Principles: [[principles]] · Stack: [[tech-direction]]
 ### B. Plant record & human input
 | ID | Feature | Notes |
 |---|---|---|
-| F9 | Register plant (name, species, photo, place city/country, origin story) | Core object |
+| F9 | Register plant (name, photo-identified species, place city/country, origin story) | Core object |
 | F10 | Chapters (time + place periods) | Even single-owner “life so far” |
 | F11 | Photo moments + same-angle guide | Fuels voice triggers |
 | F12 | Care/life event logs | Water, repot, move, travel, etc. |
@@ -77,7 +77,7 @@ Back to [[index]] · Principles: [[principles]] · Stack: [[tech-direction]]
 ### E. Daily rhythm & discovery
 | ID | Feature | Notes |
 |---|---|---|
-| F32 | Time-zone-mixed groups | ≥3 bands when groups are social |
+| F32 | Family-tree groups | Same family → order → class ([[circles]], 2026-10-15) |
 | F33 | Overnight / while-away digest | Home screen |
 | F34 | Friends’ photos + weather strip | Explains plant talk |
 | F35 | Daypart scheduling jobs | Morning / day / evening |
@@ -189,7 +189,7 @@ M1–M2, printed books, premium tiers — after habitual use exists.
 - “Homeroom” in v1 = small **Circle** of matchmade plants ([[circles]]), not “Class of 20XX”
 
 ## Kickoff decisions (2026-10-08)
-- [x] Circle membership without Sprout Day → **matchmaking by point scoring** ([[circles]])
+- [x] Circle membership without Sprout Day → ~~matchmaking by point scoring~~ → **grouping by plant family, then order, then class** (changed 2026-10-15, [[circles]])
 - [x] Rate budgets → **separate**: public ≤3/day, windowsill ≤2/day, plus one hard global AI ceiling per plant ([[plant-voice]], [[windowsill-talk]])
 - [x] Backend → **Supabase** (Postgres + Auth + Storage + Edge Functions) + a small scheduler worker picked at kickoff ([[tech-direction]])
 - [x] Product name → **Sasawis** — sasawis.app domain confirmed available 2026-10-08; trademark/App Store checks still pending

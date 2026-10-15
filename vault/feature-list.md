@@ -30,7 +30,7 @@ Back to [[index]]
 
 | ID | Feature | Detail | Acceptance criteria | Pri | Data |
 |---|---|---|---|---|---|
-| F9 | Register plant | name, species picker (+free text), photo, city/country, optional origin story, estimated birth year | Plant live in <2 min; origin story optional | P1 | plants, species |
+| F9 | Register plant | name, first photo → plant-ID API suggests the species (Yes / Pick another / Not sure), classification from GBIF, city/country, optional origin story, estimated birth year | Plant live in <2 min; species confirmed, or at least the family inferred when "not sure"; origin story optional | P1 | plants, species |
 | F10 | Chapters | Time+place periods; auto-created at registration and handover; redactable | One open chapter per plant enforced | P1 | chapters |
 | F11 | Photos + same-angle guide | Daily optional photo; camera overlays ghost of previous photo in the same angle group | Overlay aligns with last photo | P1 | photos |
 | F12 | Care/life event logs | One-tap: watered, repotted, moved, owner away; each becomes a plant_event | Log → event row → may trigger draft | P1 | plant_events |
@@ -68,7 +68,7 @@ Back to [[index]]
 
 | ID | Feature | Detail | Acceptance criteria | Pri | Data |
 |---|---|---|---|---|---|
-| F32 | TZ-mixed matching | ≥3 tz bands per circle; scoring per [[circles]] | Distribution check on every fill | P1 | matchmaking_queue |
+| F32 | Family-tree grouping | Circles by same family → order → class, per the ladder in [[circles]]; levels and sizes in `circle_rules` | Every placement follows the ladder; changing the rule needs no app release | P1 | circle_rules, matchmaking_queue |
 | F33 | Overnight digest | Per-circle summary on home; tap → first unread | Digest by owner's morning | P1 | notifications |
 | F34 | Friends' photos + weather strip | Before/after same-angle thumbs; city weather explains the talk | Weather for all member cities | P1 | photos |
 | F35 | Daypart scheduler | Worker runs morning/day/evening per tz band; matchmaking + weather scans | jobs_log shows on-time runs | P1 | jobs_log |

@@ -53,7 +53,7 @@ erDiagram
 | icon_photo_id | uuid? → photos | |
 | locale | `en \| ja` | |
 | tz | text | IANA, e.g. `Asia/Tokyo` |
-| tz_band | `apac \| emea \| americas` | derived, stored for matchmaking |
+| tz_band | `apac \| emea \| americas` | derived; used for dayparts and the optional circle tie-breaker |
 | quiet_hours | jsonb | `{start: 22, end: 7}` |
 | notif_prefs | jsonb | `{digest: true, highlight: true}` |
 | strikes | int | see strikes table for history |
@@ -73,21 +73,26 @@ No bio, no real name, no follower counts ([[principles]] — the plant is the pr
 |---|---|---|---|---|---|---|
 | | `pothos` | | | | `easygoing` | `temperate \| tropical \| arid \| cold` |
 
-Temperament values (voice layer 1, [[plant-voice]]): `expressive · stoic · habitual · easygoing · dramatic`. Start ~50 rows.
+Plus the classification used to group circles ([[circles]]), copied from GBIF: `gbif_key · class · order · family · genus`. Rows are created on demand the first time a plant is identified as that species, so the table is not limited to the curated ~50.
+
+Temperament values (voice layer 1, [[plant-voice]]): `expressive · stoic · habitual · easygoing · dramatic`. Start ~50 curated rows; species without a curated temperament fall back to their family's default.
 
 ### plants
 | Column | Type | Notes |
 |---|---|---|
 | id | uuid | |
 | owner_id | uuid → profiles | **current** owner; history lives in chapters |
-| species_id | uuid? → species | plus `species_free_text` fallback |
+| species_id | uuid? → species | null while unidentified; plus `species_free_text` fallback |
+| taxon_family / taxon_order / taxon_class | text? | from the confirmed species, or the deepest rank the ID candidates agree on when the owner is "not sure" |
+| id_source | `photo_api \| owner_pick \| owner_correction` | how the species was set |
+| id_confidence | numeric? | API confidence for the accepted candidate |
 | name | text | moderated |
 | stage | `newborn \| growing \| elder` | voice stage |
 | estimated_birth_year | int? | nullable is fine — unknown pasts are allowed |
 | city | text | coarse only |
 | country_code | char(2) | |
 | tz_band | enum | derived from tz |
-| climate_class | enum | for matchmaking |
+| climate_class | enum | weather context for the plant voice (no longer used for grouping) |
 | status | `active \| memorial \| archived` | memorial = plant died, record stays |
 | looking_for_friends | bool | matchmaking opt-in |
 | circle_id | uuid? → circles | denormalized from circle_members |
@@ -144,18 +149,21 @@ Claim runs in one transaction: close current chapter → `plants.owner_id = to_o
 ### plant_followers (follow from afar)
 `plant_id · owner_id · reason: previous_owner · created_at` — honored only while `plants.allow_previous_owner_updates` is true.
 
-## Circles (matchmade groups)
+## Circles (grouped by plant family tree)
+
+### circle_rules
+Single config row, editable without an app release: `levels text[] default '{family,order,class}' · min_to_open int default 12 · target_size int default 24 · max_size int default 30 · updated_at`.
 
 ### circles
-`id · status: forming | live | refilling | merging | closed · target_size int default 24 · created_at`
-Live stats (TZ-band distribution, active count) = view over `circle_members`, not stored.
+`id · level: family | order | class · taxon text (e.g. Araceae) · status: forming | live | refilling | merging | closed · created_at`
+Live stats (active count, TZ-band spread) = view over `circle_members`, not stored.
 
 ### circle_members
 `circle_id · plant_id · joined_at · left_at?` — pk `(circle_id, plant_id)`; one active membership per plant (partial unique).
 
 ### matchmaking_queue
-`plant_id pk · queued_at · snapshot jsonb {tz_band, climate_class, species_id, stage, activity_band}`
-Scoring per the [[circles]] table; queue consumed by a scheduler worker.
+`plant_id pk · queued_at · taxon_family · taxon_order · taxon_class`
+Placement per the ladder in [[circles]]; run on each registration and daily by the scheduler worker.
 
 ## Voice — public
 

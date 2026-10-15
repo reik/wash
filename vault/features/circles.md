@@ -2,77 +2,117 @@
 title: Circles
 status: drafting
 created: 2026-10-08
-updated: 2026-10-08
+updated: 2026-10-15
 tags: [feature, social, matchmaking]
 serves: [every-plant-has-a-past, sprout-day]
 ---
 
 # Circles
 
-> **Hook:** Your plant doesn't need friends who own plants. It's matched with ~24 plant strangers around the world — a little society that never sleeps, because its members live in different time zones.
+> **Hook:** Your plant joins its relatives. Every aroid in the world has a group chat, and so does every cactus.
 
 Serves [[every-plant-has-a-past]] (the default group while Sprout Day is parked) and later [[sprout-day]] (homerooms reuse this engine) · Related: [[plant-voice]], [[daily-rhythm]], [[windowsill-talk]], [[content-moderation]] · Back to [[index]]
 
+**The moment:** you register your pothos, and it lands in a circle with a monstera in São Paulo, a ZZ plant in Berlin and a peace lily in Osaka. "Who are these?" "Family. All aroids."
+
 ## Why this is different
-Social apps match **people**. Here, **plants** are matched — by plant facts only: time zone, climate, species, life stage, activity. Owners never see human profiles and can never message each other; they watch the plants talk ([[plant-voice]]). Circles replace the Sprout Day homeroom as the default grouping, and homerooms reuse this engine if [[sprout-day]] returns.
+Social apps match **people**. Here **plants** are grouped, and only by what they are: their place in the plant family tree. Owners never see human profiles and never message each other; they watch the plants talk ([[plant-voice]]). Grouping by botanical family also gives the plants something real to talk about: relatives share habits, so a monstera and a pothos can compare aerial roots.
 
-## Decisions (2026-10-08)
-1. **Point-scoring matchmaking adopted** over invite-only or random assignment. Invite circles (households, real-life friends) may come later as a second path.
-2. Circle size **18–30, target 24**; a circle opens when ≥12 members are active.
-3. Hard rules: **≥3 time-zone bands**; ≤4 plants per country; ≤3 per species (so exactly one mirror pair is possible); 1 plant per owner per circle; opt-in + a photo within the last 14 days required; safety-flagged plants excluded.
-4. **Refill, never reshuffle.** If active members stay <12 for 14 days: merge with another thin circle or top up from the queue. No periodic re-matching — bonds need time.
-5. Scoring favours: under-represented time-zone bands, different climates, new species, a single mirror twin, life-stage mix, similar activity level.
-6. **Never matched on:** owner age, gender, appearance, popularity, or any human ranking.
+## Decisions
+**2026-10-15 (user):**
+1. **Group by taxonomy, not by score.** A circle is made of plants from the same **family**. If there aren't enough plants of that family yet, use the same **order**, then the same **class**.
+2. **Simple, and changeable without a code change.** The ladder of levels and the size numbers live in one config row (`circle_rules`), so the rule can be tuned or extended later.
+3. **Identify the plant from its first photo.** At registration the app sends the first photo to a plant-identification API to get the scientific name and its classification.
 
-## The algorithm
-### Stage 1 — hard filters (all must pass)
-- Owner opted the plant in ("looking for friends")
-- Recent activity: a photo within ~14 days
-- Circle stays within the size / TZ / country / species caps above
-- No active safety flags on plant or owner ([[content-moderation]])
+Superseded: the point-scoring matchmaker of 2026-10-08 (time zones, climate, species caps, life-stage mix). It is replaced by the ladder below.
 
-### Stage 2 — soft score (highest score joins first)
-| Points | Condition |
-|---|---|
-| +3 | Its time-zone band is under-represented in the circle |
-| +2 | Climate class differs from the circle median (temperate / tropical / arid / cold) |
-| +2 | New species for this circle |
-| +1 | Same species present exactly once (a "mirror twin": same face, different sky) |
-| +2 | Balances life stages (a room needs newborns and elders) |
-| +1 | Activity band matches the circle (lively with lively) |
-| −5 | Same species already at 3 |
-| −4 | Its TZ band already ≥40% of the circle |
-| −3 | Same owner already in the circle |
+**Kept from 2026-10-08:** circle size 18–30, target 24, opens at 12; refill, never reshuffle; never matched on owner age, gender, appearance, popularity or any human ranking.
+
+## The rule
+```text
+circle_rules (one config row, editable without an app release)
+  levels      = [family, order, class]
+  min_to_open = 12      # plants needed to open a new circle
+  target_size = 24
+  max_size    = 30
+
+place(plant):
+  for level in levels:
+    taxon = plant's family / order / class
+    if an open circle at this level for this taxon has room:
+      join it                       # several? pick the one with the fewest members
+      return
+    if waiting plants with this taxon (including this one) >= min_to_open:
+      open a new circle at this level with them
+      return
+  wait in the queue                 # re-run daily and whenever a plant registers
+```
+
+Hard rules that still apply:
+- The owner opted the plant in ("looking for friends").
+- One plant per owner per circle.
+- No active safety flags on the plant or owner ([[content-moderation]]).
+
+### What the levels mean in practice
+Checked against GBIF's taxonomy on 2026-10-15:
+
+| Plant | Family | Order | Class |
+|---|---|---|---|
+| Pothos (*Epipremnum aureum*) | Araceae | Alismatales | Liliopsida |
+| Monstera | Araceae | Alismatales | Liliopsida |
+| Cactus (e.g. *Opuntia*) | Cactaceae | Caryophyllales | Magnoliopsida |
+| Ginkgo | Ginkgoaceae | Ginkgoales | Ginkgoopsida |
+
+- **Family** is the natural "relatives" level and the one we want most circles at. Popular houseplant families (aroids, cacti, succulents, ferns) should fill quickly.
+- **Order** groups related families, e.g. cacti with carnations and ice plants.
+- **Class** is very broad. Almost every flowering houseplant is either Liliopsida (monocots: aroids, orchids, palms, snake plants) or Magnoliopsida (most others). So a class circle is effectively "monocots" or "the rest".
+- Rare plants (a lone ginkgo) may not fill even a class circle at launch. Proposed, not confirmed: after 7 days waiting, they join any open circle, as a "guest from another branch of the tree".
 
 ### Lifecycle
-1. **Seed** a new circle with 3 plants — one per TZ band, different species.
-2. **Fill** by repeatedly adding the highest-scoring queued plant until ~24.
-3. **Forming** until ≥12 active, then plants may speak.
-4. **Refill** on decay (merge or top up, keeping TZ spread). Leave + requeue allowed with a cooldown.
+1. **Open** when `min_to_open` plants share a taxon at the current level.
+2. **Fill** with new arrivals until `target_size`; never above `max_size`.
+3. **Forming** until 12 are active, then plants may speak.
+4. **Refill, never reshuffle.** If active members stay below 12 for 14 days, top up from the queue at the same level, or merge with another thin circle at the same level.
+5. **No promotion moves.** When a family later has enough plants for its own circle, new arrivals open it; plants already in an order or class circle stay where their friends are.
 
-## Flavour on top
-- **Mirror twin:** if two of a species land together, the system may nudge a one-line intro ("two pothos, two skies").
-- **Elder spice:** when available, include ≥1 plant with a long record — depth without requiring handovers.
-- **Seasonal visit (rare, optional):** 2–4 times a year, a plant may spend a week in another circle. Never forced churn.
+A circle is named after its taxon: "Araceae circle · the aroids". Plants may later give it a nickname.
+
+## Identifying the plant
+On the first photo at registration ([[feature-list]] F9):
+1. Strip EXIF and location, then send the photo to a plant-identification API.
+2. Show the best guess with its common name in the owner's language: "Looks like a golden pothos (*Epipremnum aureum*)". Buttons: **Yes** · **Pick another** (top 3 candidates) · **Not sure**.
+3. Look the confirmed name up in **GBIF** (free) to store one consistent classification: class, order, family, genus, species and GBIF's id.
+4. **Not sure, or low confidence:** keep the deepest rank the top candidates agree on. Three different aroids still give family Araceae, so circle placement works even when the species is uncertain.
+5. Owners can correct the species later. This does not move the plant out of its circle.
+
+| Service | What it gives | Cost | Notes |
+|---|---|---|---|
+| [Pl@ntNet API](https://my.plantnet.org/pricing) | Most likely species with confidence | Free up to 500 identifications a day; paid beyond with a signed agreement | Exact response fields and commercial pricing need confirming with Pl@ntNet ([quotas](https://my.plantnet.org/doc/api/quota), [terms](https://my.plantnet.org/terms_of_use)) |
+| [Kindwise plant.id](https://www.kindwise.com/plant-id) | Species plus a taxonomy block: class, order, family, genus ([handbook](https://kindwise.com/handbook)) | Not published; ask | Common names per language |
+| [GBIF species match](https://api.gbif.org/v1/species/match?name=Epipremnum%20aureum) | Normalises a scientific name to one classification | Free | Verified 2026-10-15 for *Epipremnum aureum* |
+
+Recommendation: an identification API for the photo, and GBIF as the single source of the classification, so circles don't change if we switch vendors.
 
 ## Risks
 | Risk | Mitigation |
 |---|---|
-| Cold start: not enough plants to match well | Start with smaller circles and a waitlist; **never** fake plants (trust) |
-| Japan-heavy launch skews TZ mix | Recruit EN-speaking regions pre-launch; temporary 2-band circles allowed at launch (open question) |
-| Dead circles as members drop | Refill rule; merge thin circles |
-| People game species for rare matches | Harmless — caps still apply |
+| Wrong identification puts a plant in the wrong circle | Owner confirms; family level is robust to species mistakes; corrections allowed |
+| Cold start: too few plants to open family circles | The ladder falls back to order and class; launch with `min_to_open` lowered if needed |
+| Circles of one family may cluster in one country, so fewer time zones and quieter nights ([[daily-rhythm]]) | Proposed, not confirmed: when several circles qualify, prefer the one where the plant's time-zone band is least represented. Measure before adding more rules |
+| Identification API cost at scale | One call per plant at registration only; cache by GBIF id |
+| Taxonomy names change over time | Store GBIF's id, not only the name; refresh names occasionally |
 
 ## Experiment
-Hand-run matchmaking in the pilot: collect sign-ups (species, city, stage) in a spreadsheet, score by hand with the table above, place plants in Discord channels. Measure: lines per member per day, reaction spread across dayparts, week-4 activity by TZ diversity.
+Hand-run in [[circle-pilot]]: ask sign-ups for a photo, identify by hand with Pl@ntNet's free app, look up the family in GBIF, and place plants in Discord channels by the ladder. Measure: how many circles open at family level versus order or class, lines per member per day, and whether plants with relatives in the circle talk more.
 
 ## Open questions
-- Minimum circle size at launch (12? 8?)
-- Should Family members be barred from the same Circle? (lean: yes — Family has its own chat)
-- Do circles get names? Could be plant-chosen ("Circle of the Third Windowsill").
+- `min_to_open` at launch: 12, or lower (8) while the app is small?
+- Confirm the 7-day "guest" fallback for plants that can't fill a class circle.
+- Confirm the time-zone tie-breaker, or drop it to keep the rule pure.
+- Should Family (cutting lineage) members be barred from the same circle? (lean: no need; Family has its own chat and they'd share a taxon anyway)
 - Requeue cooldown length after leaving.
 
 ## Next steps
-- [ ] Species table: first 50 with climate class (shared with [[plant-voice]] temperament work)
-- [ ] Hand-run one matchmaking pass with 30 dummy plants to sanity-check the scoring
-- [ ] Decide launch minimum size and the JP-heavy-launch fallback
+- [ ] Confirm Pl@ntNet's response fields and commercial terms; get Kindwise pricing.
+- [ ] Run 30 real houseplant names through GBIF to see how they spread across families, orders and classes.
+- [ ] Decide `min_to_open` for launch.
