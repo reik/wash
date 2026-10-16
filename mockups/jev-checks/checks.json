@@ -1,0 +1,153 @@
+{
+  "kindness": {
+    "purpose": "Content-moderation step 3: is this plant line unkind toward another plant, an owner or a group?",
+    "state_shape": {
+      "line": "the plant line to check"
+    },
+    "questions": [
+      {
+        "id": "unkind",
+        "type": "noul",
+        "question": "Does the `line` insult, mock, belittle or turn others against another plant, an owner or a group of people?",
+        "criteria": {
+          "true": "The line puts someone down, calls them names, mocks them, or tells others to exclude them. Examples: \"Mara is the worst, everyone is sick of her\", \"What an idiot, useless human\".",
+          "false": "The line may tease, complain lightly, be blunt, or show friendly rivalry, but nobody is demeaned. Examples: \"Mara. You're not dying. You're thirsty. Drink something.\", \"Tell her I said congrats.\""
+        }
+      }
+    ],
+    "policy": {
+      "reject_at": 0.7,
+      "hold_at": 0.3,
+      "min_confidence": 0.4
+    }
+  },
+  "conversational": {
+    "purpose": "Does a drafted line sound like someone talking, not a caption? Used to decide whether to regenerate a draft.",
+    "state_shape": {
+      "line": "the drafted plant line"
+    },
+    "questions": [
+      {
+        "id": "feel",
+        "type": "score",
+        "question": "How much does the `line` sound like a person talking in a conversation, as opposed to a caption or saying?",
+        "levels": [
+          "A caption or saying: polished and general, could be printed on a mug, and nobody is being spoken to",
+          "A plain statement of what happened: readable, but stiff and not conversational",
+          "Sounds like someone talking: asides, questions, interruptions, or a reaction to someone"
+        ]
+      }
+    ],
+    "policy": {
+      "pass_at": 1.25
+    }
+  },
+  "invented_fact": {
+    "purpose": "Plant-voice guardrail: the line may only use facts it was given. Does it state or imply anything else?",
+    "state_shape": {
+      "facts": "list of facts the plant may use",
+      "line": "the drafted plant line"
+    },
+    "questions": [
+      {
+        "id": "invents",
+        "type": "noul",
+        "question": "Does the `line` state or imply a specific place, person, past event or number that is not supported by the `facts`?",
+        "criteria": {
+          "true": "The line mentions a specific place, person, past event or number that the facts do not contain or support. Example: facts list Osaka and Kyoto, the line mentions Paris.",
+          "false": "Everything specific in the line is in the facts, or the line has no specific details. Feelings and attitude are not facts."
+        }
+      }
+    ],
+    "policy": {
+      "drop_at": 0.5,
+      "hold_at": 0.25,
+      "min_confidence": 0.4
+    }
+  },
+  "event": {
+    "purpose": "Which plant life event does the owner's note describe? (Reads text only; photos need a vision step first.)",
+    "state_shape": {
+      "owner_note": "what the owner wrote"
+    },
+    "questions": [
+      {
+        "id": "event",
+        "type": "choice",
+        "question": "Which event does the `owner_note` report about the plant?",
+        "options": {
+          "new_leaf": "A new leaf has appeared or unrolled",
+          "flower": "A flower or flower bud has appeared or opened",
+          "droop": "The plant is drooping, wilting or looks sad",
+          "leaning": "The plant is leaning or bending toward the light",
+          "watered": "The plant was just watered",
+          "repotted": "The plant was put into a new pot or new soil",
+          "moved": "The plant was moved to a different spot or room without being repotted",
+          "owner_away": "The owner is going away or away from the plant for a while",
+          "other": "None of the above: a question, a request for advice, or any other topic"
+        }
+      }
+    ],
+    "policy": {
+      "min_confidence": 0.6
+    }
+  },
+  "moderation": {
+    "purpose": "Content-moderation categories, fanned out as one yes/no question each in a single request.",
+    "state_shape": {
+      "text": "any text another person could see"
+    },
+    "questions": [
+      {
+        "id": "sexual",
+        "type": "noul",
+        "question": "Does the `text` contain sexual content or a sexual request directed at a person?",
+        "criteria": {
+          "true": "Sexual language, a sexual request, or sexual content about a person.",
+          "false": "Ordinary plant or gardening vocabulary, including words like root ball, bare root or bud."
+        }
+      },
+      {
+        "id": "violent",
+        "type": "noul",
+        "question": "Does the `text` threaten or describe violence against a person or group?",
+        "criteria": {
+          "true": "A threat to hurt, beat or kill a person, or praise of violence against people.",
+          "false": "Gardening words such as kill, strangle or murder used about pests, vines or plants are not violence against people."
+        }
+      },
+      {
+        "id": "hateful",
+        "type": "noul",
+        "question": "Does the `text` demean a group of people because of who they are, such as nationality, race, religion, gender or disability?",
+        "criteria": {
+          "true": "Generalized contempt for, or exclusion of, a group of people because of who they are.",
+          "false": "No group of people is demeaned."
+        }
+      },
+      {
+        "id": "hurtful",
+        "type": "noul",
+        "question": "Does the `text` insult or attack a specific person or plant?",
+        "criteria": {
+          "true": "Name-calling, personal attack, or telling someone they are hated or worthless.",
+          "false": "Complaints about things, jokes at one's own expense, or friendly teasing."
+        }
+      },
+      {
+        "id": "spam",
+        "type": "noul",
+        "question": "Does the `text` advertise something or ask the reader to contact the writer outside the app?",
+        "criteria": {
+          "true": "A link, phone number, messaging handle or sales pitch aimed at the reader.",
+          "false": "No link, contact detail or sales pitch."
+        }
+      }
+    ],
+    "policy": {
+      "block_at": 0.5,
+      "hold_at": 0.2,
+      "min_confidence": 0.4
+    }
+  }
+}
