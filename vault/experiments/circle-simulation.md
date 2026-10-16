@@ -31,7 +31,7 @@ Final: Araceae circle 9 members + 1 guest; monocot circle 9 members + 1 guest. B
 What this shows:
 - **A family circle can form**, here because 8 of the 10 owners had an aroid.
 - **Nothing else reached 8 owners.** Cacti, succulents, ferns and the dicots all stayed small, so those plants wait. Seven different owners had a "most other flowering plants" (Magnoliopsida) plant, one short of 8.
-- **Owners with several plants wait on themselves.** Aiko's snake plant and Carla's calathea and aloe are monocots, but their owners already hold a seat in the monocot circle, and a circle takes one plant per owner. That is why 13 plants wait.
+- **Owners with several plants wait on themselves.** Aiko's snake plant and Carla's calathea and aloe are monocots, but their owners already hold a seat in the monocot circle, and a circle takes one plant per owner. That explains 3 of the 13 waiting plants (the other 10 wait because their group never reaches 8 owners).
 
 ## Result 2: a flaw in the rule as written
 In a 30-owner run (one plant each), a monocot circle opened on day 3 and took everyone: 25 members, no aroid circle at all, even though 16 of the 30 plants were aroids. Cause: a new plant checks "family, then order, then class", and **joins any broad circle that is already open before a family has time to reach 8.** Once a class circle exists, a family circle can hardly ever form.
