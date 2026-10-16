@@ -8,7 +8,7 @@ tags: [experiment, validation, p0]
 
 # P0 — Story call-out
 
-Tests the riskiest assumption of [[every-plant-has-a-past]]: **owners will write a plant's backstory before any handoff exists** (experiment 1 in the idea note). No code — posts + a form.
+Tests whether **owners will write a plant's life story at all**: the raw material for the plant record, biography and plant voice ([[plant-voice]] lines come from real events and history). This is the biography layer of the current build focus ([[every-plant-has-a-past]], reframed 2026-10-08 as plant society + biography). Handover is only a side read (form Q6), not the thing being tested. No code — posts + a form.
 
 Back to [[roadmap]] (P0) · [[index]]
 
@@ -17,7 +17,7 @@ Back to [[roadmap]] (P0) · [[index]]
 ### EN — r/houseplants, r/plants, Instagram
 > **What's the oldest plant you own — and what's its story?**
 > Not care tips. The story. Where it came from, what it survived, who gave it to you, what it has seen.
-> I'm collecting plant life stories for a project. 3+ sentences, photos welcome. I'll share the best ones back (with permission).
+> I'm collecting plant life stories for a project about plants and their lives. 3+ sentences, photos welcome. I'll share the best ones back (with permission).
 
 ### JA — X / note / LINE プラント系コミュニティ
 > **いちばん長く育てている植物の「ものがたり」を聞かせてください。**
@@ -30,7 +30,7 @@ Back to [[roadmap]] (P0) · [[index]]
 3. Where did it come from? (shop / gift / rescue / cutting / inherited / found)
 4. Tell its story (free text, 3+ sentences)
 5. One memory it holds (first flower, survived a move…)
-6. If this plant ever got a new home, should its story go with it? (yes / no / depends)
+6. Side question (handover read, not a pass criterion): if this plant ever got a new home, should its story go with it? (yes / no / depends)
 7. May we quote you? (yes / anonymous / no)
 8. Email for updates (optional)
 
@@ -46,7 +46,7 @@ Back to [[roadmap]] (P0) · [[index]]
 ## Pass signals (from the idea note)
 - **100+ story submissions in 2 weeks**
 - **Median story longer than 3 sentences**
-- Watch: % answering "story should travel with the plant" = yes (informal read on the handover myth)
+- Watch (informational only, not pass/fail): % answering "story should travel with the plant" = yes. Informal read on the long-arc handover feature ([[roadmap]] P3)
 
 ## Tracking sheet (columns)
 date · channel · submissions · median length · longest story · "travels with plant" yes% · quotable gems · email opt-ins
