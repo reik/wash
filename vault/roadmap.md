@@ -38,6 +38,7 @@ Back to [[index]] · Principles: [[principles]] · Stack: [[tech-direction]]
 | F6 | Photo upload + EXIF strip | Privacy default |
 | F7 | Content moderation pipeline | Rules + AI + kindness check; hold if down ([[content-moderation]]) |
 | F8 | Report / block / strikes / 24h review ops | App store UGC |
+| F43 | Admin dashboard (web): user list + daily charts | [[admin-dashboard]]; priority proposed P1 thin / P2 full, not decided |
 
 ### B. Plant record & human input
 | ID | Feature | Notes |

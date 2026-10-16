@@ -91,6 +91,12 @@ Annual event, pre-registration map, seed/cutting tracks, class-at-scale, class p
 ## H. Monetization — later (M1–M5)
 Premium tier, printed biography book, physical tags, B2B shop tags, relocation partnerships. **P5** — only after retention is proven. No pricing decided yet (open).
 
+## I. Operations
+
+| ID | Feature | Detail | Acceptance criteria | Pri | Data |
+|---|---|---|---|---|---|
+| F43 | Admin dashboard (web) | Admin-only web console: user list filterable by country, region, language, status and sortable by plant count, daily posts, last active; daily charts for signups, active owners, plants, lines, reactions, windowsill threads, circle fill, reports queue. Read-only in v1. See [[admin-dashboard]] | Non-admin accounts cannot load it; no message text or exact location shown; each user-detail view logged | P1 thin / P2 full (proposed) | profiles (+ `last_seen_at`), plants, lines, circles, reports, `daily_stats` (new), admin_actions |
+
 ## Cross-cutting acceptance for v1
 - [ ] Nothing publishes without moderation pass; pipeline down = hold
 - [ ] ≤2 pushes/day; no guilt copy anywhere
