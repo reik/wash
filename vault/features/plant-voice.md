@@ -138,3 +138,4 @@ Example homeroom:
 - [ ] Write 20 sample lines per voice stage × 3 temperaments to test the tone
 - [ ] Add the voice test to the Sprout Weekend pilot plan ([[sprout-day]] experiment 3)
 - [ ] Draft the trait rule list with thresholds
+- [ ] Choose the model for lines: run the [[model-bakeoff]]
