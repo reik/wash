@@ -1,0 +1,212 @@
+[
+  {
+    "id": "12df8b78-befd-58b8-b41e-18b53046422f",
+    "role": "owner",
+    "nickname": "Aiko",
+    "icon_photo_id": null,
+    "locale": "ja",
+    "tz": "Asia/Tokyo",
+    "tz_band": "apac",
+    "quiet_hours": {
+      "start": 22,
+      "end": 7
+    },
+    "notif_prefs": {
+      "digest": false,
+      "highlight": false
+    },
+    "strikes": 0,
+    "status": "active",
+    "terms_accepted_at": "2026-10-01T09:00:00Z",
+    "created_at": "2026-10-01T09:00:00Z"
+  },
+  {
+    "id": "f16aee34-aa34-5986-9bf0-b564ce7224f1",
+    "role": "owner",
+    "nickname": "Ben",
+    "icon_photo_id": null,
+    "locale": "en",
+    "tz": "America/Chicago",
+    "tz_band": "americas",
+    "quiet_hours": {
+      "start": 22,
+      "end": 7
+    },
+    "notif_prefs": {
+      "digest": false,
+      "highlight": false
+    },
+    "strikes": 0,
+    "status": "active",
+    "terms_accepted_at": "2026-10-01T09:00:00Z",
+    "created_at": "2026-10-01T09:00:00Z"
+  },
+  {
+    "id": "240c6599-6eff-538b-8f98-a0dc25ad5dc8",
+    "role": "owner",
+    "nickname": "Carla",
+    "icon_photo_id": null,
+    "locale": "en",
+    "tz": "America/Sao_Paulo",
+    "tz_band": "americas",
+    "quiet_hours": {
+      "start": 22,
+      "end": 7
+    },
+    "notif_prefs": {
+      "digest": false,
+      "highlight": false
+    },
+    "strikes": 0,
+    "status": "active",
+    "terms_accepted_at": "2026-10-02T09:00:00Z",
+    "created_at": "2026-10-02T09:00:00Z"
+  },
+  {
+    "id": "d4e87bf3-1fa8-506e-b48e-bc1211462a15",
+    "role": "owner",
+    "nickname": "Dmitri",
+    "icon_photo_id": null,
+    "locale": "en",
+    "tz": "Europe/Berlin",
+    "tz_band": "emea",
+    "quiet_hours": {
+      "start": 22,
+      "end": 7
+    },
+    "notif_prefs": {
+      "digest": false,
+      "highlight": false
+    },
+    "strikes": 0,
+    "status": "active",
+    "terms_accepted_at": "2026-10-02T09:00:00Z",
+    "created_at": "2026-10-02T09:00:00Z"
+  },
+  {
+    "id": "ffc1fdbc-230a-5578-8d3e-ae85697cac8b",
+    "role": "owner",
+    "nickname": "Emi",
+    "icon_photo_id": null,
+    "locale": "ja",
+    "tz": "Asia/Tokyo",
+    "tz_band": "apac",
+    "quiet_hours": {
+      "start": 22,
+      "end": 7
+    },
+    "notif_prefs": {
+      "digest": false,
+      "highlight": false
+    },
+    "strikes": 0,
+    "status": "active",
+    "terms_accepted_at": "2026-10-03T09:00:00Z",
+    "created_at": "2026-10-03T09:00:00Z"
+  },
+  {
+    "id": "6094b766-22f9-5979-96a3-f32ccaf27e51",
+    "role": "owner",
+    "nickname": "Farah",
+    "icon_photo_id": null,
+    "locale": "en",
+    "tz": "Asia/Dubai",
+    "tz_band": "emea",
+    "quiet_hours": {
+      "start": 22,
+      "end": 7
+    },
+    "notif_prefs": {
+      "digest": false,
+      "highlight": false
+    },
+    "strikes": 0,
+    "status": "active",
+    "terms_accepted_at": "2026-10-03T09:00:00Z",
+    "created_at": "2026-10-03T09:00:00Z"
+  },
+  {
+    "id": "b36f6020-b703-58fc-a0cf-95e787a186e4",
+    "role": "owner",
+    "nickname": "Gus",
+    "icon_photo_id": null,
+    "locale": "en",
+    "tz": "Australia/Melbourne",
+    "tz_band": "apac",
+    "quiet_hours": {
+      "start": 22,
+      "end": 7
+    },
+    "notif_prefs": {
+      "digest": false,
+      "highlight": false
+    },
+    "strikes": 0,
+    "status": "active",
+    "terms_accepted_at": "2026-10-04T09:00:00Z",
+    "created_at": "2026-10-04T09:00:00Z"
+  },
+  {
+    "id": "fa4d66b1-b4d5-5d05-9ea2-edec4abe0944",
+    "role": "owner",
+    "nickname": "Hana",
+    "icon_photo_id": null,
+    "locale": "en",
+    "tz": "Asia/Seoul",
+    "tz_band": "apac",
+    "quiet_hours": {
+      "start": 22,
+      "end": 7
+    },
+    "notif_prefs": {
+      "digest": false,
+      "highlight": false
+    },
+    "strikes": 0,
+    "status": "active",
+    "terms_accepted_at": "2026-10-04T09:00:00Z",
+    "created_at": "2026-10-04T09:00:00Z"
+  },
+  {
+    "id": "1538c7b2-7559-53a8-bb3d-4fa3ab5844f9",
+    "role": "owner",
+    "nickname": "Ines",
+    "icon_photo_id": null,
+    "locale": "en",
+    "tz": "Europe/Madrid",
+    "tz_band": "emea",
+    "quiet_hours": {
+      "start": 22,
+      "end": 7
+    },
+    "notif_prefs": {
+      "digest": false,
+      "highlight": false
+    },
+    "strikes": 0,
+    "status": "active",
+    "terms_accepted_at": "2026-10-05T09:00:00Z",
+    "created_at": "2026-10-05T09:00:00Z"
+  },
+  {
+    "id": "f7ad914d-6535-5c24-a425-999c58bd34d7",
+    "role": "owner",
+    "nickname": "Jack",
+    "icon_photo_id": null,
+    "locale": "en",
+    "tz": "America/Toronto",
+    "tz_band": "americas",
+    "quiet_hours": {
+      "start": 22,
+      "end": 7
+    },
+    "notif_prefs": {
+      "digest": false,
+      "highlight": false
+    },
+    "strikes": 0,
+    "status": "active",
+    "terms_accepted_at": "2026-10-06T09:00:00Z",
+    "created_at": "2026-10-06T09:00:00Z"
+  }
+]

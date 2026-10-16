@@ -260,3 +260,5 @@ plant_events row created
 - [ ] Family size cap → if needed, `families.max_chat_members` + paging
 - [ ] Analytics product events (funnel) — separate `analytics_events` table or external (PostHog)? Don't confuse with `plant_events`.
 - [ ] Translation cache invalidation when a line is edited after posting (allowed? lean: no edits after post, delete instead)
+- [ ] Found while seeding dummy data ([[seed-data-fit]]): `circle_members` needs `owner_id` (one plant per owner per circle) and `is_guest`; `circle_rules` needs `guest_after_days` and maybe `hold_days`
+- [ ] Dummy-row marker (`profiles.is_seed` or email domain only), family-level temperament defaults, and how a user's country is derived for the admin dashboard ([[seed-data-fit]])
