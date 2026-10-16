@@ -2,7 +2,7 @@
 title: P0 — Tone samples
 status: drafting
 created: 2026-10-08
-updated: 2026-10-08
+updated: 2026-10-16
 tags: [experiment, voice, p0]
 ---
 
@@ -120,8 +120,16 @@ If the JA versions feel flat, that is a **translation prompt problem**, fixable 
 - Whether stage/temperament is *guessable* from the line (personality legibility)
 - Whether any line makes you cringe (kill-list those patterns before the pilot)
 
+## Result (2026-10-16)
+Owner scored **all 22 moments ✅** (22 of 22 = 100%, pass bar was 70%). No 😐 or ❌, so there is nothing to rewrite and no cringe patterns to kill-list yet.
+
+Still open:
+- The friend test: show 5 to 10 lines to a plant-owning friend; pass = they pick at least 2 to screenshot.
+- The JA spot-check was not scored separately.
+- A clean sweep says little about which lines are best. The friend test is the real filter.
+
 ## Next steps
-- [ ] You: score the 22 moments ✅/😐/❌ (10 min)
+- [x] You: score the 22 moments ✅/😐/❌ (all ✅, 2026-10-16)
 - [ ] You: show top lines to one plant friend
-- [ ] Me: rewrite ❌ lines once, in this note
+- [x] Me: rewrite ❌ lines once, in this note (none to rewrite)
 - [ ] Winner patterns get pinned as style examples for the pilot ([[circle-pilot]])

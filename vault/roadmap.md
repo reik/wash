@@ -123,7 +123,7 @@ Back to [[index]] · Principles: [[principles]] · Stack: [[tech-direction]]
 ## Dev priority
 
 ### P0 — Validate before heavy build (no full app required) — **in progress 2026-10-08**
-1. Tone samples: public lines + windowsill threads (feel test) → [[tone-samples]] **written**; needs owner scoring
+1. Tone samples: public lines + windowsill threads (feel test) → [[tone-samples]] **scored 2026-10-16: 22 of 22 ✅**; friend screenshot test still open
 2. Story/biography call-out (will people write plant life stories?) → [[story-callout]] **drafts ready**; needs posting
 3. Hand-run plant group chat (Discord): draft → approve → react → [[circle-pilot]] **plan ready**; needs participants
 4. Thin windowsill arm in the same hand-run → included in [[circle-pilot]]
