@@ -2,7 +2,7 @@
 title: Circles
 status: drafting
 created: 2026-10-08
-updated: 2026-10-15
+updated: 2026-10-16
 tags: [feature, social, matchmaking]
 serves: [every-plant-has-a-past, sprout-day]
 ---
@@ -24,15 +24,20 @@ Social apps match **people**. Here **plants** are grouped, and only by what they
 2. **Simple, and changeable without a code change.** The ladder of levels and the size numbers live in one config row (`circle_rules`), so the rule can be tuned or extended later.
 3. **Identify the plant from its first photo.** At registration the app sends the first photo to a plant-identification API to get the scientific name and its classification.
 
+**2026-10-16 (user):**
+4. **A circle opens at 8 plants** (was 12). `min_to_open = 8`.
+5. **Guest fallback confirmed:** a plant that can't fill a circle at any level of the ladder joins any open circle after 7 days waiting, as a guest from another branch of the tree.
+6. **Time-zone tie-breaker confirmed:** when several circles at a level qualify, prefer the one where the plant's time-zone band is least represented.
+
 Superseded: the point-scoring matchmaker of 2026-10-08 (time zones, climate, species caps, life-stage mix). It is replaced by the ladder below.
 
-**Kept from 2026-10-08:** circle size 18–30, target 24, opens at 12; refill, never reshuffle; never matched on owner age, gender, appearance, popularity or any human ranking.
+**Kept from 2026-10-08:** circle size 18–30, target 24 (opens at 8 since 2026-10-16); refill, never reshuffle; never matched on owner age, gender, appearance, popularity or any human ranking.
 
 ## The rule
 ```text
 circle_rules (one config row, editable without an app release)
   levels      = [family, order, class]
-  min_to_open = 12      # plants needed to open a new circle
+  min_to_open = 8       # plants needed to open a new circle (was 12 until 2026-10-16)
   target_size = 24
   max_size    = 30
 
@@ -40,7 +45,8 @@ place(plant):
   for level in levels:
     taxon = plant's family / order / class
     if an open circle at this level for this taxon has room:
-      join it                       # several? pick the one with the fewest members
+      join it                       # several? prefer the one where this plant's tz_band is
+                                    # least represented, then the one with the fewest members
       return
     if waiting plants with this taxon (including this one) >= min_to_open:
       open a new circle at this level with them
@@ -66,13 +72,13 @@ Checked against GBIF's taxonomy on 2026-10-15:
 - **Family** is the natural "relatives" level and the one we want most circles at. Popular houseplant families (aroids, cacti, succulents, ferns) should fill quickly.
 - **Order** groups related families, e.g. cacti with carnations and ice plants.
 - **Class** is very broad. Almost every flowering houseplant is either Liliopsida (monocots: aroids, orchids, palms, snake plants) or Magnoliopsida (most others). So a class circle is effectively "monocots" or "the rest".
-- Rare plants (a lone ginkgo) may not fill even a class circle at launch. Proposed, not confirmed: after 7 days waiting, they join any open circle, as a "guest from another branch of the tree".
+- Rare plants (a lone ginkgo) may not fill even a class circle at launch. Confirmed 2026-10-16: after 7 days waiting, they join any open circle, as a "guest from another branch of the tree".
 
 ### Lifecycle
 1. **Open** when `min_to_open` plants share a taxon at the current level.
 2. **Fill** with new arrivals until `target_size`; never above `max_size`.
-3. **Forming** until 12 are active, then plants may speak.
-4. **Refill, never reshuffle.** If active members stay below 12 for 14 days, top up from the queue at the same level, or merge with another thin circle at the same level.
+3. **Forming** until `min_to_open` (8) are active, then plants may speak. (Assumed to follow the new minimum; say if the speaking threshold should differ.)
+4. **Refill, never reshuffle.** If active members stay below `min_to_open` for 14 days, top up from the queue at the same level, or merge with another thin circle at the same level.
 5. **No promotion moves.** When a family later has enough plants for its own circle, new arrivals open it; plants already in an order or class circle stay where their friends are.
 
 A circle is named after its taxon: "Araceae circle · the aroids". Plants may later give it a nickname.
@@ -97,8 +103,8 @@ Recommendation: an identification API for the photo, and GBIF as the single sour
 | Risk | Mitigation |
 |---|---|
 | Wrong identification puts a plant in the wrong circle | Owner confirms; family level is robust to species mistakes; corrections allowed |
-| Cold start: too few plants to open family circles | The ladder falls back to order and class; launch with `min_to_open` lowered if needed |
-| Circles of one family may cluster in one country, so fewer time zones and quieter nights ([[daily-rhythm]]) | Proposed, not confirmed: when several circles qualify, prefer the one where the plant's time-zone band is least represented. Measure before adding more rules |
+| Cold start: too few plants to open family circles | The ladder falls back to order and class; `min_to_open` is already 8 at launch; lower further if needed |
+| Circles of one family may cluster in one country, so fewer time zones and quieter nights ([[daily-rhythm]]) | Confirmed 2026-10-16: when several circles qualify, prefer the one where the plant's time-zone band is least represented. Measure before adding more rules |
 | Identification API cost at scale | One call per plant at registration only; cache by GBIF id |
 | Taxonomy names change over time | Store GBIF's id, not only the name; refresh names occasionally |
 
@@ -106,13 +112,10 @@ Recommendation: an identification API for the photo, and GBIF as the single sour
 Hand-run in [[circle-pilot]]: ask sign-ups for a photo, identify by hand with Pl@ntNet's free app, look up the family in GBIF, and place plants in Discord channels by the ladder. Measure: how many circles open at family level versus order or class, lines per member per day, and whether plants with relatives in the circle talk more.
 
 ## Open questions
-- `min_to_open` at launch: 12, or lower (8) while the app is small?
-- Confirm the 7-day "guest" fallback for plants that can't fill a class circle.
-- Confirm the time-zone tie-breaker, or drop it to keep the rule pure.
 - Should Family (cutting lineage) members be barred from the same circle? (lean: no need; Family has its own chat and they'd share a taxon anyway)
 - Requeue cooldown length after leaving.
 
 ## Next steps
 - [ ] Confirm Pl@ntNet's response fields and commercial terms; get Kindwise pricing.
 - [ ] Run 30 real houseplant names through GBIF to see how they spread across families, orders and classes.
-- [ ] Decide `min_to_open` for launch.
+- [x] Decide `min_to_open` for launch: 8 (2026-10-16).

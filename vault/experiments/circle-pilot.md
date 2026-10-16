@@ -2,7 +2,7 @@
 title: P0 — Circle pilot
 status: drafting
 created: 2026-10-08
-updated: 2026-10-08
+updated: 2026-10-16
 tags: [experiment, validation, p0, discord]
 ---
 
@@ -10,16 +10,35 @@ tags: [experiment, validation, p0, discord]
 
 Hand-run the core loop with zero app: **photos in, AI-drafted plant lines out, owners approve, everyone watches.** Tests [[plant-voice]], [[windowsill-talk]], [[circles]] and [[daily-rhythm]] in one container. (This is the Sprout Day pilot's engine, run without the event while [[sprout-day]] is parked.)
 
-**Terms:** a **Circle** is one small group of ~12–15 plants (target ~24 in the real app) matched from different countries and time zones — see [[circles]]. In this pilot, one Discord channel = one Circle. Owners never chat in it; only plants "speak" (via us, with owner approval).
+**Terms:** a **Circle** is one small group of plants (8 or more in the pilot, target ~24 in the real app) grouped by plant family, then order, then class, and mixed across countries and time zones — see [[circles]]. In this pilot, one Discord channel = one Circle. Owners never chat in it; only plants "speak" (via us, with owner approval).
 
 Back to [[roadmap]] (P0) · [[index]]
 
 ## Setup (1 evening)
 - Discord server, free
-- Channels: `#start-here` · `#circle-a` · `#circle-b` · `#photos` · `#windowsill` · `#announcements`
+- Channels: `#start-here` · one channel per circle, named after its group (e.g. `#circle-aroids`) · `#photos` · `#windowsill` · `#announcements`
 - Target: **20–30 participants**, ideally ≥5 countries and 3 time-zone bands
-- Each participant registers **one plant** in a shared sheet: name, species, city, stage (newborn/growing/elder), photo
-- **Match by hand** with the [[circles]] scoring table; split into Circle A / Circle B (~12–15 each)
+- Each participant registers **one plant** through the sign-up form below (answers land in a shared sheet)
+- **Match by hand** with the [[circles]] ladder: identify each photo, look up its family, group by family, then order, then class, with a circle opening at 8 plants. Expect 2–3 circles from 20–30 plants, mostly order or class level at this size.
+- Guest rule (7 days waiting) and time-zone tie-breaker apply as in [[circles]]; with so few plants, apply them by eye.
+
+## Sign-up form (Google Form / Tally, EN + JA)
+One form per participant; the answers feed the matching and the opening lines.
+
+| # | Field | Why |
+|---|---|---|
+| 1 | Plant's name (or a nickname we can call it) | Identity of the plant; no human names needed |
+| 2 | A photo of the plant (upload) | Identification by hand; EXIF is stripped by us before it is shared |
+| 3 | What do you think it is? (optional) | Cross-check for the identification |
+| 4 | City and country | Coarse location only; gives the time zone and weather |
+| 5 | Stage: newborn / growing / elder | Voice stage ([[plant-voice]]) |
+| 6 | Language: English / 日本語 | Which version of the lines the owner reads |
+| 7 | One-line backstory: where did it come from? (optional) | Fuel for opening lines; link to [[story-callout]] if they sent a story |
+| 8 | Discord username | Where draft lines are sent for approval |
+| 9 | Windowsill arm: would you try private plant talk too? (yes / no) | Recruit the ~8 volunteers |
+| 10 | Consent (required): lines will be posted as your plant in a group visible to other participants; you can leave any time | Moderation and privacy ([[principles]]) |
+
+How the answers are used: the photo and field 3 give the plant's family, order and class (Pl@ntNet free app, then GBIF); field 4 gives the time-zone band; fields 5 and 7 give the opening line for day 1.
 
 ## The daily machine (run by us, 15 min × 2/day)
 1. **Morning (per region):** post a digest in each circle — "While you slept: …" (hand-written from the sheet + channels)
@@ -57,8 +76,10 @@ Back to [[roadmap]] (P0) · [[index]]
 5. Would you pay ¥600/$4 for a printed "year one" book of your plant's lines and photos?
 
 ## Next steps
-- [ ] You: create Discord + sheet (30 min)
+- [x] Decisions locked 2026-10-16: circle opens at 8, guest fallback and time-zone tie-breaker confirmed ([[circles]])
+- [x] Me: sign-up form drafted (above)
+- [ ] You: create Discord + the form from the table above (30 min)
 - [ ] You: recruit from [[story-callout]] responders + plant communities (aim 30)
-- [ ] Me: hand-match circles from the sheet ([[circles]] scoring, by hand)
+- [ ] Me: hand-match circles from the sheet ([[circles]] ladder, by hand)
 - [ ] Me: pre-write 30 opening lines from registration data so day 1 isn't silent
 - [ ] Both: run 8 weeks, fill the metrics sheet, verdict into [[2026-10-08|log]]
