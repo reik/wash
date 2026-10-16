@@ -8,7 +8,7 @@ tags: [experiment, data-model, seed]
 
 # Seed data fit check
 
-Putting the 10 dummy owners and 33 plants from the circle simulation (`vault/experiments/circle-simulation.md`, PR #8) into `db/seed/dev/` as rows of the draft [[data-model]] showed where the model does not yet fit the rules decided for [[circles]]. Nothing in the model was changed; each item is a proposal added to the data-model open questions. Back to [[index]]
+Putting the 10 dummy owners and 33 plants from [[circle-simulation]] into `db/seed/dev/` as rows of the draft [[data-model]] showed where the model does not yet fit the rules decided for [[circles]]. Nothing in the model was changed; each item is a proposal added to the data-model open questions. Back to [[index]]
 
 ## What fit without changes
 `species` (with GBIF class, order, family, genus), `profiles` and `plants` took every dummy value as the model describes them. The taxon columns on `plants` match their species, and the seed passes the integrity checks in `db/seed/test_seed_dev.py`.
