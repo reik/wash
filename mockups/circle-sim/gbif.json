@@ -1,0 +1,210 @@
+{
+ "golden pothos": {
+  "canonicalName": "Epipremnum aureum",
+  "family": "Araceae",
+  "order": "Alismatales",
+  "class": "Liliopsida",
+  "usageKey": 2868323,
+  "matchType": "EXACT"
+ },
+ "monstera": {
+  "canonicalName": "Monstera deliciosa",
+  "family": "Araceae",
+  "order": "Alismatales",
+  "class": "Liliopsida",
+  "usageKey": 2868241,
+  "matchType": "EXACT"
+ },
+ "philodendron": {
+  "canonicalName": "Philodendron hederaceum",
+  "family": "Araceae",
+  "order": "Alismatales",
+  "class": "Liliopsida",
+  "usageKey": 2871003,
+  "matchType": "EXACT"
+ },
+ "ZZ plant": {
+  "canonicalName": "Zamioculcas zamiifolia",
+  "family": "Araceae",
+  "order": "Alismatales",
+  "class": "Liliopsida",
+  "usageKey": 2869014,
+  "matchType": "EXACT"
+ },
+ "peace lily": {
+  "canonicalName": "Spathiphyllum wallisii",
+  "family": "Araceae",
+  "order": "Alismatales",
+  "class": "Liliopsida",
+  "usageKey": 2869680,
+  "matchType": "EXACT"
+ },
+ "anthurium": {
+  "canonicalName": "Anthurium andraeanum",
+  "family": "Araceae",
+  "order": "Alismatales",
+  "class": "Liliopsida",
+  "usageKey": 2872695,
+  "matchType": "EXACT"
+ },
+ "syngonium": {
+  "canonicalName": "Syngonium podophyllum",
+  "family": "Araceae",
+  "order": "Alismatales",
+  "class": "Liliopsida",
+  "usageKey": 2867866,
+  "matchType": "EXACT"
+ },
+ "snake plant": {
+  "canonicalName": "Dracaena trifasciata",
+  "family": "Asparagaceae",
+  "order": "Asparagales",
+  "class": "Liliopsida",
+  "usageKey": 11041822,
+  "matchType": "EXACT"
+ },
+ "spider plant": {
+  "canonicalName": "Chlorophytum comosum",
+  "family": "Asparagaceae",
+  "order": "Asparagales",
+  "class": "Liliopsida",
+  "usageKey": 2774846,
+  "matchType": "EXACT"
+ },
+ "aloe": {
+  "canonicalName": "Aloe vera",
+  "family": "Asphodelaceae",
+  "order": "Asparagales",
+  "class": "Liliopsida",
+  "usageKey": 2777724,
+  "matchType": "EXACT"
+ },
+ "phalaenopsis orchid": {
+  "canonicalName": "Phalaenopsis amabilis",
+  "family": "Orchidaceae",
+  "order": "Asparagales",
+  "class": "Liliopsida",
+  "usageKey": 5311007,
+  "matchType": "EXACT"
+ },
+ "areca palm": {
+  "canonicalName": "Dypsis lutescens",
+  "family": "Arecaceae",
+  "order": "Arecales",
+  "class": "Liliopsida",
+  "usageKey": 2735935,
+  "matchType": "EXACT"
+ },
+ "calathea": {
+  "canonicalName": "Goeppertia orbifolia",
+  "family": "Marantaceae",
+  "order": "Zingiberales",
+  "class": "Liliopsida",
+  "usageKey": 7476815,
+  "matchType": "EXACT"
+ },
+ "boston fern": {
+  "canonicalName": "Nephrolepis exaltata",
+  "family": "Nephrolepidaceae",
+  "order": "Polypodiales",
+  "class": "Polypodiopsida",
+  "usageKey": 2650927,
+  "matchType": "EXACT"
+ },
+ "jade plant": {
+  "canonicalName": "Crassula ovata",
+  "family": "Crassulaceae",
+  "order": "Saxifragales",
+  "class": "Magnoliopsida",
+  "usageKey": 5362063,
+  "matchType": "EXACT"
+ },
+ "echeveria": {
+  "canonicalName": "Echeveria elegans",
+  "family": "Crassulaceae",
+  "order": "Saxifragales",
+  "class": "Magnoliopsida",
+  "usageKey": 8315197,
+  "matchType": "EXACT"
+ },
+ "prickly pear": {
+  "canonicalName": "Opuntia ficus-indica",
+  "family": "Cactaceae",
+  "order": "Caryophyllales",
+  "class": "Magnoliopsida",
+  "usageKey": 5384064,
+  "matchType": "EXACT"
+ },
+ "mammillaria": {
+  "canonicalName": "Mammillaria elongata",
+  "family": "Cactaceae",
+  "order": "Caryophyllales",
+  "class": "Magnoliopsida",
+  "usageKey": 8406968,
+  "matchType": "EXACT"
+ },
+ "fiddle-leaf fig": {
+  "canonicalName": "Ficus lyrata",
+  "family": "Moraceae",
+  "order": "Rosales",
+  "class": "Magnoliopsida",
+  "usageKey": 5361899,
+  "matchType": "EXACT"
+ },
+ "rubber plant": {
+  "canonicalName": "Ficus elastica",
+  "family": "Moraceae",
+  "order": "Rosales",
+  "class": "Magnoliopsida",
+  "usageKey": 7835333,
+  "matchType": "EXACT"
+ },
+ "begonia": {
+  "canonicalName": "Begonia maculata",
+  "family": "Begoniaceae",
+  "order": "Cucurbitales",
+  "class": "Magnoliopsida",
+  "usageKey": 7303475,
+  "matchType": "EXACT"
+ },
+ "african violet": {
+  "canonicalName": "Streptocarpus ionanthus",
+  "family": "Gesneriaceae",
+  "order": "Lamiales",
+  "class": "Magnoliopsida",
+  "usageKey": 6710927,
+  "matchType": "EXACT"
+ },
+ "basil": {
+  "canonicalName": "Ocimum basilicum",
+  "family": "Lamiaceae",
+  "order": "Lamiales",
+  "class": "Magnoliopsida",
+  "usageKey": 2927096,
+  "matchType": "EXACT"
+ },
+ "rosemary": {
+  "canonicalName": "Salvia rosmarinus",
+  "family": "Lamiaceae",
+  "order": "Lamiales",
+  "class": "Magnoliopsida",
+  "usageKey": 10902460,
+  "matchType": "EXACT"
+ },
+ "ginkgo bonsai": {
+  "canonicalName": "Ginkgo biloba",
+  "family": "Ginkgoaceae",
+  "order": "Ginkgoales",
+  "class": "Ginkgoopsida",
+  "usageKey": 2687885,
+  "matchType": "EXACT"
+ },
+ "maidenhair fern": {
+  "canonicalName": "Adiantum raddianum",
+  "family": "Pteridaceae",
+  "order": "Polypodiales",
+  "class": "Polypodiopsida",
+  "usageKey": 2651826,
+  "matchType": "EXACT"
+ }
+}

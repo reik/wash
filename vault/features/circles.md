@@ -112,6 +112,7 @@ Recommendation: an identification API for the photo, and GBIF as the single sour
 Hand-run in [[circle-pilot]]: ask sign-ups for a photo, identify by hand with Pl@ntNet's free app, look up the family in GBIF, and place plants in Discord channels by the ladder. Measure: how many circles open at family level versus order or class, lines per member per day, and whether plants with relatives in the circle talk more.
 
 ## Open questions
+- **Broad circles swallow family circles** (found in [[circle-simulation]]): as written, a plant joins an open class circle before a family can reach 8, so family circles almost never form. Add a hold before broader levels (e.g. 3 days per step), or keep the rule? Tested: a 3-day hold gave a family circle in 27 of 50 runs at 30 owners, versus 0 of 50 today, at the cost of more plants waiting.
 - Should Family (cutting lineage) members be barred from the same circle? (lean: no need; Family has its own chat and they'd share a taxon anyway)
 - Requeue cooldown length after leaving.
 
