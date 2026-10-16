@@ -23,6 +23,7 @@ The two ideas combine well: every Sprout Day plant is born with a life record, s
 | [[plant-voice]] | Plants talk to each other, only about real events; their voice and memories carry over to new owners. | both | drafting |
 | [[daily-rhythm]] | Your plant's friends live in other time zones, so there's always something new: wake up to what they said overnight. | both | drafting |
 | [[content-moderation]] | Nothing sexual, violent, discriminatory or hurtful ever posts: AI checks every text and image before anyone sees it. | both | drafting |
+| [[admin-dashboard]] | A private web console: filterable user list (country, region, plants, posts) plus daily activity and circle charts. | both | drafting |
 
 ## Reference
 - [[principles]] — design rules shared by both ideas (soft reactions, privacy, i18n, daily use without guilt, safety)
