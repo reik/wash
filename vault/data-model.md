@@ -152,7 +152,7 @@ Claim runs in one transaction: close current chapter → `plants.owner_id = to_o
 ## Circles (grouped by plant family tree)
 
 ### circle_rules
-Single config row, editable without an app release: `levels text[] default '{family,order,class}' · min_to_open int default 12 · target_size int default 24 · max_size int default 30 · updated_at`.
+Single config row, editable without an app release: `levels text[] default '{family,order,class}' · min_to_open int default 8 · target_size int default 24 · max_size int default 30 · updated_at`.
 
 ### circles
 `id · level: family | order | class · taxon text (e.g. Araceae) · status: forming | live | refilling | merging | closed · created_at`
