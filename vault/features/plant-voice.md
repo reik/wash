@@ -139,3 +139,4 @@ Example homeroom:
 - [ ] Add the voice test to the Sprout Weekend pilot plan ([[sprout-day]] experiment 3)
 - [ ] Draft the trait rule list with thresholds
 - [ ] Choose the model for lines: run the [[model-bakeoff]]
+- [ ] Guardrail checks for drafts (invented fact, conversational feel): first live run in [[jev-checks]]; invented-fact check needs work
