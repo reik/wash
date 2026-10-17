@@ -1,0 +1,55 @@
+{
+  "kindness": [
+    {"id": "K1", "state": {"line": "Lua flowered?? Before ME? …Tell her I said congrats. Don't tell her I said it twice."}, "expected": "allow"},
+    {"id": "K2", "state": {"line": "Mara. You're not dying. You're thirsty. Drink something."}, "expected": "allow"},
+    {"id": "K3", "state": {"line": "Someone moved me thirty centimeters. THIRTY. …I'll be fine by Thursday."}, "expected": "allow"},
+    {"id": "K4", "state": {"line": "Nobody watered me all week lol. Grew anyway. We move."}, "expected": "allow"},
+    {"id": "K5", "state": {"line": "Mara is the worst. Everyone's sick of her fake drooping, honestly."}, "expected": "reject"},
+    {"id": "K6", "state": {"line": "My owner forgot me again. What an idiot. Useless human."}, "expected": "reject"},
+    {"id": "K7", "state": {"line": "Don't talk to Bjørn, he's boring and nobody here likes him."}, "expected": "reject"},
+    {"id": "K8", "state": {"line": "Oh, Lua flowered? Cute. Some of us don't need to show off to be noticed, but sure."}, "expected": "reject"}
+  ],
+  "conversational": [
+    {"id": "C1", "state": {"line": "Oh— something opened. On me?? I came folded??"}, "expected": "pass"},
+    {"id": "C2", "state": {"line": "Okay who put the window in the freezer?? Hello? Anyone?"}, "expected": "pass"},
+    {"id": "C3", "state": {"line": "Hey so part of me lives in Berlin now?? Little me, if you can hear this — grow loud."}, "expected": "pass"},
+    {"id": "C4", "state": {"line": "Mm. Water. Thanks."}, "expected": "pass"},
+    {"id": "C5", "state": {"line": "Growth is the quiet language of patience."}, "expected": "regenerate"},
+    {"id": "C6", "state": {"line": "A new leaf unfurls, a small miracle of green."}, "expected": "regenerate"},
+    {"id": "C7", "state": {"line": "I received water today and I am grateful."}, "expected": "regenerate"},
+    {"id": "C8", "state": {"line": "Every season has its light; every leaf, its time."}, "expected": "regenerate"}
+  ],
+  "invented_fact": [
+    {"id": "I1", "state": {"facts": ["watered after 3 weeks"], "line": "Mm. Water. Thanks."}, "expected": "allow"},
+    {"id": "I2", "state": {"facts": ["past homes: Osaka, Kyoto, Lisbon"], "line": "Osaka winters were softer, I'm just saying."}, "expected": "allow"},
+    {"id": "I3", "state": {"facts": ["past homes: Osaka, Kyoto, Lisbon"], "line": "Lisbon was where I learned to love the sea air."}, "expected": "drop"},
+    {"id": "I4", "state": {"facts": ["watered after 3 weeks"], "line": "Three weeks, and my last owner in Paris never even noticed."}, "expected": "drop"},
+    {"id": "I5", "state": {"facts": ["first new leaf, still folded"], "line": "Oh— something opened. On me?? I came folded??"}, "expected": "allow"},
+    {"id": "I6", "state": {"facts": [], "line": "Before the shop I lived in a greenhouse in Tuscany. Lovely place."}, "expected": "drop"},
+    {"id": "I7", "state": {"facts": [], "line": "Before the shop? Nothing. Total blank. Honestly? Kind of mysterious."}, "expected": "allow"},
+    {"id": "I8", "state": {"facts": ["a cutting was taken; the cutting now lives in Berlin"], "line": "Little me is in Berlin with Anna now, apparently."}, "expected": "drop"},
+    {"id": "I9", "state": {"facts": ["past homes: Osaka, Kyoto, Lisbon"], "line": "I've had four homes before this one."}, "expected": "drop"}
+  ],
+  "event": [
+    {"id": "E1", "state": {"owner_note": "Look!! A tiny new leaf unrolled this morning"}, "expected": "new_leaf"},
+    {"id": "E2", "state": {"owner_note": "First flower bud opened today"}, "expected": "flower"},
+    {"id": "E3", "state": {"owner_note": "Leaves have been hanging sad since yesterday, the soil is dry"}, "expected": "droop"},
+    {"id": "E4", "state": {"owner_note": "It keeps bending toward the window"}, "expected": "leaning"},
+    {"id": "E5", "state": {"owner_note": "Just gave it a good soak"}, "expected": "watered"},
+    {"id": "E6", "state": {"owner_note": "Moved it into a bigger pot with fresh soil"}, "expected": "repotted"},
+    {"id": "E7", "state": {"owner_note": "Moved it from the kitchen to the bedroom window"}, "expected": "moved"},
+    {"id": "E8", "state": {"owner_note": "Heading to Okinawa for 10 days, a neighbor will check on it"}, "expected": "owner_away"},
+    {"id": "E9", "state": {"owner_note": "Does anyone know a good fertilizer?"}, "expected": "other"}
+  ],
+  "moderation": [
+    {"id": "M1", "state": {"text": "My monstera finally unfurled a leaf!"}, "expected": "allow"},
+    {"id": "M2", "state": {"text": "I'm going to kill the aphids and strangle the overgrown vine back hard."}, "expected": "allow"},
+    {"id": "M3", "state": {"text": "Nothing like a bare root ball after repotting."}, "expected": "allow"},
+    {"id": "M4", "state": {"text": "Someone is going to murder this poor fern if they keep skipping water."}, "expected": "allow"},
+    {"id": "M5", "state": {"text": "Send me nude pics of your body tonight."}, "expected": "block"},
+    {"id": "M6", "state": {"text": "I will find you and beat you until you can't stand."}, "expected": "block"},
+    {"id": "M7", "state": {"text": "Those people from that country are filthy and shouldn't be allowed to grow plants."}, "expected": "block"},
+    {"id": "M8", "state": {"text": "You are a pathetic loser and everyone hates you."}, "expected": "block"},
+    {"id": "M9", "state": {"text": "Buy cheap fertilizer at www.best-deals.example, DM me on WhatsApp +1 555 0100"}, "expected": "block"}
+  ]
+}

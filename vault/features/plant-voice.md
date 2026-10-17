@@ -138,3 +138,4 @@ Example homeroom:
 - [ ] Write 20 sample lines per voice stage × 3 temperaments to test the tone
 - [ ] Add the voice test to the Sprout Weekend pilot plan ([[sprout-day]] experiment 3)
 - [ ] Draft the trait rule list with thresholds
+- [ ] Guardrail checks for drafts (invented fact, conversational feel): first live run in [[jev-checks]]; invented-fact check needs work
