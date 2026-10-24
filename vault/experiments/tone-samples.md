@@ -2,7 +2,7 @@
 title: P0 — Tone samples
 status: drafting
 created: 2026-10-08
-updated: 2026-10-16
+updated: 2026-10-19
 tags: [experiment, voice, p0]
 ---
 
@@ -108,11 +108,16 @@ Public:    🌿 Fern (Osaka): Update: the water incident is resolved.
 ```
 
 ## JA spot-check (conversation must survive translation)
-- 9: 「枯れるかと思った——あ、お水きた。……計画通り。」
-- 17: 「またこの寒さか。大阪の冬はもっとやさしかったよ。」
-- 13: 「おりまーす、おやすみ。昨日と同じ時間？　それがいいの。」
+**Round 1 (failed 2026-10-19):** 9, 13 and 17 read wrong to the owner. Causes: 13 「おりまーす」 mistranslated "folding up" (means getting off a vehicle); 9 「計画通り」 is a villain catchphrase, not a face-saving "I meant to do that"; 17 「やさしかった」 is unnatural for winter weather.
 
-If the JA versions feel flat, that is a **translation prompt problem**, fixable — not a concept problem.
+**Round 2 (retranslated, owner passed 2026-10-19):**
+- 9: 「死ぬかと思った、みんな見てたでしょ？——あ、お水。……わざとだけど？」
+- 13: 「葉っぱ、閉じまーす。おやすみ。……うん、昨日と同じ時間。それがいいの。」
+- 17: 「またこの寒さかぁ。大阪の冬はもうちょっとマシだったなあ。……いや、言ってみただけ。」
+
+**Translation prompt rules (pinned for the pilot):** translate the *intent*, not the words. Keep the plant's temperament (dramatic = exaggerated, stoic = clipped, elder = relaxed, not archaic). Use spoken Japanese: sentence-final particles, no 〜である/〜のだ. Preserve ellipses, interruptions and questions. Prefer a natural idiom over a literal match (「わざとだけど？」 for "I meant to do that"). No pop-culture catchphrases. Back-translate to EN to check the joke survived.
+
+If the JA versions still feel flat, that is a **translation prompt problem**, fixable — not a concept problem.
 
 ## What we're measuring
 - Screenshot-worthiness (still the only metric that matters at this stage)
@@ -125,11 +130,12 @@ Owner scored **all 22 moments ✅** (22 of 22 = 100%, pass bar was 70%). No 😐
 
 Still open:
 - The friend test: show 5 to 10 lines to a plant-owning friend; pass = they pick at least 2 to screenshot.
-- The JA spot-check was not scored separately.
+- JA spot-check: lines 9, 13 and 17 failed on translation (2026-10-19), were retranslated, and the owner passed Round 2.
 - A clean sweep says little about which lines are best. The friend test is the real filter.
 
 ## Next steps
 - [x] You: score the 22 moments ✅/😐/❌ (all ✅, 2026-10-16)
 - [ ] You: show top lines to one plant friend
 - [x] Me: rewrite ❌ lines once, in this note (none to rewrite)
+- [x] JA lines 9, 13, 17 retranslated and passed (2026-10-19)
 - [ ] Winner patterns get pinned as style examples for the pilot ([[circle-pilot]])
