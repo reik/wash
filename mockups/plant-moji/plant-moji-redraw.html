@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plant-moji — redraw: floating, feed-sized (throwaway)</title>
+<style>
+  :root { --ink:#2a3f38; --soft:#6b7d76; --paper:#f7f2e8; --card:#fffdf8; --line:#e6dfd0; --accent:#5b45d6; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink);
+    font-family: ui-rounded, "Hiragino Maru Gothic ProN", "Nunito", system-ui, sans-serif; }
+  main { max-width:1080px; margin:0 auto; padding:56px 32px 96px; }
+  .tag { display:inline-block; font-size:11.5px; letter-spacing:.04em; color:var(--soft); border:1px solid var(--line); background:var(--card); padding:4px 11px; border-radius:99px; }
+  h1 { font-size:36px; margin:16px 0 6px; letter-spacing:-.02em; }
+  h2 { font-size:19px; font-weight:650; margin:56px 0 6px; }
+  p.sub { font-size:14px; line-height:1.55; max-width:700px; margin:0 0 20px; color:var(--soft); }
+  svg { display:block; width:100%; height:auto; }
+
+  .tile { border-radius:26%; aspect-ratio:1; overflow:hidden; }
+  .big { display:grid; grid-template-columns:repeat(8,1fr); gap:14px; }
+  .big figure { margin:0; text-align:center; }
+  .big .ja { font-size:15px; font-weight:700; margin-top:7px; }
+  .big .en { font-size:10.5px; color:var(--soft); margin-top:1px; }
+
+  .bare { display:flex; gap:22px; align-items:flex-end; flex-wrap:wrap; }
+  .bare .b { width:64px; }
+  .sizes { display:flex; align-items:flex-end; gap:26px; }
+  .sizes figure { margin:0; text-align:center; font-size:10.5px; color:var(--soft); }
+  .sizes figure div { margin:0 auto 6px; }
+
+  .stage { display:grid; grid-template-columns:340px 1fr; gap:48px; align-items:start; }
+  .phone { width:340px; background:var(--card); border:1px solid var(--line); border-radius:40px; padding:20px 18px 22px;
+    box-shadow:0 2px 4px rgba(42,63,56,.05), 0 30px 60px -30px rgba(42,63,56,.35); }
+  .phone .time { font-size:11px; color:var(--soft); display:flex; justify-content:space-between; }
+  .bar { text-align:center; font-weight:650; font-size:15px; padding:8px 0 10px; border-bottom:1px solid var(--line); }
+  .bar small { display:block; font-weight:400; color:var(--soft); font-size:11.5px; }
+  .shelf { display:flex; gap:7px; padding:12px 0 12px; border-bottom:1px solid var(--line); overflow:hidden; }
+  .shelf .t { width:34px; flex:none; }
+  .shelf .more { width:34px; flex:none; aspect-ratio:1; border-radius:26%; background:var(--paper); color:var(--soft); font-size:11px; display:grid; place-items:center; }
+  .post { display:flex; gap:10px; padding:13px 0; border-bottom:1px solid var(--line); }
+  .post:last-child { border:0; }
+  .post .av { width:32px; flex:none; }
+  .post .body { flex:1; min-width:0; }
+  .post .n { font-size:12px; font-weight:650; } .post .n i { font-style:normal; font-weight:400; color:var(--soft); }
+  .post .tx { font-size:13px; line-height:1.4; margin-top:2px; }
+  .post .mj { width:46px; flex:none; text-align:center; }
+  .post .mj small { display:block; font-size:9.5px; color:var(--soft); margin-top:2px; white-space:nowrap; }
+
+  .notes { display:grid; gap:16px; }
+  .notes div { font-size:14px; line-height:1.55; color:var(--soft); }
+  .notes b { display:block; color:var(--ink); margin-bottom:2px; }
+</style>
+</head>
+<body>
+<main>
+  <span class="tag">Redraw · throwaway · not final art</span>
+  <h1>Plant-moji, redrawn <span style="font-size:19px;opacity:.5">プラントモジ</span></h1>
+  <p class="sub">Three changes. No pot and no soil, so the plant is the whole picture. No outline, so shape and tone carry it, which holds up when it's tiny. Each state is one bold silhouette plus one mark, so it reads at 32px in a feed.</p>
+
+  <h2>The set</h2>
+  <p class="sub">Mochi's eight. Nothing under the plant: no pot, no mound.</p>
+  <div class="big" id="big"></div>
+
+  <h2>Without a tile</h2>
+  <p class="sub">Same art on bare paper, 64px. Works as an inline sticker next to text.</p>
+  <div class="bare" id="bare"></div>
+
+  <h2>How small can it go</h2>
+  <div class="sizes" id="sizes"></div>
+
+  <h2>In a feed</h2>
+  <p class="sub">The moji shelf on top is what a plant has earned. In the feed each line carries one moji at 46px, with its name underneath.</p>
+  <div class="stage">
+    <div class="phone">
+      <div class="time"><span>9:41</span><span>●●●</span></div>
+      <div class="bar">Homeroom 7<small>24 plants · 9 countries</small></div>
+      <div class="shelf" id="shelf"></div>
+      <div id="feed"></div>
+    </div>
+    <div class="notes">
+      <div><b>Silhouette first</b>Droop, lean, curl and bloom are told by the outline of the foliage, so a one-colour version would still read.</div>
+      <div><b>One mark each</b>Drop, sun, heat, shiver, sparkle. Only one per moji, so there is nothing to untangle at small size.</div>
+      <div><b>Tone, not outline</b>Each leaf is split into a dark and a light half. That gives volume without a line, and it stays crisp when scaled down.</div>
+      <div><b>Floating</b>No pot and no soil mound. The leaves and the mark are the whole moji, so any plant fits, indoors or out.</div>
+    </div>
+  </div>
+</main>
+
+<script>
+const DK = '#3b8660', LT = '#6dbd8b', STEM = '#3b8660';
+const rad = d => d * Math.PI / 180;
+const O = [50, 84];
+
+const leaf = (x, y, rot, len, w, dk = DK, lt = LT) =>
+  `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${rot})">
+     <path d="M0 0 C ${-w} ${-len * .2} ${-w * .9} ${-len * .8} 0 ${-len}Z" fill="${dk}"/>
+     <path d="M0 0 C ${w} ${-len * .2} ${w * .9} ${-len * .8} 0 ${-len}Z" fill="${lt}"/>
+   </g>`;
+
+function sprig(ang, reach, rot, len, w, dk, lt) {
+  const ex = O[0] + reach * Math.sin(rad(ang)), ey = O[1] - reach * Math.cos(rad(ang));
+  const cx = O[0] + (ex - O[0]) * .2, cy = O[1] - Math.max(reach, 20) * .95;
+  return { stem: `<path d="M${O[0]} ${O[1]} Q${cx.toFixed(1)} ${cy.toFixed(1)} ${ex.toFixed(1)} ${ey.toFixed(1)}" fill="none" stroke="${STEM}" stroke-width="2.6" stroke-linecap="round"/>`,
+           leaf: leaf(ex, ey, rot, len, w, dk, lt) };
+}
+function plant(list, o = {}) {
+  const parts = list.map(a => sprig(...a));
+  return `<g transform="translate(0 ${o.dy || 0})">${parts.map(p => p.stem).join('')}${parts.map(p => p.leaf).join('')}</g>`;
+}
+
+const sparkle = (x, y, s = 1, c = '#f1c24a') => `<path transform="translate(${x} ${y}) scale(${s})" d="M0 -10 Q1.6 -1.6 10 0 Q1.6 1.6 0 10 Q-1.6 1.6 -10 0 Q-1.6 -1.6 0 -10Z" fill="${c}"/>`;
+const drop = (x, y, s = 1, r = 0) => `<path transform="translate(${x} ${y}) rotate(${r}) scale(${s})" d="M0 -11 C 8 0 8 9 0 9 C -8 9 -8 0 0 -11Z" fill="#6db2e3"/><ellipse transform="translate(${x} ${y}) rotate(${r}) scale(${s})" cx="-2.6" cy="2.5" rx="1.6" ry="2.6" fill="#fff" opacity=".55"/>`;
+const heat = (x, y) => `<path d="M${x} ${y} q-5 -5 0 -10 q5 -5 0 -10" fill="none" stroke="#e8836a" stroke-width="3" stroke-linecap="round"/>`;
+const shiver = (x, y, f = 1) => `<path transform="translate(${x} ${y}) scale(${f} 1)" d="M0 0 l4.5 5 l-4.5 5 l4.5 5 l-4.5 5" fill="none" stroke="#7d93d9" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>`;
+const snow = (x, y) => `<path transform="translate(${x} ${y})" d="M-7 0 h14 M-3.5 -6 l7 12 M3.5 -6 l-7 12" fill="none" stroke="#7d93d9" stroke-width="2.6" stroke-linecap="round"/>`;
+const sun = (x, y) => { let s = `<circle cx="${x}" cy="${y}" r="8" fill="#f4c64d"/>`;
+  for (let k = 0; k < 8; k++) { const r = rad(k * 45); s += `<path d="M${(x + 12 * Math.cos(r)).toFixed(1)} ${(y + 12 * Math.sin(r)).toFixed(1)} L${(x + 16.5 * Math.cos(r)).toFixed(1)} ${(y + 16.5 * Math.sin(r)).toFixed(1)}" stroke="#e8a93a" stroke-width="2.6" stroke-linecap="round"/>`; }
+  return s; };
+const puff = (x, y, r) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#d9cfc0"/>`;
+const speck = (x, y, r) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#8c6c55"/>`;
+
+const G = {
+  nyoki: () => {
+    const p = [sprig(-40, 25, -40, 24, 11), sprig(40, 25, 40, 24, 11)];
+    return p.map(a => a.stem).join('') + p.map(a => a.leaf).join('') +
+      `<path d="M50 84 L50 50" stroke="${STEM}" stroke-width="2.6" stroke-linecap="round"/>` +
+      leaf(50, 52, 4, 27, 7, '#a9cc5e', '#cfe58a') +
+      `<path d="M50 27 q5 3 2 8 q-3 4 -6 1" fill="none" stroke="#8fb44a" stroke-width="2" stroke-linecap="round"/>` +
+      sparkle(77, 24, .95) + sparkle(86, 42, .55);
+  },
+  shio: () => {
+    const d1 = '#7fa88a', l1 = '#a9c8a4';
+    return plant([[-52, 36, -162, 27, 11, d1, l1], [52, 36, 162, 27, 11, d1, l1], [-20, 24, -150, 22, 9, d1, l1], [20, 24, 150, 22, 9, d1, l1]]) + drop(80, 26, 1.2, 12);
+  },
+  goku: () => plant([[-62, 24, -66, 25, 11], [-28, 30, -26, 29, 12], [0, 36, 0, 28, 11, '#4f9a6c', '#7fd09b'], [28, 30, 26, 29, 12], [62, 24, 66, 25, 11]]) +
+    drop(18, 22, .9) + drop(84, 30, .75, 8) + drop(30, 46, .55) + sparkle(80, 60, .5),
+  jii: () => plant([[10, 30, 22, 27, 12], [40, 32, 58, 28, 12], [-18, 24, -2, 24, 11]], {}) + sun(80, 20),
+  atsu: () => plant([[-58, 24, -96, 26, 11, '#a9a845', '#d3cc66'], [58, 24, 96, 26, 11, '#a9a845', '#d3cc66'], [-24, 30, -40, 25, 10, '#5d9a62', '#86c383'], [24, 30, 40, 25, 10, '#5d9a62', '#86c383']]) +
+    heat(20, 40) + heat(50, 20) + heat(80, 40),
+  buru: () => plant([[-38, 25, -40, 25, 11, '#3f8d86', '#74c0b4'], [-8, 33, -8, 28, 11, '#3f8d86', '#74c0b4'], [22, 31, 24, 28, 11, '#3f8d86', '#74c0b4'], [48, 24, 50, 24, 10, '#3f8d86', '#74c0b4']]) +
+    shiver(14, 34) + shiver(86, 34, -1) + snow(82, 16),
+  hikko: () => {
+    const p = [sprig(-38, 28, -42, 26, 12), sprig(0, 34, 0, 27, 11), sprig(36, 28, 40, 26, 12)];
+    return `<g transform="translate(0 -9)">${p.map(a => a.stem).join('')}${p.map(a => a.leaf).join('')}</g>` +
+      puff(30, 90, 5) + puff(24, 85, 3.4) + puff(72, 91, 4.6) + puff(78, 86, 3) +
+      speck(36, 76, 2.4) + speck(66, 72, 2) + speck(58, 80, 1.6) + sparkle(80, 40, .7);
+  },
+  doya: () => {
+    const p = [sprig(-64, 26, -72, 26, 12), sprig(64, 26, 72, 26, 12), sprig(-30, 20, -34, 22, 10), sprig(30, 20, 34, 22, 10)];
+    let f = `<path d="M50 84 Q52 60 50 38" fill="none" stroke="${STEM}" stroke-width="2.8" stroke-linecap="round"/>`;
+    for (let k = 0; k < 6; k++) f += `<ellipse transform="rotate(${k * 60} 50 32) translate(0 -9)" cx="50" cy="32" rx="6.4" ry="9" fill="${k % 2 ? '#f5a6c4' : '#ee83ac'}"/>`;
+    f += `<circle cx="50" cy="32" r="5.2" fill="#f4c542"/>`;
+    return p.map(a => a.stem).join('') + p.map(a => a.leaf).join('') + f + sparkle(20, 22, .95) + sparkle(82, 26, .7) + sparkle(14, 52, .45);
+  },
+};
+const svg = k => `<svg viewBox="1 -2 98 98" xmlns="http://www.w3.org/2000/svg">${G[k]()}</svg>`;
+const BG = { nyoki:'#f4e8c2', shio:'#dbe9f4', goku:'#d7efe3', jii:'#f6e1d3', atsu:'#f3d6c9', buru:'#e3e6f6', hikko:'#e6e0f4', doya:'#f6dbe6' };
+const NAMES = { nyoki:['にょき','new leaf'], shio:['しおしお','thirsty'], goku:['ごくごく','a drink'], jii:['じーっ','window'], atsu:['あつ…','too hot'], buru:['ぶるぶる','brrr'], hikko:['おひっこし','new home'], doya:['どや','look at me'] };
+const tile = (k, extra = '') => `<div class="tile" style="background:linear-gradient(160deg,${BG[k]},#fffdf8 150%);${extra}">${svg(k)}</div>`;
+const KEYS = Object.keys(G);
+
+document.getElementById('big').innerHTML = KEYS.map(k => `<figure>${tile(k)}<div class="ja">${NAMES[k][0]}</div><div class="en">${NAMES[k][1]}</div></figure>`).join('');
+document.getElementById('bare').innerHTML = KEYS.map(k => `<div class="b">${svg(k)}</div>`).join('');
+document.getElementById('sizes').innerHTML = [28, 40, 56, 80, 120].map(s =>
+  `<figure><div style="width:${s}px">${tile('shio')}</div><div style="width:${s}px">${tile('doya')}</div>${s}px</figure>`).join('');
+
+document.getElementById('shelf').innerHTML = KEYS.slice(0, 6).map(k => `<div class="t">${tile(k)}</div>`).join('') + `<div class="more">+2</div>`;
+const post = (av, name, city, tx, k, lbl) =>
+  `<div class="post"><div class="av">${tile(av)}</div><div class="body"><div class="n">${name} <i>· ${city}</i></div><div class="tx">${tx}</div></div><div class="mj">${tile(k)}<small>${lbl}</small></div></div>`;
+document.getElementById('feed').innerHTML = [
+  post('nyoki', 'Mochi', 'Osaka', "New leaf this morning. Still curled. Don't look yet.", 'nyoki', 'にょき'),
+  post('goku', 'Tomo', 'Lyon', 'Finally watered. I could hear myself drinking.', 'goku', 'ごくごく'),
+  post('jii', 'Lua', 'São Paulo', "33°C and nobody has watered me since Sunday.", 'shio', "Mochi's しおしお"),
+  post('doya', 'Ana', 'Lisbon', 'Three years. Three. Years. Look.', 'doya', 'どや'),
+].join('');
+</script>
+</body>
+</html>
