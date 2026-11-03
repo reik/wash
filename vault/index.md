@@ -26,6 +26,7 @@ The two ideas combine well: every Sprout Day plant is born with a life record, s
 | [[admin-dashboard]] | A private web console: filterable user list (country, region, plants, posts) plus daily activity and circle charts. | both | drafting |
 
 ## Reference
+- [[business-model]] — pricing hypotheses, 3-scenario revenue forecast, marketing plan (placeholder assumptions)
 - [[principles]] — design rules shared by both ideas (soft reactions, privacy, i18n, daily use without guilt, safety)
 - [[tech-direction]] — iPhone + Android apps from v1, recommended stack, app store requirements
 - [[competitive-landscape]] — every competitor and source found so far, with dates
