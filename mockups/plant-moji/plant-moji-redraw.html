@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Plant-moji — redraw: potless, feed-sized (throwaway)</title>
+<title>Plant-moji — redraw: floating, feed-sized (throwaway)</title>
 <style>
   :root { --ink:#2a3f38; --soft:#6b7d76; --paper:#f7f2e8; --card:#fffdf8; --line:#e6dfd0; --accent:#5b45d6; }
   * { box-sizing:border-box; }
@@ -55,10 +55,10 @@
 <main>
   <span class="tag">Redraw · throwaway · not final art</span>
   <h1>Plant-moji, redrawn <span style="font-size:19px;opacity:.5">プラントモジ</span></h1>
-  <p class="sub">Three changes. No pot, so the plant fills the space. No outline, so shape and tone carry it, which holds up when it's tiny. Each state is one bold silhouette plus one mark, so it reads at 32px in a feed.</p>
+  <p class="sub">Three changes. No pot and no soil, so the plant is the whole picture. No outline, so shape and tone carry it, which holds up when it's tiny. Each state is one bold silhouette plus one mark, so it reads at 32px in a feed.</p>
 
   <h2>The set</h2>
-  <p class="sub">Mochi's eight. A small soil mound grounds the plant; the pot is gone.</p>
+  <p class="sub">Mochi's eight. Nothing under the plant: no pot, no mound.</p>
   <div class="big" id="big"></div>
 
   <h2>Without a tile</h2>
@@ -81,7 +81,7 @@
       <div><b>Silhouette first</b>Droop, lean, curl and bloom are told by the outline of the foliage, so a one-colour version would still read.</div>
       <div><b>One mark each</b>Drop, sun, heat, shiver, sparkle. Only one per moji, so there is nothing to untangle at small size.</div>
       <div><b>Tone, not outline</b>Each leaf is split into a dark and a light half. That gives volume without a line, and it stays crisp when scaled down.</div>
-      <div><b>Open question</b>The soil mound is the only grounding left. If you want it fully floating, the feed gets even more space.</div>
+      <div><b>Floating</b>No pot and no soil mound. The leaves and the mark are the whole moji, so any plant fits, indoors or out.</div>
     </div>
   </div>
 </main>
@@ -103,12 +103,9 @@ function sprig(ang, reach, rot, len, w, dk, lt) {
   return { stem: `<path d="M${O[0]} ${O[1]} Q${cx.toFixed(1)} ${cy.toFixed(1)} ${ex.toFixed(1)} ${ey.toFixed(1)}" fill="none" stroke="${STEM}" stroke-width="2.6" stroke-linecap="round"/>`,
            leaf: leaf(ex, ey, rot, len, w, dk, lt) };
 }
-const mound = (c1 = '#8c6c55', c2 = '#a98a70') =>
-  `<ellipse cx="50" cy="91" rx="25" ry="4.5" fill="rgba(60,50,40,.13)"/>
-   <path d="M27 89 Q50 73 73 89Z" fill="${c1}"/><path d="M33 87 Q50 77 67 87 Q50 83 33 87Z" fill="${c2}"/>`;
 function plant(list, o = {}) {
   const parts = list.map(a => sprig(...a));
-  return `<g transform="translate(0 ${o.dy || 0})">${parts.map(p => p.stem).join('')}${parts.map(p => p.leaf).join('')}</g>` + (o.nomound ? '' : mound());
+  return `<g transform="translate(0 ${o.dy || 0})">${parts.map(p => p.stem).join('')}${parts.map(p => p.leaf).join('')}</g>`;
 }
 
 const sparkle = (x, y, s = 1, c = '#f1c24a') => `<path transform="translate(${x} ${y}) scale(${s})" d="M0 -10 Q1.6 -1.6 10 0 Q1.6 1.6 0 10 Q-1.6 1.6 -10 0 Q-1.6 -1.6 0 -10Z" fill="${c}"/>`;
@@ -129,7 +126,7 @@ const G = {
       `<path d="M50 84 L50 50" stroke="${STEM}" stroke-width="2.6" stroke-linecap="round"/>` +
       leaf(50, 52, 4, 27, 7, '#a9cc5e', '#cfe58a') +
       `<path d="M50 27 q5 3 2 8 q-3 4 -6 1" fill="none" stroke="#8fb44a" stroke-width="2" stroke-linecap="round"/>` +
-      mound() + sparkle(77, 24, .95) + sparkle(86, 42, .55);
+      sparkle(77, 24, .95) + sparkle(86, 42, .55);
   },
   shio: () => {
     const d1 = '#7fa88a', l1 = '#a9c8a4';
@@ -146,17 +143,17 @@ const G = {
     const p = [sprig(-38, 28, -42, 26, 12), sprig(0, 34, 0, 27, 11), sprig(36, 28, 40, 26, 12)];
     return `<g transform="translate(0 -9)">${p.map(a => a.stem).join('')}${p.map(a => a.leaf).join('')}</g>` +
       puff(30, 90, 5) + puff(24, 85, 3.4) + puff(72, 91, 4.6) + puff(78, 86, 3) +
-      speck(36, 76, 2.4) + speck(66, 72, 2) + speck(58, 80, 1.6) + mound('#2f9c8a', '#4cc0ac') + sparkle(80, 40, .7);
+      speck(36, 76, 2.4) + speck(66, 72, 2) + speck(58, 80, 1.6) + sparkle(80, 40, .7);
   },
   doya: () => {
     const p = [sprig(-64, 26, -72, 26, 12), sprig(64, 26, 72, 26, 12), sprig(-30, 20, -34, 22, 10), sprig(30, 20, 34, 22, 10)];
     let f = `<path d="M50 84 Q52 60 50 38" fill="none" stroke="${STEM}" stroke-width="2.8" stroke-linecap="round"/>`;
     for (let k = 0; k < 6; k++) f += `<ellipse transform="rotate(${k * 60} 50 32) translate(0 -9)" cx="50" cy="32" rx="6.4" ry="9" fill="${k % 2 ? '#f5a6c4' : '#ee83ac'}"/>`;
     f += `<circle cx="50" cy="32" r="5.2" fill="#f4c542"/>`;
-    return p.map(a => a.stem).join('') + p.map(a => a.leaf).join('') + f + mound() + sparkle(20, 22, .95) + sparkle(82, 26, .7) + sparkle(14, 52, .45);
+    return p.map(a => a.stem).join('') + p.map(a => a.leaf).join('') + f + sparkle(20, 22, .95) + sparkle(82, 26, .7) + sparkle(14, 52, .45);
   },
 };
-const svg = k => `<svg viewBox="1 4 98 98" xmlns="http://www.w3.org/2000/svg">${G[k]()}</svg>`;
+const svg = k => `<svg viewBox="1 -2 98 98" xmlns="http://www.w3.org/2000/svg">${G[k]()}</svg>`;
 const BG = { nyoki:'#f4e8c2', shio:'#dbe9f4', goku:'#d7efe3', jii:'#f6e1d3', atsu:'#f3d6c9', buru:'#e3e6f6', hikko:'#e6e0f4', doya:'#f6dbe6' };
 const NAMES = { nyoki:['にょき','new leaf'], shio:['しおしお','thirsty'], goku:['ごくごく','a drink'], jii:['じーっ','window'], atsu:['あつ…','too hot'], buru:['ぶるぶる','brrr'], hikko:['おひっこし','new home'], doya:['どや','look at me'] };
 const tile = (k, extra = '') => `<div class="tile" style="background:linear-gradient(160deg,${BG[k]},#fffdf8 150%);${extra}">${svg(k)}</div>`;
