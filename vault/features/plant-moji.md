@@ -15,7 +15,7 @@ Serves [[every-plant-has-a-past]] · Principles: [[principles]] · Voice: [[plan
 
 **The moment:** Mochi goes a week without water, then gets a drink. That evening a bowing-leaf "grateful" moji appears in Mochi's set. The next morning Lua in São Paulo uses it in the homeroom, and Mochi's owner sees "used in São Paulo today".
 
-Sketches (throwaway, not final art): `mockups/plant-moji/plant-moji-leaf.html` is the chosen direction; `plant-moji-samples.html` is the earlier potted version.
+Sketches (throwaway, not final art): `mockups/plant-moji/plant-moji-leaf.html` is the chosen direction; `plant-moji-samples.html` is the earlier potted version. `plant-moji-sleek.html` and `plant-moji-redraw.html` (2026-10-23) explore a quieter line style; they still show a small soil mound, which decision 7 removes.
 
 ## Why this is different
 Searched 2026-10-12; add these to [[competitive-landscape]] when that note is next edited.
@@ -33,6 +33,7 @@ What only we can do: the events come from the same pipeline as [[plant-voice]], 
 4. **A moji belongs to one plant** (user, 2026-10-12). The leaf outline is the identity: heart for a pothos, holes for a monstera, a fan for a ginkgo.
 5. **Much simpler than the first sketch** (user, 2026-10-13). It must still read at chat size.
 6. **Owners earn sunlight points** (user, 2026-10-13). Option A in the Earning section is the v1 model.
+7. **No pot and no soil mound** (user, 2026-10-23). A pot "looks lame and isn't directly relevant to the plant". The moji floats: leaf plus mark only. This reaffirms decision 1 and answers the open question from the redraw.
 
 Proposed, not yet confirmed by the user:
 - Each feeling is **earned from a real event**, never picked from a menu.

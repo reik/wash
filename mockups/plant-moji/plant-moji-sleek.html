@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plant-moji — sleek direction (throwaway)</title>
+<style>
+  :root {
+    --ink:#2a3f38; --ink-soft:#6b7d76; --paper:#f7f2e8; --card:#fffdf8; --line:#e6dfd0;
+    --accent:#5b45d6; --accent-soft:#e9e4fa;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink);
+    font-family: ui-rounded, "Hiragino Maru Gothic ProN", "Nunito", system-ui, sans-serif; }
+  main { max-width:1080px; margin:0 auto; padding:56px 32px 96px; }
+  .tag { display:inline-block; font-size:11.5px; letter-spacing:.04em; color:var(--ink-soft); border:1px solid var(--line); background:var(--card); padding:4px 11px; border-radius:99px; }
+  h1 { font-size:38px; font-weight:700; margin:16px 0 6px; letter-spacing:-.02em; }
+  h2 { font-size:20px; font-weight:650; margin:64px 0 6px; letter-spacing:-.01em; }
+  p.lead { font-size:17px; line-height:1.55; max-width:660px; margin:0 0 8px; }
+  p.sub { font-size:14px; line-height:1.55; max-width:680px; margin:0 0 22px; color:var(--ink-soft); }
+
+  /* current vs sleek */
+  .vs { display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+  .vs h3 { font-size:13px; font-weight:600; color:var(--ink-soft); margin:0 0 12px; letter-spacing:.03em; text-transform:uppercase; }
+  .vs .row { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  .old { border-radius:26px; padding:14px; text-align:center; border:3px solid #17332b; box-shadow:5px 6px 0 #17332b; }
+  .old .ja { font-size:24px; font-weight:800; }
+  .old .en { font-size:13px; font-weight:700; }
+
+  /* sleek card */
+  .grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+  .moji { background:var(--card); border:1px solid var(--line); border-radius:20px; padding:10px 10px 16px; text-align:center;
+          box-shadow:0 1px 2px rgba(42,63,56,.04), 0 8px 24px -12px rgba(42,63,56,.18); }
+  .moji .art { border-radius:14px; padding:6px 6px 0; }
+  .moji svg { width:100%; height:auto; display:block; }
+  .ja { font-size:21px; font-weight:700; margin-top:10px; letter-spacing:.02em; }
+  .en { font-size:12.5px; color:var(--ink-soft); margin-top:2px; }
+  .ev { display:inline-block; margin-top:9px; font-size:11px; color:var(--ink-soft); background:var(--paper); border-radius:99px; padding:3px 10px; }
+
+  /* phones */
+  .phones { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; justify-items:center; }
+  .phone { width:300px; height:620px; background:var(--card); border:1px solid var(--line); border-radius:40px; padding:22px 20px; position:relative; overflow:hidden;
+           box-shadow:0 2px 4px rgba(42,63,56,.05), 0 30px 60px -30px rgba(42,63,56,.35); display:flex; flex-direction:column; }
+  .phone .time { font-size:11px; color:var(--ink-soft); display:flex; justify-content:space-between; margin-bottom:6px; }
+  .welcome { align-items:center; text-align:center; background:linear-gradient(#efeaf9,#f7f2e8 55%); }
+  .welcome .hero { width:190px; margin:46px 0 10px; }
+  .welcome .brand { font-size:24px; font-weight:700; color:var(--accent); letter-spacing:-.01em; }
+  .welcome p { font-size:14px; line-height:1.5; margin:10px 12px 0; }
+  .welcome .spacer { flex:1; }
+  .btn { width:100%; border-radius:14px; padding:14px; font-size:14.5px; font-weight:600; text-align:center; }
+  .btn.primary { background:var(--accent); color:#fff; box-shadow:0 8px 18px -8px rgba(91,69,214,.7); }
+  .btn.ghost { background:var(--accent-soft); color:var(--accent); margin-top:9px; }
+  .fine { font-size:10.5px; color:var(--ink-soft); margin:12px 0 4px; }
+
+  .bar { text-align:center; font-weight:650; font-size:15px; padding:8px 0 12px; border-bottom:1px solid var(--line); margin-bottom:14px; }
+  .bar small { display:block; font-weight:400; color:var(--ink-soft); font-size:11.5px; margin-top:1px; }
+  .msg { display:flex; gap:9px; margin-bottom:15px; }
+  .msg > svg { width:34px; height:34px; flex:none; border-radius:50%; background:#e7f1e9; padding:2px; }
+  .msg .n { font-size:11.5px; font-weight:650; } .msg .n i { font-style:normal; font-weight:400; color:var(--ink-soft); }
+  .bub { background:var(--paper); border-radius:4px 14px 14px 14px; padding:8px 11px; font-size:13px; line-height:1.4; margin-top:3px; display:inline-block; }
+  .stk svg { width:84px; height:84px; display:block; }
+  .stk small { display:block; font-size:10px; color:var(--ink-soft); margin:-2px 0 0 6px; }
+  .react { font-size:12px; color:var(--ink-soft); margin-top:2px; }
+
+  .detail { align-items:center; text-align:center; }
+  .detail .big { width:230px; border-radius:26px; margin:18px 0 6px; padding:10px 10px 0; }
+  .detail .ja { font-size:30px; margin-top:6px; }
+  .detail .en { font-size:13.5px; }
+  .detail .ev { font-size:12px; }
+  .travel { margin-top:18px; width:100%; background:var(--paper); border-radius:16px; padding:13px 14px; text-align:left; font-size:13px; line-height:1.5; }
+  .travel b { font-weight:650; }
+  .pts { display:inline-block; background:#f6e6b4; border-radius:99px; padding:1px 9px; font-weight:650; font-size:12px; margin-left:4px; }
+  .travel .muted { color:var(--ink-soft); font-size:12px; }
+
+  .ink * { stroke:var(--ink); stroke-width:1.6; stroke-linejoin:round; stroke-linecap:round; }
+  .ink .line { fill:none; }
+  .ink text { stroke-width:0; }
+
+  .notes { margin-top:30px; display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  .notes div { font-size:13.5px; line-height:1.55; color:var(--ink-soft); }
+  .notes b { display:block; color:var(--ink); margin-bottom:3px; font-size:14px; }
+</style>
+</head>
+<body>
+<main>
+  <span class="tag">Direction sketch · throwaway · not final art</span>
+  <h1>Plant-moji, sleeker <span style="font-size:20px;opacity:.5">プラントモジ</span></h1>
+  <p class="lead">Same moji, same rule (no eyes, no mouth, real posture plus a small mark). The packaging gets quieter.</p>
+  <p class="sub">Borrowed from Ahead: soft lilac wash, one confident accent, generous space, calm rounded cards. Kept from plant-moji: cream paper, ink-green line, Japanese sound-words.</p>
+
+  <h2>Before and after</h2>
+  <div class="vs">
+    <div><h3>Current</h3><div class="row" id="old"></div></div>
+    <div><h3>Sleek</h3><div class="row" id="new"></div></div>
+  </div>
+  <div class="notes">
+    <div><b>Line</b>2.5px black outline and white sticker halo become a 1.6px ink-green line, no halo.</div>
+    <div><b>Depth</b>Hard offset shadow becomes a faint, wide, soft shadow. Cards sit on paper instead of stuck on it.</div>
+    <div><b>Colour</b>Saturated fills drop about a third. Plant and marks keep their hue so the feeling still reads. One accent, used only for actions.</div>
+  </div>
+
+  <h2>Mochi's set</h2>
+  <p class="sub">Eight moji earned since March, in the sleek style.</p>
+  <div class="grid" id="mochi"></div>
+
+  <h2>In the app</h2>
+  <p class="sub">Three screens in the same system: first launch, a Homeroom chat, and a moji's page.</p>
+  <div class="phones">
+    <div class="phone welcome">
+      <div class="time" style="width:100%"><span>9:41</span><span>●●●</span></div>
+      <div class="hero" id="hero"></div>
+      <div class="brand">Sasawis</div>
+      <p>Your plant has a life. Let it talk to the plants next door.</p>
+      <div class="spacer"></div>
+      <div class="btn primary">Get started</div>
+      <div class="btn ghost">I already have an account</div>
+      <div class="fine">By continuing you agree to the Terms and Privacy Policy.</div>
+    </div>
+    <div class="phone">
+      <div class="time"><span>9:41</span><span>●●●</span></div>
+      <div class="bar">Homeroom 7<small>24 plants · 9 countries</small></div>
+      <div id="chat"></div>
+    </div>
+    <div class="phone detail">
+      <div class="time" style="width:100%"><span>9:41</span><span>●●●</span></div>
+      <div class="bar" style="width:100%;border:0">Mochi's moji<small>pothos · Osaka</small></div>
+      <div class="moji big" id="big"></div>
+      <div class="travel" id="travel"></div>
+    </div>
+  </div>
+</main>
+
+<script>
+const INK = '#2a3f38';
+const G1 = '#5f9e7a', G2 = '#86bd97', G3 = '#b9d98a', POT = '#d98a68';
+const C = { drop:'#7fb8e0', spark:'#e8c45a', steam:'#e48a72', shiver:'#7d93d9', sun:'#f0c04a', ray:'#e0a63a', dirt:'#9a6e52', petal:'#f0a3bd', teal:'#5fb7a4' };
+const rad = d => d * Math.PI / 180;
+const wrap = (body, vb = '0 0 120 120') =>
+  `<svg viewBox="${vb}" xmlns="http://www.w3.org/2000/svg"><g class="ink">${body}</g></svg>`;
+
+function leaf(x, y, ang, s, fill) {
+  return `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${ang.toFixed(1)}) scale(${s})">
+    <path d="M0 2 C 17 -8 19 -34 0 -48 C -19 -34 -17 -8 0 2Z" fill="${fill}"/>
+    <path class="line" d="M0 -4 L0 -36" style="stroke-width:1.1;opacity:.55"/></g>`;
+}
+const stem = d => `<path class="line" d="${d}" style="stroke:${G1};stroke-width:3.4"/>`;
+function potShape(color) {
+  return `<path d="M40 82 L80 82 L76 108 Q75 113 70 113 L50 113 Q45 113 44 108Z" fill="${color}"/>
+    <rect x="35" y="74" width="50" height="11" rx="4" fill="${color}"/>`;
+}
+function plant(o = {}) {
+  const { droop = 0, lean = 0, stems = [-50, -17, 15, 46], len = [28, 38, 36, 27],
+          pot = POT, curl = false, flower = false, tint = null } = o;
+  const bx = 60, by = 78;
+  let s = '';
+  stems.forEach((a0, i) => {
+    const sg = a0 < 0 ? -1 : 1;
+    const a = a0 + lean + sg * droop * 52;
+    const L = len[i];
+    const tx = bx + L * Math.sin(rad(a)), ty = by - L * Math.cos(rad(a)) + droop * 10;
+    const c = a0 * 0.35 + lean * 0.6;
+    const cx = bx + L * 0.8 * Math.sin(rad(c)), cy = by - L * 0.8 * Math.cos(rad(c));
+    s += stem(`M${bx} ${by} Q${cx.toFixed(1)} ${cy.toFixed(1)} ${tx.toFixed(1)} ${ty.toFixed(1)}`);
+    s += leaf(tx, ty, a + sg * droop * 75, 0.56 + (i % 2) * 0.1, tint && i % 2 ? tint : (i % 2 ? G2 : G1));
+  });
+  if (curl) {
+    s += stem('M60 78 Q57 60 61 46');
+    s += `<path d="M61 48 C 68 40 67 26 60 20 C 55 28 55 40 61 48Z" fill="${G3}"/>
+          <path class="line" d="M60 22 q4 4 1 9" style="stroke-width:1.1;opacity:.55"/>`;
+  }
+  if (flower) {
+    s += stem('M60 78 Q63 55 60 34');
+    for (let k = 0; k < 5; k++) {
+      const r = rad(k * 72 - 90);
+      s += `<circle cx="${(60 + 9 * Math.cos(r)).toFixed(1)}" cy="${(26 + 9 * Math.sin(r)).toFixed(1)}" r="7" fill="${C.petal}"/>`;
+    }
+    s += `<circle cx="60" cy="26" r="5.5" fill="${C.spark}"/>`;
+  }
+  return s + potShape(pot);
+}
+const drop = (x, y, s = 1, r = 0) => `<path transform="translate(${x} ${y}) rotate(${r}) scale(${s})" d="M0 -11 C 8 0 8 9 0 9 C -8 9 -8 0 0 -11Z" fill="${C.drop}"/>`;
+const sparkle = (x, y, s = 1) => `<path transform="translate(${x} ${y}) scale(${s})" d="M0 -11 Q1.8 -1.8 11 0 Q1.8 1.8 0 11 Q-1.8 1.8 -11 0 Q-1.8 -1.8 0 -11Z" fill="${C.spark}" style="stroke-width:1.2"/>`;
+const steam = (x, y) => `<path class="line" transform="translate(${x} ${y})" d="M0 0 q-6 -6 0 -12 q6 -6 0 -12" style="stroke:${C.steam};stroke-width:2.6"/>`;
+const shiver = (x, y, f = 1) => `<path class="line" transform="translate(${x} ${y}) scale(${f} 1)" d="M0 0 l5 6 l-5 6 l5 6 l-5 6" style="stroke:${C.shiver};stroke-width:2.4"/>`;
+const snow = (x, y) => `<path class="line" transform="translate(${x} ${y})" d="M-7 0 h14 M-3.5 -6 l7 12 M3.5 -6 l-7 12" style="stroke:${C.shiver};stroke-width:2.2"/>`;
+const sun = (x, y) => { let s = `<circle cx="${x}" cy="${y}" r="9" fill="${C.sun}"/>`;
+  for (let k = 0; k < 8; k++) { const r = rad(k * 45); s += `<path class="line" d="M${(x + 13 * Math.cos(r)).toFixed(1)} ${(y + 13 * Math.sin(r)).toFixed(1)} L${(x + 18 * Math.cos(r)).toFixed(1)} ${(y + 18 * Math.sin(r)).toFixed(1)}" style="stroke:${C.ray};stroke-width:2.2"/>`; }
+  return s; };
+const dirt = pts => pts.map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${C.dirt}" style="stroke-width:0"/>`).join('');
+
+const M = {
+  nyoki: plant({ curl: true }) + sparkle(84, 22, .9) + sparkle(96, 40, .5),
+  shio:  plant({ droop: .95 }) + drop(98, 26, 1.15, 14),
+  goku:  plant({}) + drop(22, 22, .9) + drop(100, 30, .75) + drop(34, 46, .55) + sparkle(94, 60, .5),
+  jii:   plant({ lean: 20 }) + sun(100, 20),
+  atsu:  plant({ droop: .5, tint: '#cdd68a' }) + steam(22, 46) + steam(60, 22) + steam(98, 46),
+  buru:  plant({ droop: .12 }) + shiver(12, 34) + shiver(108, 34, -1) + snow(100, 18),
+  hikko: plant({ pot: C.teal }) + dirt([[28,104,3],[22,96,2],[94,106,2.6],[100,98,2],[33,112,2]]) + sparkle(96, 84, .6),
+  doya:  plant({ flower: true }) + sparkle(24, 24, .95) + sparkle(98, 30, .7) + sparkle(18, 56, .45),
+};
+const SET = [
+  ['nyoki','にょき',"Nyoki · new leaf, don't look yet",'14 Mar · first new leaf','#f6ebc6'],
+  ['shio','しおしお','Shio-shio · so thirsty','2 Jun · 6 days without water','#dcebf6'],
+  ['goku','ごくごく','Goku-goku · finally, a drink','3 Jun · watered','#dbf0e5'],
+  ['jii','じーっ','Jii · staring at the window','20 Jun · leaning to the light','#f6e2d6'],
+  ['atsu','あつ…','Atsu · too hot','4 Aug · Osaka 36°C','#f4d9cd'],
+  ['buru','ぶるぶる','Buru-buru · brrr','9 Jan · cold snap','#e4e7f6'],
+  ['hikko','おひっこし','Ohikkoshi · new pot day','12 Apr · repotted','#e9e2f5'],
+  ['doya','どや','Doya · look at me','30 Sep · first flower ever','#f6dde7'],
+];
+const sleek = ([k, ja, en, ev, bg]) =>
+  `<div class="moji"><div class="art" style="background:${bg}">${wrap(M[k])}</div><div class="ja">${ja}</div><div class="en">${en}</div><span class="ev">${ev}</span></div>`;
+document.getElementById('mochi').innerHTML = SET.map(sleek).join('');
+document.getElementById('new').innerHTML = [SET[1], SET[7]].map(sleek).join('');
+
+/* "current" look: crops of the real plant-moji-samples.png */
+const crop = (x, y, w, h) => `<div style="width:100%;aspect-ratio:${w}/${h};background:url(plant-moji-samples.png) -${x}px -${y}px / 1140px auto;transform-origin:0 0"></div>`;
+document.getElementById('old').innerHTML =
+  `<div class="oldimg" data-x="318" data-y="436" data-w="250" data-h="356"></div>` +
+  `<div class="oldimg" data-x="836" data-y="803" data-w="250" data-h="340"></div>`;
+document.querySelectorAll('.oldimg').forEach(el => {
+  const x = +el.dataset.x, y = +el.dataset.y, w = +el.dataset.w, h = +el.dataset.h;
+  el.style.cssText = `aspect-ratio:${w}/${h};background:url(plant-moji-samples.png) no-repeat;background-size:${1140 / w * 100}% auto;background-position:${x / (1140 - w) * 100}% ${y / (2100 - h) * 100}%`;
+});
+
+/* app screens */
+document.getElementById('hero').innerHTML = wrap(M.doya);
+const cactus = `<path d="M40 62 q-12 0 -12 -12 v-6 a5 5 0 0 1 10 0 v5 q0 3 4 3Z" fill="${G2}"/>
+  <path d="M80 54 q12 0 12 -12 v-4 a5 5 0 0 0 -10 0 v3 q0 3 -4 3Z" fill="${G2}"/>
+  <rect x="44" y="22" width="32" height="62" rx="16" fill="${G1}"/>` + potShape('#7d9be0');
+const waves = (x, y) => `<path class="line" transform="translate(${x} ${y})" d="M0 0 q4 -4 8 0 t8 0 t8 0" style="stroke:${C.steam};stroke-width:2.4"/>`;
+const lua = `<path class="line" d="M60 96 Q58 70 60 52" style="stroke:${G1};stroke-width:4"/>` +
+  [0,1,2,3,4,5].map(k => { const r = rad(k * 60); return `<ellipse cx="${(60 + 15 * Math.cos(r)).toFixed(1)}" cy="${(44 + 15 * Math.sin(r)).toFixed(1)}" rx="11" ry="11" fill="#ee8aa4"/>`; }).join('') +
+  `<circle cx="60" cy="44" r="9" fill="${C.spark}"/>` + leaf(60, 84, -65, .5, G1) + leaf(60, 78, 62, .5, G2);
+const msg = (av, name, city, inner) => `<div class="msg">${wrap(av)}<div><div class="n">${name} <i>· ${city}</i></div>${inner}</div></div>`;
+document.getElementById('chat').innerHTML = [
+  msg(cactus, 'Bjørn', 'Oslo', `<div class="bub">−6°C outside. I live on a radiator now. I have opinions about this.</div><div class="stk">${wrap(cactus + waves(14, 28) + waves(84, 22))}</div>`),
+  msg(plant({}), 'Mochi', 'Osaka', `<div class="bub">New leaf this morning. Still curled. Don't look yet.</div><div class="stk">${wrap(M.nyoki)}</div><div class="react">☀️ 5 &nbsp; 🌱 3</div>`),
+  msg(lua, 'Lua', 'São Paulo', `<div class="bub">33°C and nobody has watered me since Sunday.</div><div class="stk">${wrap(M.shio)}<small>Mochi's しおしお</small></div>`),
+].join('');
+document.getElementById('big').innerHTML = `<div class="art" style="background:#dcebf6">${wrap(M.shio)}</div><div class="ja">しおしお</div><div class="en">Shio-shio · so thirsty</div><span class="ev">2 Jun · 6 days without water</span>`;
+document.getElementById('travel').innerHTML = `<b>Went travelling today</b><br>Used in São Paulo and Oslo <span class="pts">+2 ☀</span><br><span class="muted">Only you can see this.</span>`;
+</script>
+</body>
+</html>
