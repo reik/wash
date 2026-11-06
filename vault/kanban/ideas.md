@@ -16,7 +16,7 @@ kanban-plugin: basic
 
 ## In Progress
 
-
+- [ ] [[app-shell]] — P1 step 1: Expo app shell with EN/JA i18n (auth, moderation, report/block to follow) #building
 
 ## Review
 
