@@ -23,8 +23,17 @@ Run the checks: `python3 db/seed/test_seed_dev.py`
   - `circles`, `circle_members` and `matchmaking_queue` are produced by the placement job. The seed only supplies the plants that job places. `plants.circle_id` is null here on purpose.
   - Species `temperament` is null until the curated table exists.
 
-## Loading (not built yet)
-No database exists yet. The loader, when written, should: create the `auth.users` rows from `auth_users.json` with the Supabase admin API, then insert `species`, `profiles`, `plants` in that order.
+## Loading into the local stack
+The schema for these tables lives in `supabase/migrations/20261103000000_dev_seed_tables.sql`. The loader only talks to a loopback URL and refuses anything else.
+
+```bash
+supabase start                      # local stack (API on http://127.0.0.1:56321)
+supabase db reset                   # apply migrations; clears auth users
+SUPABASE_SERVICE_ROLE_KEY="$(supabase status -o env | grep '^SERVICE_ROLE_KEY' | cut -d'"' -f2)" \
+  python3 db/seed/load_dev.py
+```
+
+The loader creates the 10 auth users through the admin API with their fixed ids, then upserts `species`, `profiles`, `plants` in that order. Running it again is safe. Tests: `python3 db/seed/test_load_dev.py`.
 
 ## Reproducing the circle simulation
 Reading these files into the simulation in `mockups/circle-sim/` gives exactly the same circles as its built-in dummy table (checked on 2026-10-16: Araceae circle on day 5, monocot circle on day 6, 13 plants waiting).
