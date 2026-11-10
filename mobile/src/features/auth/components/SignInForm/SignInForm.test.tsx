@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { fireEvent, render, screen } from '@testing-library/react-native';
-import { http, HttpResponse } from 'msw';
+import { delay, http, HttpResponse } from 'msw';
 import { I18nextProvider } from 'react-i18next';
 
 import { SUPABASE_URL } from '../../../../api/config';
@@ -51,5 +51,29 @@ describe('SignInForm', () => {
     await fillAndSubmit('plant@example.com', 'wrong-password');
 
     expect(await screen.findByText('Email or password is incorrect')).toBeTruthy();
+  });
+
+  it('should_disable_sign_in_button_while_request_is_in_flight', async () => {
+    server.use(
+      http.post(`${SUPABASE_URL}/auth/v1/token`, async () => {
+        await delay(200);
+        return HttpResponse.json({ error: 'invalid_grant' }, { status: 400 });
+      }),
+    );
+    await renderSignInForm();
+
+    await fillAndSubmit('plant@example.com', 'wrong-password');
+
+    expect(screen.getByRole('button', { name: 'Sign in' }).props.accessibilityState?.disabled).toBe(true);
+    expect(await screen.findByText('Email or password is incorrect')).toBeTruthy();
+  });
+
+  it('should_submit_form_when_return_is_pressed_in_password_field', async () => {
+    await renderSignInForm();
+    await fireEvent.changeText(screen.getByLabelText('Email'), 'not-an-email');
+
+    await fireEvent(screen.getByLabelText('Password'), 'submitEditing');
+
+    expect(await screen.findByText('Enter a valid email address')).toBeTruthy();
   });
 });
