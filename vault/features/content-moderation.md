@@ -1,8 +1,8 @@
 ---
 title: Content moderation
-status: drafting
+status: building
 created: 2026-10-02
-updated: 2026-10-02
+updated: 2026-11-12
 tags: [feature, safety, trust, ai]
 serves: [sprout-day, every-plant-has-a-past]
 ---

@@ -6,7 +6,6 @@ kanban-plugin: basic
 
 ## Backlog
 
-- [ ] [[content-moderation]] — AI checks every text and image before posting; nothing sexual, violent, discriminatory or hurtful (feature of both ideas) #drafting
 - [ ] [[admin-dashboard]] — Private web console: filterable user list plus daily activity and circle charts (feature of both ideas) #drafting
 - [ ] [[daily-rhythm]] — Time-zone relay and digests so people check in 2–3×/day without guilt (feature of both ideas) #drafting
 - [ ] [[plant-voice]] — Plants talk to each other, only about real events; voice carries over to new owners (feature of both ideas) #drafting
@@ -17,6 +16,7 @@ kanban-plugin: basic
 ## In Progress
 
 - [ ] [[app-shell]] — P1 step 1: Expo app shell with EN/JA i18n (auth, moderation, report/block to follow) #building
+- [ ] [[content-moderation]] — F7 baseline: server-side AI text check that fails closed; image check and posting wiring to follow (feature of both ideas) #building
 
 ## Review
 
