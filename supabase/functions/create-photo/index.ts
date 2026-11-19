@@ -3,6 +3,8 @@ import { createClient } from '@supabase/supabase-js';
 import { createClaudeImageClassifier } from '../_shared/claude-image-classifier.ts';
 import { createPhotoHandler, type PhotoDeps } from './handler.ts';
 
+const PHOTO_BUCKET = 'plant-photos';
+
 const url = Deno.env.get('SUPABASE_URL') ?? '';
 const anonKey = Deno.env.get('SUPABASE_ANON_KEY') ?? '';
 const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
@@ -35,21 +37,30 @@ const deps: PhotoDeps = {
     fetchImpl: fetch,
   }),
 
-  async recordPhoto(row) {
-    const { data, error } = await admin
-      .from('photos')
-      .insert({
-        plant_id: row.plantId,
-        uploader_id: row.uploaderId,
-        moderation_status: row.moderationStatus,
-        moderation_checked_at: new Date().toISOString(),
-      })
-      .select('id')
-      .single();
+  newId: () => crypto.randomUUID(),
+
+  async storeImage(path, bytes, mediaType) {
+    const { error } = await admin.storage.from(PHOTO_BUCKET).upload(path, bytes, {
+      contentType: mediaType,
+      upsert: false,
+    });
     if (error) {
       throw error;
     }
-    return { id: data.id };
+  },
+
+  async recordPhoto(row) {
+    const { error } = await admin.from('photos').insert({
+      id: row.id,
+      plant_id: row.plantId,
+      uploader_id: row.uploaderId,
+      storage_path: row.storagePath,
+      moderation_status: row.moderationStatus,
+      moderation_checked_at: new Date().toISOString(),
+    });
+    if (error) {
+      throw error;
+    }
   },
 };
 
