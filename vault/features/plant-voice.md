@@ -1,8 +1,8 @@
 ---
 title: Plant voice
-status: drafting
+status: building
 created: 2026-10-02
-updated: 2026-10-02
+updated: 2026-11-19
 tags: [feature, ai, voice, personality]
 serves: [every-plant-has-a-past, sprout-day]
 ---
