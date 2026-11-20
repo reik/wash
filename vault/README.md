@@ -6,9 +6,10 @@ Single source of truth for where each feature stands. Read it at the start of a 
 
 | Feature | Stage | Next action |
 |---|---|---|
-| [[app-shell]] (F1–F3) | building | Layer 2 merged; sign-in merged (#20, #21) |
-| [[content-moderation]] (F7) | building | Text gate for plant lines; photo gate PR #24 awaiting merge |
-| [[plant-voice]] | building | Gate plant lines through the text check before posting |
+| [[app-shell]] (F1–F3) | building | Sign-in merged (#20, #21); report/block (F8) next |
+| [[content-moderation]] (F7) | building | Photo gate (#24) and line gate (#25) merged; image and text checks merged |
+| [[plant-voice]] | building | Lines gated; chat design decides who sees a line |
+| [[photo-upload]] (F6) | building | Strip metadata, store the stripped copy, record `storage_path` |
 
 ## Delivery (PR by PR)
 
@@ -21,7 +22,9 @@ Single source of truth for where each feature stands. Read it at the start of a 
 | #21 | auth: sign-in redesign | merged |
 | #22 | content-moderation: text check | merged |
 | #23 | content-moderation: image check | merged |
-| #24 | content-moderation: photo gate | open |
+| #24 | content-moderation: photo gate | merged |
+| #25 | content-moderation: line gate | merged |
+| — | photo-upload: metadata strip, storage | in progress |
 
 ## Notes
-- Photo storage (F6) is blocked until #24 merges. Building it on top of #24 would stack PRs, so it waits.
+- Photo storage (F6) builds on the photo gate (#24), which has merged, so it starts from `main`.
