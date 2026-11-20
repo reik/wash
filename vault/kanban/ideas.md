@@ -19,6 +19,7 @@ kanban-plugin: basic
 - [ ] [[content-moderation]] — F7 baseline: server-side AI text check that fails closed; image check and posting wiring to follow (feature of both ideas) #building
 - [ ] [[plant-voice]] — Plant lines pass the text check before posting; events-only lines to follow (feature of both ideas) #building
 - [ ] [[photo-upload]] — F6: strip metadata, store the stripped copy in a private bucket, record the path (feature of every-plant-has-a-past) #building
+- [ ] [[plant-register]] — F9: register a plant with city, country and origin; owner-only access, short code from the database #building
 
 ## Review
 

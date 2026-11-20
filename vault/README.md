@@ -10,6 +10,7 @@ Single source of truth for where each feature stands. Read it at the start of a 
 | [[content-moderation]] (F7) | building | Photo gate (#24) and line gate (#25) merged; image and text checks merged |
 | [[plant-voice]] | building | Lines gated; chat design decides who sees a line |
 | [[photo-upload]] (F6) | building | Metadata stripping and storage merged (#26); upload screen (#28) in review |
+| [[plant-register]] (F9) | building | Short code, owner-only plant policies, owner profile policies |
 | [[report-block]] (F8) | building | Reports and blocks tables with row-level security |
 
 ## Delivery (PR by PR)
