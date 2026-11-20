@@ -32,8 +32,18 @@ Serves: [[every-plant-has-a-past]] · Roadmap: [[roadmap]] (P1, step 2: F9) · B
 | A short-code collision makes an insert fail | Unique constraint; the app retries once in the register flow (mobile PR) |
 | A plant's owner changes without a handover | Handover is F37, later; the app never reassigns owner_id |
 
+## Photo identification (decided 2026-11-20)
+- **Trigger:** the first photo that passes the check for a plant with no species yet. The plant is identified from that photo automatically; the owner doesn't press anything.
+- **Model:** Claude Opus 5.5 (`claude-opus-5-5`). Identification is a knowledge-and-vision task on a small number of uploads, so the most capable model is worth the cost. Change the constant in `_shared/plant-identifier.ts` to move to a cheaper model later.
+- **Output:** common name, scientific name, family, order, class, category (foliage, flowering, succulent, cactus, fern, herb, tree, other), and a confidence from 0 to 1.
+- **Stored:** `species_free_text` (common name), `taxon_family`, `taxon_order`, `taxon_class`, `category`, `id_source = 'photo_api'`, `id_confidence`. The owner can correct it (`owner_correction`).
+- **Below 0.5 confidence:** nothing is stored, and the owner picks the species by hand.
+- **Failure:** identification is best-effort. An error or unclear answer leaves the plant unidentified and never blocks the photo.
+- **Cost:** one vision call per plant (only until it's identified), not per photo.
+
 ## Open questions
 - Which fields are shown on a plant's public page (F4).
+- Whether owners can re-identify a plant later (not in this step).
 
 ## Next steps
 - [x] Vault note, README row, kanban card
