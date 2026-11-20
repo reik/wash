@@ -10,6 +10,7 @@ Single source of truth for where each feature stands. Read it at the start of a 
 | [[content-moderation]] (F7) | building | Photo gate (#24) and line gate (#25) merged; image and text checks merged |
 | [[plant-voice]] | building | Lines gated; chat design decides who sees a line |
 | [[photo-upload]] (F6) | building | Strip metadata, store the stripped copy, record `storage_path` |
+| [[photo-moments]] (F11) | building | Angle groups and one avatar per plant, owner-only |
 
 ## Delivery (PR by PR)
 
