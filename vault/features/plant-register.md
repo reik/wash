@@ -43,7 +43,13 @@ Serves: [[every-plant-has-a-past]] · Roadmap: [[roadmap]] (P1, step 2: F9) · B
 
 ## Open questions
 - Which fields are shown on a plant's public page (F4).
-- Whether owners can re-identify a plant later (not in this step).
+- Whether owners can re-identify a plant later (not in this step: a correction is always possible, re-running the model is not).
+
+## Owner corrections (decided 2026-11-20)
+- **The owner always has the last word.** Any identity field can be corrected by the plant's owner, whether the model or the owner set it first.
+- **Corrections are recorded as the owner's.** A free-text correction sets `id_source = 'owner_correction'`; picking a species from the list sets `owner_pick`. Either way `id_confidence` is cleared, because it describes the model's guess, not the owner's answer.
+- **Identity fields change only through the correction function.** The owner can't write `id_source` or `id_confidence` directly, so a correction can't be dressed up as a model guess.
+- **Other owners can't correct a plant**, and nobody else can see the correction until public pages (F4) show it.
 
 ## Next steps
 - [x] Vault note, README row, kanban card
