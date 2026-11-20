@@ -9,7 +9,8 @@ Single source of truth for where each feature stands. Read it at the start of a 
 | [[app-shell]] (F1–F3) | building | Sign-in merged (#20, #21); report/block (F8) next |
 | [[content-moderation]] (F7) | building | Photo gate (#24) and line gate (#25) merged; image and text checks merged |
 | [[plant-voice]] | building | Lines gated; chat design decides who sees a line |
-| [[photo-upload]] (F6) | building | Strip metadata, store the stripped copy, record `storage_path` |
+| [[photo-upload]] (F6) | building | Metadata stripping and storage merged (#26); upload screen (#28) in review |
+| [[report-block]] (F8) | building | Reports and blocks tables with row-level security |
 
 ## Delivery (PR by PR)
 
@@ -24,7 +25,10 @@ Single source of truth for where each feature stands. Read it at the start of a 
 | #23 | content-moderation: image check | merged |
 | #24 | content-moderation: photo gate | merged |
 | #25 | content-moderation: line gate | merged |
-| — | photo-upload: metadata strip, storage | in progress |
+| #26 | photo-upload: metadata strip, storage | merged |
+| #27 | photo-upload: mobile client | merged |
+| #28 | photo-upload: upload screen | open |
+| — | report-block: reports and blocks | in progress |
 
 ## Notes
 - Photo storage (F6) builds on the photo gate (#24), which has merged, so it starts from `main`.
