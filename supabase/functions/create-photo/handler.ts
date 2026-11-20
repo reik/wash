@@ -1,9 +1,12 @@
 import { readImage } from '../_shared/image-input.ts';
-import { moderateImage, type ImageClassifier } from '../_shared/moderation.ts';
+import { moderateImage, type ImageClassifier, type MediaType } from '../_shared/moderation.ts';
+import { stripMetadata, type StrippableMediaType } from '../_shared/metadata-strip.ts';
 
 export interface PhotoRow {
+  id: string;
   plantId: string;
   uploaderId: string;
+  storagePath: string;
   moderationStatus: 'pass';
 }
 
@@ -12,10 +15,19 @@ export interface PhotoDeps {
   userIdFromRequest(request: Request): Promise<string | null>;
   ownsPlant(userId: string, plantId: string): Promise<boolean>;
   classify: ImageClassifier;
-  recordPhoto(row: PhotoRow): Promise<{ id: string }>;
+  newId(): string;
+  /** Stores the metadata-free bytes in the private photo bucket. */
+  storeImage(path: string, bytes: Uint8Array, mediaType: StrippableMediaType): Promise<void>;
+  recordPhoto(row: PhotoRow): Promise<void>;
 }
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+const EXTENSIONS: Record<MediaType, string> = {
+  'image/jpeg': 'jpg',
+  'image/png': 'png',
+  'image/webp': 'webp',
+};
 
 function json(body: unknown, status: number): Response {
   return new Response(JSON.stringify(body), {
@@ -32,9 +44,15 @@ function readPlantId(body: unknown): string | null {
   return typeof plantId === 'string' && UUID.test(plantId) ? plantId : null;
 }
 
+function decodeBase64(data: string): Uint8Array {
+  return Uint8Array.from(atob(data), (char) => char.charCodeAt(0));
+}
+
 /**
  * Photo gate: nothing is saved unless the owner is signed in, owns the plant,
- * and the image passes the check. A failed or unavailable check saves nothing.
+ * the bytes match the declared format, and the image passes the check.
+ * Only the metadata-free copy is stored. A failed or unavailable check or
+ * upload stores nothing.
  */
 export function createPhotoHandler(deps: PhotoDeps) {
   return async (request: Request): Promise<Response> => {
@@ -60,6 +78,13 @@ export function createPhotoHandler(deps: PhotoDeps) {
       return json({ error: parsed.error }, parsed.status);
     }
 
+    let stripped: Uint8Array;
+    try {
+      stripped = stripMetadata(parsed.image.mediaType, decodeBase64(parsed.image.data));
+    } catch {
+      return json({ error: 'image_format_mismatch' }, 400);
+    }
+
     if (!(await deps.ownsPlant(userId, plantId))) {
       return json({ error: 'forbidden' }, 403);
     }
@@ -71,7 +96,15 @@ export function createPhotoHandler(deps: PhotoDeps) {
         : json({ error: 'image_flagged' }, 422);
     }
 
-    const saved = await deps.recordPhoto({ plantId, uploaderId: userId, moderationStatus: 'pass' });
-    return json({ id: saved.id, moderation_status: 'pass' }, 201);
+    const id = deps.newId();
+    const storagePath = `${plantId}/${id}.${EXTENSIONS[parsed.image.mediaType]}`;
+    try {
+      await deps.storeImage(storagePath, stripped, parsed.image.mediaType);
+    } catch {
+      return json({ error: 'storage_unavailable' }, 503);
+    }
+
+    await deps.recordPhoto({ id, plantId, uploaderId: userId, storagePath, moderationStatus: 'pass' });
+    return json({ id, moderation_status: 'pass' }, 201);
   };
 }
