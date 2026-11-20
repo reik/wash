@@ -14,6 +14,8 @@ kanban-plugin: basic
 
 ## In Progress
 
+- [ ] [[care-log]] — F12: owner logs care and life events (watered, repotted, moved); events are immutable and feed the plant voice #building
+
 - [ ] [[app-shell]] — P1 step 1: Expo app shell with EN/JA i18n (auth, moderation, report/block to follow) #building
 - [ ] [[content-moderation]] — F7 baseline: server-side AI text check that fails closed; image check and posting wiring to follow (feature of both ideas) #building
 - [ ] [[plant-voice]] — Plant lines pass the text check before posting; events-only lines to follow (feature of both ideas) #building
