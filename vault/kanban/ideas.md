@@ -14,6 +14,8 @@ kanban-plugin: basic
 
 ## In Progress
 
+- [ ] [[care-log]] — F12: owner logs care and life events (watered, repotted, moved); events are immutable and feed the plant voice #building
+
 - [ ] [[report-block]] — F8: report content by reason and block users; row-level security on both tables #building
 - [ ] [[app-shell]] — P1 step 1: Expo app shell with EN/JA i18n (auth, moderation, report/block to follow) #building
 - [ ] [[content-moderation]] — F7 baseline: server-side AI text check that fails closed; image check and posting wiring to follow (feature of both ideas) #building
