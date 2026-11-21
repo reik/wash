@@ -1,5 +1,5 @@
 import { readImage } from '../_shared/image-input.ts';
-import { moderateImage, type ImageClassifier, type MediaType } from '../_shared/moderation.ts';
+import { moderateImage, type ImageClassifier, type ImageInput, type MediaType } from '../_shared/moderation.ts';
 import { stripMetadata, type StrippableMediaType } from '../_shared/metadata-strip.ts';
 
 export interface PhotoRow {
@@ -19,6 +19,11 @@ export interface PhotoDeps {
   /** Stores the metadata-free bytes in the private photo bucket. */
   storeImage(path: string, bytes: Uint8Array, mediaType: StrippableMediaType): Promise<void>;
   recordPhoto(row: PhotoRow): Promise<void>;
+  /**
+   * Identifies the plant from this photo if it has no identity yet. Best-effort:
+   * a failure never changes the photo's result.
+   */
+  identifyPlant(plantId: string, image: ImageInput): Promise<void>;
 }
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -105,6 +110,11 @@ export function createPhotoHandler(deps: PhotoDeps) {
     }
 
     await deps.recordPhoto({ id, plantId, uploaderId: userId, storagePath, moderationStatus: 'pass' });
+    try {
+      await deps.identifyPlant(plantId, parsed.image);
+    } catch {
+      // Identification is best-effort; the photo is already saved.
+    }
     return json({ id, moderation_status: 'pass' }, 201);
   };
 }

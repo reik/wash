@@ -26,10 +26,11 @@ function post(body: unknown, token: string | null = 'user-token'): Request {
 interface Recorded {
   rows: { id: string; plantId: string; uploaderId: string; storagePath: string; moderationStatus: string }[];
   uploads: { path: string; mediaType: string; bytes: number[] }[];
+  identified: string[];
 }
 
 function fakeDeps(overrides: Partial<PhotoDeps> = {}): { deps: PhotoDeps; recorded: Recorded } {
-  const recorded: Recorded = { rows: [], uploads: [] };
+  const recorded: Recorded = { rows: [], uploads: [], identified: [] };
   const deps: PhotoDeps = {
     userIdFromRequest: () => Promise.resolve(USER_ID),
     ownsPlant: () => Promise.resolve(true),
@@ -41,6 +42,10 @@ function fakeDeps(overrides: Partial<PhotoDeps> = {}): { deps: PhotoDeps; record
     },
     recordPhoto: (row) => {
       recorded.rows.push(row);
+      return Promise.resolve();
+    },
+    identifyPlant: (plantId) => {
+      recorded.identified.push(plantId);
       return Promise.resolve();
     },
     ...overrides,
@@ -141,4 +146,28 @@ Deno.test('should_return_201_and_record_photo_as_passed_when_image_is_safe', asy
       moderationStatus: 'pass',
     },
   ]);
+});
+
+Deno.test('should_identify_plant_after_photo_is_saved', async () => {
+  const { deps, recorded } = fakeDeps();
+
+  await createPhotoHandler(deps)(post(validBody));
+
+  assertEquals(recorded.identified, [PLANT_ID]);
+});
+
+Deno.test('should_still_return_201_when_identification_fails', async () => {
+  const { deps } = fakeDeps({ identifyPlant: () => Promise.reject(new Error('model down')) });
+
+  const response = await createPhotoHandler(deps)(post(validBody));
+
+  assertEquals(response.status, 201);
+});
+
+Deno.test('should_not_identify_plant_when_image_is_flagged', async () => {
+  const { deps, recorded } = fakeDeps({ classify: () => Promise.resolve('unsafe') });
+
+  await createPhotoHandler(deps)(post(validBody));
+
+  assertEquals(recorded.identified, []);
 });
