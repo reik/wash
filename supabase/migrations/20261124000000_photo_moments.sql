@@ -32,6 +32,8 @@ create policy photos_owner_moments_update on public.photos
   using (public.is_plant_owner(plant_id))
   with check (public.is_plant_owner(plant_id));
 
+-- Explicit, so no table-wide update can exist: the owner changes only angle_group_id.
+revoke update on public.photos from authenticated, anon;
 grant update (angle_group_id) on public.photos to authenticated;
 
 create function public.set_plant_avatar(p_photo_id uuid)
