@@ -49,6 +49,22 @@ export const translations = {
       stages: { newborn: 'New', growing: 'Growing', elder: 'Elder' },
       climates: { temperate: 'Temperate', tropical: 'Tropical', arid: 'Arid', cold: 'Cold' },
     },
+    event: {
+      label: 'What happened',
+      log: 'Log event',
+      logged: 'Event logged',
+      failed: 'Something went wrong. Please try again.',
+      types: {
+        watered: 'Watered',
+        repotted: 'Repotted',
+        moved: 'Moved',
+        new_leaf: 'New leaf',
+        flower: 'Flowering',
+        droop: 'Drooping',
+        leaning: 'Leaning',
+        owner_away: 'I was away',
+      },
+    },
   },
   ja: {
     app: {
@@ -89,6 +105,22 @@ export const translations = {
       failed: 'うまくいきませんでした。もう一度お試しください。',
       stages: { newborn: 'はじめて', growing: '成長中', elder: 'ベテラン' },
       climates: { temperate: '温帯', tropical: '熱帯', arid: '乾燥', cold: '寒冷' },
+    },
+    event: {
+      label: '何があった？',
+      log: '記録する',
+      logged: '記録しました',
+      failed: 'うまくいきませんでした。もう一度お試しください。',
+      types: {
+        watered: '水やり',
+        repotted: '植え替え',
+        moved: '引っ越し',
+        new_leaf: '新芽',
+        flower: '開花',
+        droop: 'しおれ',
+        leaning: '傾き',
+        owner_away: '留守にした',
+      },
     },
   },
 } as const satisfies Record<Locale, Dictionary>;
