@@ -2,7 +2,7 @@
 title: Multi-plant garden home (F16)
 status: building   # drafting → building → review → shipped
 created: 2026-11-20
-updated: 2026-11-20
+updated: 2026-11-27
 tags: [feature, p1, home, plant]
 serves: [every-plant-has-a-past]
 ---
@@ -30,5 +30,6 @@ Serves: [[every-plant-has-a-past]] · Roadmap: [[roadmap]] (P1, step 2: F16) · 
 
 ## Next steps
 - [x] Vault note, README row, kanban card
-- [ ] Migration: `garden_for_owner()` function
-- [ ] Mobile home screen (later PR, with a screenshot)
+- [x] Migration: `garden_for_owner()` function (#34; avatar and latest event in #36)
+- [x] Mobile garden screen (#38)
+- [ ] Decide whether `/garden` becomes the home screen

@@ -2,7 +2,7 @@
 title: Report and block (F8)
 status: building   # drafting → building → review → shipped
 created: 2026-11-20
-updated: 2026-11-20
+updated: 2026-11-27
 tags: [feature, p1, safety, ugc]
 serves: [every-plant-has-a-past]
 ---
@@ -38,5 +38,5 @@ App store user-generated-content rules require a way to report content and to bl
 
 ## Next steps
 - [x] Vault note, README row, kanban card
-- [ ] Migration: `reports` and `blocks` tables with row-level security
-- [ ] Mobile report and block controls (later PR, with a screenshot)
+- [x] Migration: `reports` and `blocks` tables with row-level security (#29)
+- [ ] Mobile report and block controls (later PR, with a screenshot); needs a screen that shows other owners' content

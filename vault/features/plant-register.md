@@ -2,7 +2,7 @@
 title: Plant register (F9)
 status: building   # drafting → building → review → shipped
 created: 2026-11-20
-updated: 2026-11-20
+updated: 2026-11-27
 tags: [feature, p1, plant, core]
 serves: [every-plant-has-a-past]
 ---
@@ -53,5 +53,7 @@ Serves: [[every-plant-has-a-past]] · Roadmap: [[roadmap]] (P1, step 2: F9) · B
 
 ## Next steps
 - [x] Vault note, README row, kanban card
-- [ ] Migration: short-code default, owner-only plant policies, owner profile policies, species read
-- [ ] Mobile register screen (later PR, with a screenshot)
+- [x] Migration: short-code default, owner-only plant policies, owner profile policies, species read (#30)
+- [x] Plant and profile API clients (#31)
+- [x] Mobile register screen (#35)
+- [ ] Owner correction screen for the plant's identity
