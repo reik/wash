@@ -2,7 +2,7 @@
 title: Photo moments and same-angle guide (F11)
 status: building   # drafting → building → review → shipped
 created: 2026-11-20
-updated: 2026-11-20
+updated: 2026-11-27
 tags: [feature, p1, plant, photos]
 serves: [every-plant-has-a-past, plant-voice]
 ---
@@ -33,5 +33,5 @@ Serves: [[every-plant-has-a-past]], [[plant-voice]] · Roadmap: [[roadmap]] (P1,
 
 ## Next steps
 - [x] Vault note, README row, kanban card
-- [ ] Migration: `angle_group_id`, `is_avatar`, one-avatar index, owner-only update
+- [x] Migration: `angle_group_id`, `is_avatar`, one-avatar index, owner-only update (#33)
 - [ ] Mobile guide overlay (later PR, with a screenshot)

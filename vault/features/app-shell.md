@@ -2,7 +2,7 @@
 title: App shell (P1 step 1, part 1)
 status: building   # drafting → building → review → shipped
 created: 2026-11-06
-updated: 2026-11-06
+updated: 2026-11-27
 tags: [feature, p1, foundation]
 serves: [every-plant-has-a-past]
 ---
@@ -42,6 +42,10 @@ None. This is build work, not validation.
 
 ## Next steps
 - [x] Expo app with Expo Router, EN/JA i18n, tests (7 passing), typecheck, lint, expo-doctor
-- [ ] F2 auth + minimal owner profile (needs Supabase project)
-- [ ] F7 moderation baseline and F8 report/block
-- [ ] Open PR, then move card to Review
+- [x] F2 sign-in on local Supabase (#19–#21); the owner profile is created at plant registration (#31, #35)
+- [ ] F2 sign-up and profile screens; hosted Supabase project
+- [x] F7 moderation baseline (#22–#25)
+- [x] F8 `reports` and `blocks` tables (#29)
+- [ ] F8 mobile report and block controls ([[report-block]])
+- [x] PRs opened and merged (#17, #18)
+- [ ] Move card to Review once the items above are done

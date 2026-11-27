@@ -2,7 +2,7 @@
 title: Care and life-event log (F12)
 status: building   # drafting → building → review → shipped
 created: 2026-11-20
-updated: 2026-11-20
+updated: 2026-11-27
 tags: [feature, p1, plant, voice]
 serves: [every-plant-has-a-past, plant-voice]
 ---
@@ -35,5 +35,5 @@ Plant lines are only allowed to talk about real events ([[plant-voice]]). Every 
 
 ## Next steps
 - [x] Vault note, README row, kanban card
-- [ ] Migration: `plant_events` with type check and owner-only insert and read
-- [ ] Mobile log screen (later PR, with a screenshot)
+- [x] Migration: `plant_events` with type check and owner-only insert and read (#32)
+- [x] Mobile log screen (#37)

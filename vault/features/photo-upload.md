@@ -2,7 +2,7 @@
 title: Photo upload (F6)
 status: building   # drafting → building → review → shipped
 created: 2026-11-19
-updated: 2026-11-19
+updated: 2026-11-27
 tags: [feature, p1, privacy, photos]
 serves: [every-plant-has-a-past]
 ---
@@ -34,7 +34,8 @@ Serves: [[every-plant-has-a-past]] · Roadmap: [[roadmap]] (P1, step 2: F6) · G
 - Signed-URL lifetime for the app (later PR).
 
 ## Next steps
-- [ ] Metadata stripping for JPEG, PNG and WebP (tests first)
-- [ ] `create-photo` stores the stripped copy and records `storage_path`
-- [ ] Migration: `storage_path` column and private bucket
-- [ ] Open PR; move card to Review
+- [x] Metadata stripping for JPEG, PNG and WebP (tests first)
+- [x] `create-photo` stores the stripped copy and records `storage_path`
+- [x] Migration: `storage_path` column and private bucket
+- [x] PRs merged: storage (#26), mobile client (#27), upload screen (#28)
+- [ ] Show stored photos through signed URLs
